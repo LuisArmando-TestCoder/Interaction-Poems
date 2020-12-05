@@ -37,7 +37,7 @@ def getThreeJSFileNames(fileJson):
     return fileNames
 
 
-fileContent = open("threeJSImportsData.json").read()
+fileContent = open("threeJSImports.json").read()
 fileJson = json.loads(fileContent)
 fileNames = getThreeJSFileNames(fileJson)
 
