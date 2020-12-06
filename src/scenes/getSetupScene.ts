@@ -105,7 +105,7 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
 function addFloor(scene: THREE.Scene): THREE.Object3D {
     const mesh = new THREE.Mesh(
         new THREE.PlaneGeometry(200, 200), 
-        new THREE.MeshStandardMaterial({ color: '#eee' })
+        new THREE.MeshStandardMaterial({ color: '#aaa' })
     )
 
     mesh.rotation.x = -Math.PI / 2

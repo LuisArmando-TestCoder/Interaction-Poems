@@ -8,7 +8,11 @@ function deegresToRadians(degrees) {
 }
 
 export const keyController = {
-    keys: [],
+    keyAxes: {
+        ws: [],
+        ad: []
+    },
+    chosenKey: ""
 }
 
 const friqtionResistance = 2
@@ -41,25 +45,37 @@ const cameraVector = {
 }
 
 const move = {
+    right_forward() {
+        cameraVector.rotation = deegresToRadians(-90)
+        cameraVector.chosenAxis = 'z'
+    },
+    left_forward() {
+        cameraVector.rotation = deegresToRadians(90)
+        cameraVector.chosenAxis = 'z'
+    },
+    right_backward() {
+        cameraVector.rotation = deegresToRadians(-270)
+        cameraVector.chosenAxis = 'x'
+    },
+    left_backward() {
+        cameraVector.rotation = deegresToRadians(270)
+        cameraVector.chosenAxis = 'x'
+    },
     forward() {
         cameraVector.rotation = 0
         cameraVector.chosenAxis = 'z'
-        cameraVector.acceleration.z += cameraVector.friqtion.z * friqtionResistance
     },
     backward() {
-        cameraVector.rotation = deegresToRadians(0)
+        cameraVector.rotation = deegresToRadians(360)
         cameraVector.chosenAxis = 'z'
-        cameraVector.acceleration.z -= cameraVector.friqtion.z * friqtionResistance
     },
     right() {
-        cameraVector.rotation = deegresToRadians(180)
+        cameraVector.rotation = deegresToRadians(-180)
         cameraVector.chosenAxis = 'x'
-        cameraVector.acceleration.x -= cameraVector.friqtion.x * friqtionResistance
     },
     left() {
         cameraVector.rotation = deegresToRadians(180)
         cameraVector.chosenAxis = 'x'
-        cameraVector.acceleration.x += cameraVector.friqtion.x * friqtionResistance
     },
     up() {
         cameraVector.position.y += cameraVector.flySpeed.y
@@ -75,18 +91,15 @@ const creativeKeys = {
 }
 
 const movementKeys = {
+    wa: move.left_forward,
+    wd: move.right_forward,
+    sa: move.left_backward,
+    sd: move.right_backward,
+
     w: move.forward,
     a: move.left,
     s: move.backward,
     d: move.right,
-    W: move.forward,
-    A: move.left,
-    S: move.backward,
-    D: move.right,
-    ArrowUp: move.forward,
-    ArrowLeft: move.left,
-    ArrowDown: move.backward,
-    ArrowRight: move.right,
 }
 
 const validAxes = ['x', 'z']
@@ -116,15 +129,20 @@ function topFirstPersonPositionAcceleration() {
 }
 
 function setMoveOnKeyDown() {
-    keyController.keys.forEach((key) => {
-        movementKeys[key]()
-    })
+    if (movementKeys[keyController.chosenKey]) {
+        movementKeys[keyController.chosenKey]()
+
+        const { acceleration, friqtion, chosenAxis } = cameraVector
+
+        acceleration[chosenAxis] += friqtion[chosenAxis] * friqtionResistance
+    }
 }
 
 export function updateFirstPersonPosition() {
     setMoveOnKeyDown()
     reduceFirstPersonPositionAcceleration()
     topFirstPersonPositionAcceleration()
+
     const {
         camera,
         cameraDirection,
@@ -145,20 +163,58 @@ export function updateFirstPersonPosition() {
 
 export function setFirstPersonPositionControllers(canvas: HTMLCanvasElement) {
     canvas.addEventListener('keydown', (event) => {
-        const isValidKey = Object.keys(movementKeys).includes(event.key)
-        const isKeyInQueue = keyController.keys.includes(event.key)
-        if (isValidKey && !isKeyInQueue) {
-            keyController.keys.push(event.key)
-            return event.preventDefault()
-        }
+        const key = event.key.toLowerCase();
+
+        addKeyToQueue(key)
+        chooseKey()
+
         const validCode = creativeKeys[event.code]
+
         if (validCode) {
             validCode()
-            return event.preventDefault()
+            event.preventDefault()
         }
     })
     canvas.addEventListener('keyup', (event) => {
-        const disappearingKeyIndex = keyController.keys.indexOf(event.key)
-        keyController.keys.splice(disappearingKeyIndex, 1)
+        const key = event.key.toLowerCase();
+        deleteKeyFromQueue(key)
+        chooseKey()
     })
+}
+
+function chooseKey() {
+    keyController.chosenKey = ""
+
+    if (keyController.keyAxes.ws.length) {
+        keyController.chosenKey = keyController.keyAxes.ws[
+            keyController.keyAxes.ws.length - 1
+        ]
+    }
+
+    if (keyController.keyAxes.ad.length) {
+        keyController.chosenKey += keyController.keyAxes.ad[
+            keyController.keyAxes.ad.length - 1
+        ]
+    }
+}
+
+function addKeyToQueue(key: string) {
+    for (const keyAxis in keyController.keyAxes) {
+        const keyAxisQueue = keyController.keyAxes[keyAxis]
+        if (keyAxis.includes(key) && !keyAxisQueue.includes(key)) {
+            keyAxisQueue.push(key)
+            break
+        }
+    }
+}
+
+function deleteKeyFromQueue(key: string) {
+    for (const keyAxis in keyController.keyAxes) {
+        const keyAxisQueue = keyController.keyAxes[keyAxis]
+        const isValidKey = keyAxis.includes(key) && keyAxisQueue.includes(key)
+
+        if (isValidKey) {
+            keyAxisQueue.splice(keyAxisQueue.indexOf(key), 1)
+        }
+    }
 }
