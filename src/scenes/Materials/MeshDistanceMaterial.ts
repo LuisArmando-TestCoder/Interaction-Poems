@@ -1,3 +1,11 @@
 import * as THREE from 'three'
+import getSetupScene from '../getSetupScene'
 // https://threejs.org/docs/api/en/materials/MeshDistanceMaterial.html
-export default function MeshDistanceMaterial(scene: THREE.Scene) {}
+export default function MeshDistanceMaterial() {
+  getSetupScene({
+    setup({ renderer, scene, camera }) {
+    },
+    animate({ renderer, scene, camera }) {
+    },
+  })
+}

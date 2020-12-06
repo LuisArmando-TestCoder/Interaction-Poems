@@ -1,6 +1,15 @@
 import json
 import os
 
+functionInsight =  "{\n"
+functionInsight += "  getSetupScene({\n"
+functionInsight += "    setup({ renderer, scene, camera }) {\n"
+functionInsight += "    },\n"
+functionInsight += "    animate({ renderer, scene, camera }) {\n"
+functionInsight += "    },\n"
+functionInsight += "  })\n"
+functionInsight += "}"
+
 def createFolder(folderPath):
     accessRights = 0o755
 
@@ -15,8 +24,10 @@ def createThreeJSFile(item, folderPath):
     file = open("../../src/scenes/" + folderPath + "/" + item["name"] + ".ts","w+")
 
     file.write("import * as THREE from 'three'\r\n")
+    file.write("import getSetupScene from '../getSetupScene'\r\n")
     file.write("// " + item["link"] + "\r\n")
-    file.write("export default function " + item["name"] + r"(scene: THREE.Scene) {}")
+    file.write("export default function " + item["name"] + r"() ")
+    file.write(functionInsight)
     file.close()
 
 def transformDataToThreeJSFiles(fileNames, fileJson):

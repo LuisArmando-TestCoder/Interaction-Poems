@@ -1,3 +1,11 @@
 import * as THREE from 'three'
+import getSetupScene from '../getSetupScene'
 // https://threejs.org/docs/api/en/math/Line3.html
-export default function Line3(scene: THREE.Scene) {}
+export default function Line3() {
+  getSetupScene({
+    setup({ renderer, scene, camera }) {
+    },
+    animate({ renderer, scene, camera }) {
+    },
+  })
+}

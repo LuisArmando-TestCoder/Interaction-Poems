@@ -1,3 +1,11 @@
 import * as THREE from 'three'
+import getSetupScene from '../getSetupScene'
 // https://threejs.org/docs/api/en/geometries/TetrahedronBufferGeometry.html
-export default function TetrahedronBufferGeometry(scene: THREE.Scene) {}
+export default function TetrahedronBufferGeometry() {
+  getSetupScene({
+    setup({ renderer, scene, camera }) {
+    },
+    animate({ renderer, scene, camera }) {
+    },
+  })
+}

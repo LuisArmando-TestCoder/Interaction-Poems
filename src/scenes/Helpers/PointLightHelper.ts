@@ -1,3 +1,11 @@
 import * as THREE from 'three'
+import getSetupScene from '../getSetupScene'
 // https://threejs.org/docs/api/en/helpers/PointLightHelper.html
-export default function PointLightHelper(scene: THREE.Scene) {}
+export default function PointLightHelper() {
+  getSetupScene({
+    setup({ renderer, scene, camera }) {
+    },
+    animate({ renderer, scene, camera }) {
+    },
+  })
+}

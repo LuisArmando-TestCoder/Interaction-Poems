@@ -1,3 +1,11 @@
 import * as THREE from 'three'
+import getSetupScene from '../getSetupScene'
 // https://threejs.org/docs/api/en/geometries/ExtrudeGeometry.html
-export default function ExtrudeGeometry(scene: THREE.Scene) {}
+export default function ExtrudeGeometry() {
+  getSetupScene({
+    setup({ renderer, scene, camera }) {
+    },
+    animate({ renderer, scene, camera }) {
+    },
+  })
+}

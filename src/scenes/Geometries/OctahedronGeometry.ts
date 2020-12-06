@@ -1,3 +1,11 @@
 import * as THREE from 'three'
+import getSetupScene from '../getSetupScene'
 // https://threejs.org/docs/api/en/geometries/OctahedronGeometry.html
-export default function OctahedronGeometry(scene: THREE.Scene) {}
+export default function OctahedronGeometry() {
+  getSetupScene({
+    setup({ renderer, scene, camera }) {
+    },
+    animate({ renderer, scene, camera }) {
+    },
+  })
+}

@@ -12,7 +12,7 @@ export default function getScene(sceneName: string): Promise<Function> {
             for (const threeJSScene of threeJSScenes) {
                 if (sceneName === threeJSScene.name) {
                     import(`./${folder}/${sceneName}`)
-                    .then(resolve)
+                    .then(scene => resolve(scene.default))
                     .catch(reject)
 
                     return
