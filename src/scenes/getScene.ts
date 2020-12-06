@@ -9,16 +9,16 @@ export default function getScene(sceneName: string): Promise<Function> {
     return new Promise((resolve, reject) => {
         for (const folder in threeJSImports) {
             const threeJSScenes: ThreeJSImport[] = threeJSImports[folder]
-
-            threeJSScenes.forEach(threeJSScene => {
+            for (const threeJSScene of threeJSScenes) {
                 if (sceneName === threeJSScene.name) {
                     import(`./${folder}/${sceneName}`)
                     .then(resolve)
                     .catch(reject)
 
-                    return;
+                    return
                 }
-            })
+
+            }
         }
 
         reject(new Error(`${sceneName} doesn't exists`))
