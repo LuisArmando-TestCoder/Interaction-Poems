@@ -1,3 +1,3 @@
 import * as THREE from 'three'
 // https://threejs.org/docs/api/en/lights/AmbientLightProbe.html
-export default function AmbientLightProbe() {}
+export default function AmbientLightProbe(scene: THREE.Scene) {}

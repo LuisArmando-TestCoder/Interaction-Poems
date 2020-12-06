@@ -1,3 +1,3 @@
 import * as THREE from 'three'
 // https://threejs.org/docs/api/en/geometries/IcosahedronBufferGeometry.html
-export default function IcosahedronBufferGeometry() {}
+export default function IcosahedronBufferGeometry(scene: THREE.Scene) {}

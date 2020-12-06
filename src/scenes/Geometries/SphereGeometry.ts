@@ -1,3 +1,3 @@
 import * as THREE from 'three'
 // https://threejs.org/docs/api/en/geometries/SphereGeometry.html
-export default function SphereGeometry() {}
+export default function SphereGeometry(scene: THREE.Scene) {}

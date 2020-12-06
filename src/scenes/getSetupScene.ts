@@ -108,23 +108,23 @@ function addFloor(scene: THREE.Scene): THREE.Object3D {
         new THREE.MeshStandardMaterial({ color: '#aaa' })
     )
 
-    mesh.rotation.x = -Math.PI / 2
-    mesh.position.y = -1
+    mesh.rotation.x = -Math.PI / 2  
     mesh.receiveShadow = true
-    mesh.castShadow = true
+    mesh.castShadow = false
     scene.add(mesh)
 
     return mesh
 }
 
 function addDefaultObject(scene: THREE.Scene): THREE.Object3D {
+    const height = 1
     const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(2, 2, 2),
+        new THREE.BoxGeometry(height, height, height),
         new THREE.MeshStandardMaterial({ color: '#4ff' })
     )
-
+    mesh.position.y = height / 2
     mesh.castShadow = true
-    mesh.receiveShadow = true
+    mesh.receiveShadow = false
     scene.add(mesh)
 
     return mesh

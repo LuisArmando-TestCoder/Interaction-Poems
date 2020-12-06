@@ -1,3 +1,3 @@
 import * as THREE from 'three'
 // https://threejs.org/docs/api/en/math/Box2.html
-export default function Box2() {}
+export default function Box2(scene: THREE.Scene) {}
