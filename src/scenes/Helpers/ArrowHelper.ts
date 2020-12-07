@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import getSetupScene from '../getSetupScene'
+import getSetupScene from '../../sceneSetup/getSetupScene'
 // https://threejs.org/docs/api/en/helpers/ArrowHelper.html
 export default function ArrowHelper() {
   getSetupScene({

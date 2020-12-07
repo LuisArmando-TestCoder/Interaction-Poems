@@ -11,7 +11,7 @@ export default function getScene(sceneName: string): Promise<Function> {
             const threeJSScenes: ThreeJSImport[] = threeJSImports[folder]
             for (const threeJSScene of threeJSScenes) {
                 if (sceneName === threeJSScene.name) {
-                    import(`./${folder}/${sceneName}`)
+                    import(`../scenes/${folder}/${sceneName}`)
                     .then(scene => resolve(scene.default))
                     .catch(reject)
 

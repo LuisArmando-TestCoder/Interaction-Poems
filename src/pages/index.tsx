@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import getScene from '../scenes/getScene'
+import getScene from '../sceneSetup/getScene'
 import './global.css'
 
 export default function Home() {

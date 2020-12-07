@@ -24,7 +24,7 @@ def createThreeJSFile(item, folderPath):
     file = open("../../src/scenes/" + folderPath + "/" + item["name"] + ".ts","w+")
 
     file.write("import * as THREE from 'three'\r\n")
-    file.write("import getSetupScene from '../getSetupScene'\r\n")
+    file.write("import getSetupScene from '../../sceneSetup/getSetupScene'\r\n")
     file.write("// " + item["link"] + "\r\n")
     file.write("export default function " + item["name"] + r"() ")
     file.write(functionInsight)

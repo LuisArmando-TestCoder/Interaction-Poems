@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import getSetupScene from '../getSetupScene'
+import getSetupScene from '../../sceneSetup/getSetupScene'
 // https://threejs.org/docs/api/en/math/Ray.html
 export default function Ray() {
   getSetupScene({

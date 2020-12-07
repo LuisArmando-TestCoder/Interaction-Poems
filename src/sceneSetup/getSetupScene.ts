@@ -104,7 +104,7 @@ function addDefaultObject(scene: THREE.Scene): THREE.Object3D {
 
 export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     const canvas = document.querySelector('canvas')
-    const camera = new THREE.PerspectiveCamera(32, getAspectRatio(canvas), 1, 500)
+    const camera = new THREE.PerspectiveCamera(32, getAspectRatio(canvas), 1)
     const scene = new THREE.Scene()
     const renderer = new THREE.WebGLRenderer({
         canvas,

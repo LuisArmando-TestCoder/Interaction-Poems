@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import getSetupScene from '../getSetupScene'
+import getSetupScene from '../../sceneSetup/getSetupScene'
 
 // https://threejs.org/docs/api/en/geometries/RingBufferGeometry.html
 
@@ -11,42 +11,54 @@ const colorPalette = [
   '#35D3DE',
   '#3DFF8C'
 ]
+const height = 150
+const m = { o: Math.PI }
 
-function getWaveRings(amount: number): THREE.Group {
+function getSpinRings(amount: number): THREE.Group {
+  console.log(m);
   const group = new THREE.Group()
-  const tunelSpacing = 30
-  const y = 30
-  for (let j = 0; j < amount; j++) {
-    for (let i = 0; i < amount; i++) {
-      const ring = getRing({
-        color: colorPalette[Math.round(Math.random() * colorPalette.length)],
-        y
-      })
-  
-      ring.position.set(
-        (j - amount / 2) * tunelSpacing,
-        y,
-        (i - amount / 2) * tunelSpacing
-      )
-      ring.rotation.z = -Math.PI / 2
-      group.add(ring)
-    }
+  for (let itemIndex = 0; itemIndex < amount; itemIndex++) {
+    const ring = getRing({
+      color: colorPalette[Math.round(Math.random() * colorPalette.length)],
+      y: height
+    })
+    const portion = itemIndex / amount
+    const spins = 100
+    const spiralRadius = Math.sin(portion * Math.PI) * height
+
+    ring.position.set(
+      Math.sin(portion * spins) * spiralRadius,
+      0,
+      Math.cos(portion * spins) * spiralRadius
+    )
+    
+    group.add(ring)
   }
 
   return group
 }
 
-function updateWaveRings(waveRings: THREE.Group) {
-  const speed = 0.005
-  const amplifier = 10
-  const waveReduction = 50
-
-  waveRings.children.forEach((mesh) => {
-    mesh.position['original'] = mesh.position['original'] || { y: mesh.position.y }
-    mesh.position.y = mesh.position['original'].y
-                    + Math.sin((mesh.position.z + mesh.position.x) / waveReduction + Date.now() * speed)
-                    * amplifier
+function updateSpinRings(waveRings: THREE.Group) {
+  waveRings.children.forEach((ring, itemIndex) => {
+    spinSphereRings(ring, itemIndex, waveRings)
   })
+}
+
+function spinSphereRings(ring, itemIndex, waveRings) {
+  const spins = Date.now() / 1000
+  const portion = itemIndex / waveRings.children.length
+  const spiralRadius = Math.sin(portion * Math.PI) * height
+  const portionSineDistribution = Math.sin((portion - 0.5) * 2 * (Math.PI / 2))
+  const heightCenter = height * 2
+
+  ring.lookAt(0, heightCenter, 0)
+
+  ring.position.set(
+    Math.sin(portion * spins) * spiralRadius,
+    portionSineDistribution * height + heightCenter,
+    Math.cos(portion * spins) * spiralRadius
+  )
+
 }
 
 function getRing({
@@ -74,14 +86,17 @@ function getRing({
 }
 
 export default function RingBufferGeometry() {
-  const waveRings = getWaveRings(30)
+  // const waveRings = getWaveRings(30) // n^2
+  const spinRings = getSpinRings(550) // n^3
 
   getSetupScene({
     setup({ renderer, scene, camera }) {
-      scene.add(waveRings)
+      // scene.add(waveRings)
+      scene.add(spinRings)
     },
     animate({ renderer, scene, camera }) {
-      updateWaveRings(waveRings)
+      // updateWaveRings(waveRings)
+      updateSpinRings(spinRings)
     },
   })
 }
