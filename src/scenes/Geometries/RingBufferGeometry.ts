@@ -14,24 +14,39 @@ const colorPalette = [
 
 function getSpinningRings(amount: number): THREE.Group {
   const group = new THREE.Group()
-  const tunelSpacing = 10
+  const tunelSpacing = 30
+  const y = 30
+  for (let j = 0; j < amount; j++) {
+    for (let i = 0; i < amount; i++) {
+      const ring = getRing({
+        color: colorPalette[Math.round(Math.random() * colorPalette.length)],
+        y
+      })
   
-  for (let i = 0; i < amount; i++) {
-    const y = 10
-    const ring = getRing({
-      color: colorPalette[Math.round(Math.random() * colorPalette.length)],
-      y
-    })
-
-    ring.position.set(
-      0,
-      y,
-      (i - amount / 2) * tunelSpacing
-    )
-    group.add(ring)
+      ring.position.set(
+        (j - amount / 2) * tunelSpacing,
+        y,
+        (i - amount / 2) * tunelSpacing
+      )
+      ring.rotation.z = -Math.PI / 2
+      group.add(ring)
+    }
   }
 
   return group
+}
+
+function waveRings(spinningRings: THREE.Group) {
+  const speed = 0.005
+  const amplifier = 10
+  const waveReduction = 50
+
+  spinningRings.children.forEach((mesh) => {
+    mesh.position['original'] = mesh.position['original'] || { y: mesh.position.y }
+    mesh.position.y = mesh.position['original'].y
+                    + Math.sin((mesh.position.z + mesh.position.x) / waveReduction + Date.now() * speed)
+                    * amplifier
+  })
 }
 
 function getRing({
@@ -59,19 +74,14 @@ function getRing({
 }
 
 export default function RingBufferGeometry() {
-  const spinningRings = getSpinningRings(100)
-  const speed = 0.005
-  const amplifier = 10
-  const waveReduction = 50
+  const spinningRings = getSpinningRings(30)
 
   getSetupScene({
     setup({ renderer, scene, camera }) {
       scene.add(spinningRings)
     },
     animate({ renderer, scene, camera }) {
-      spinningRings.children.forEach((mesh) => {
-        mesh.position.x = Math.sin(mesh.position.z / waveReduction + Date.now() * speed) * amplifier
-      })
+      waveRings(spinningRings)
     },
   })
 }
