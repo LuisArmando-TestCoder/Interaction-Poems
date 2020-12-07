@@ -5,6 +5,8 @@ import {
 } from './camera/controller/position'
 import setFirstPersonDirectionControllers from './camera/controller/direction'
 
+const ambientColor = 0xffffff
+
 interface FrameUtils {
     renderer: THREE.Renderer,
     scene: THREE.Scene,
@@ -69,11 +71,41 @@ interface SetupScene {
     animate: Function, 
 }
 
+function addFloor(scene: THREE.Scene): THREE.Object3D {
+    const material = new THREE.MeshStandardMaterial({ color: 0xeeeeee })
+    material.color.convertSRGBToLinear()
+    const mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(200, 200), 
+        material
+    )
+    
+    mesh.rotation.x = -Math.PI / 2  
+    mesh.receiveShadow = true
+    mesh.castShadow = false
+    scene.add(mesh)
+
+    return mesh
+}
+
+function addDefaultObject(scene: THREE.Scene): THREE.Object3D {
+    const height = 1
+    const material = new THREE.MeshStandardMaterial({ color: 0x44ffff })
+    const mesh = new THREE.Mesh(
+        new THREE.BoxBufferGeometry(height, height, height),
+        material
+    )
+    mesh.position.y = height / 2
+    mesh.castShadow = true
+    mesh.receiveShadow = false
+    scene.add(mesh)
+
+    return mesh
+}
+
 export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     const canvas = document.querySelector('canvas')
     const camera = new THREE.PerspectiveCamera(32, getAspectRatio(canvas), 1, 500)
     const scene = new THREE.Scene()
-    const ambientColor = '#fff'
     const renderer = new THREE.WebGLRenderer({
         canvas,
         antialias: true,
@@ -83,6 +115,7 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
 
     scene.fog = new THREE.Fog(ambientColor, 5, 1000)
     renderer.shadowMap.enabled = true
+    renderer.outputEncoding = THREE.sRGBEncoding;
 
     renderer.setClearColor(ambientColor, 1)
     camera.lookAt(new THREE.Vector3())
@@ -100,32 +133,4 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     addFloor(scene)
 
     return scene
-}
-
-function addFloor(scene: THREE.Scene): THREE.Object3D {
-    const mesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(200, 200), 
-        new THREE.MeshStandardMaterial({ color: '#aaa' })
-    )
-
-    mesh.rotation.x = -Math.PI / 2  
-    mesh.receiveShadow = true
-    mesh.castShadow = false
-    scene.add(mesh)
-
-    return mesh
-}
-
-function addDefaultObject(scene: THREE.Scene): THREE.Object3D {
-    const height = 1
-    const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(height, height, height),
-        new THREE.MeshStandardMaterial({ color: '#4ff' })
-    )
-    mesh.position.y = height / 2
-    mesh.castShadow = true
-    mesh.receiveShadow = false
-    scene.add(mesh)
-
-    return mesh
 }
