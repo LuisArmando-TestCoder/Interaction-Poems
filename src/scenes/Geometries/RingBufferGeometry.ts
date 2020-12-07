@@ -12,7 +12,7 @@ const colorPalette = [
   '#3DFF8C'
 ]
 
-function getSpinningRings(amount: number): THREE.Group {
+function getWaveRings(amount: number): THREE.Group {
   const group = new THREE.Group()
   const tunelSpacing = 30
   const y = 30
@@ -36,12 +36,12 @@ function getSpinningRings(amount: number): THREE.Group {
   return group
 }
 
-function waveRings(spinningRings: THREE.Group) {
+function updateWaveRings(waveRings: THREE.Group) {
   const speed = 0.005
   const amplifier = 10
   const waveReduction = 50
 
-  spinningRings.children.forEach((mesh) => {
+  waveRings.children.forEach((mesh) => {
     mesh.position['original'] = mesh.position['original'] || { y: mesh.position.y }
     mesh.position.y = mesh.position['original'].y
                     + Math.sin((mesh.position.z + mesh.position.x) / waveReduction + Date.now() * speed)
@@ -74,14 +74,14 @@ function getRing({
 }
 
 export default function RingBufferGeometry() {
-  const spinningRings = getSpinningRings(30)
+  const waveRings = getWaveRings(30)
 
   getSetupScene({
     setup({ renderer, scene, camera }) {
-      scene.add(spinningRings)
+      scene.add(waveRings)
     },
     animate({ renderer, scene, camera }) {
-      waveRings(spinningRings)
+      updateWaveRings(waveRings)
     },
   })
 }
