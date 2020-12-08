@@ -1,9 +1,10 @@
 import * as THREE from 'three'
 import {
-  setFirstPersonPositionControllers,
+  setFirstPersonPosition,
   updateFirstPersonPosition,
-} from './camera/controller/setFirstPersonPositionControllers'
-import setFirstPersonDirectionControllers from './camera/controller/setFirstPersonDirectionControllers'
+} from './camera/controller/setFirstPersonPosition'
+import setFirstPersonDirection from './camera/controller/setFirstPersonDirection'
+import setFirstPersonZoom from './camera/controller/setFirstPersonZoom'
 
 const ambientColor = 0xffffff
 
@@ -135,8 +136,9 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     setupScene.setup && setupScene.setup(frameUtils)
 
     setAnimationFrame(frameUtils, setupScene.animate)
-    setFirstPersonPositionControllers(canvas)
-    setFirstPersonDirectionControllers(camera, canvas)
+    setFirstPersonPosition(canvas)
+    setFirstPersonDirection(camera, canvas)
+    setFirstPersonZoom(camera)
     handleCanvasSize({ canvas, renderer, camera })
 
     scene.add(floor)

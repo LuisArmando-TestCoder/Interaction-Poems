@@ -1,6 +1,6 @@
 import {
     mouseController,
-} from './setFirstPersonDirectionControllers'
+} from './setFirstPersonDirection'
 
 function deegresToRadians(degrees) {
     const normalizedDegrees = degrees / 360
@@ -161,27 +161,6 @@ export function updateFirstPersonPosition() {
 
 }
 
-export function setFirstPersonPositionControllers(canvas: HTMLCanvasElement) {
-    canvas.addEventListener('keydown', (event) => {
-        const key = event.key.toLowerCase();
-
-        addKeyToQueue(key)
-        chooseKey()
-
-        const validCode = creativeKeys[event.code]
-
-        if (validCode) {
-            validCode()
-            event.preventDefault()
-        }
-    })
-    canvas.addEventListener('keyup', (event) => {
-        const key = event.key.toLowerCase();
-        deleteKeyFromQueue(key)
-        chooseKey()
-    })
-}
-
 function chooseKey() {
     keyController.chosenKey = ""
 
@@ -217,4 +196,25 @@ function deleteKeyFromQueue(key: string) {
             keyAxisQueue.splice(keyAxisQueue.indexOf(key), 1)
         }
     }
+}
+
+export function setFirstPersonPosition(canvas: HTMLCanvasElement) {
+    canvas.addEventListener('keydown', (event) => {
+        const key = event.key.toLowerCase();
+
+        addKeyToQueue(key)
+        chooseKey()
+
+        const validCode = creativeKeys[event.code]
+
+        if (validCode) {
+            validCode()
+            event.preventDefault()
+        }
+    })
+    canvas.addEventListener('keyup', (event) => {
+        const key = event.key.toLowerCase();
+        deleteKeyFromQueue(key)
+        chooseKey()
+    })
 }
