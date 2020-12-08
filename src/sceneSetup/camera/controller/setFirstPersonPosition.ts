@@ -12,7 +12,8 @@ export const keyController = {
         ws: [],
         ad: []
     },
-    chosenKey: ""
+    chosenKey: "",
+    flyingKeys: [],
 }
 
 const friqtionResistance = 2
@@ -27,7 +28,13 @@ const cameraVector = {
         }
     },
     flySpeed: {
-        y: 1,
+        force: 0.1,
+        direction: 0,
+        friction: 0.025,
+        acceleration: 0,
+        max: {
+            acceleration: 0.5
+        }
     },
     acceleration: {
         x: 0,
@@ -81,19 +88,16 @@ const move = {
         cameraVector.chosenAxis = 'x'
     },
     up() {
-        cameraVector.position.y += cameraVector.flySpeed.y
+        cameraVector.flySpeed.direction = -1
     },
     down() {
-        cameraVector.position.y = Math.max(
-            cameraVector.position.min.y,
-            cameraVector.position.y - cameraVector.flySpeed.y
-        )
+        cameraVector.flySpeed.direction = 1
     },
 }
 
-const creativeKeys = {
-    KeyC: move.down,
-    Space: move.up,
+const flyingKeys = {
+    KeyV: move.down,
+    KeyC: move.up,
 }
 
 const movementKeys = {
@@ -144,29 +148,6 @@ function setMoveOnKeyDown() {
     }
 }
 
-export function updateFirstPersonPosition() {
-    setMoveOnKeyDown()
-    reduceFirstPersonPositionAcceleration()
-    topFirstPersonPositionAcceleration()
-
-    const {
-        camera,
-        cameraDirection,
-    } = mouseController
-    const {
-        acceleration,
-        chosenAxis,
-        rotation,
-    } = cameraVector
-
-    if (camera) {
-        camera.position.x += acceleration[chosenAxis] * Math.sin(cameraDirection.x + rotation)
-        camera.position.z += acceleration[chosenAxis] * Math.cos(cameraDirection.x + rotation)
-        camera.position.y = cameraVector.position.y
-    }
-
-}
-
 function chooseKey() {
     keyController.chosenKey = ""
 
@@ -204,6 +185,82 @@ function deleteKeyFromQueue(key: string) {
     }
 }
 
+function triggerFlyCode() {
+    if (keyController.flyingKeys.length) {
+        // fly force increase
+        cameraVector.flySpeed.acceleration = Math.min(
+            cameraVector.flySpeed.max.acceleration,
+            cameraVector.flySpeed.acceleration
+          + cameraVector.flySpeed.force
+        )
+
+        flyingKeys[
+            keyController.flyingKeys[
+                keyController.flyingKeys.length - 1
+            ]
+        ]()
+    }
+}
+
+function deleteFliyingKeyFromQueue(event: KeyboardEvent) {
+    const isKeyAlreadyInQueue = keyController.flyingKeys.includes(event.code)
+
+    if (isKeyAlreadyInQueue) {
+        keyController.flyingKeys.splice(keyController.flyingKeys.indexOf(event.code), 1)
+    }
+}
+
+function addFlyingKeyToQueue(event: KeyboardEvent) {
+    const validFlyingCode = flyingKeys[event.code]
+
+    if (validFlyingCode) {
+        const isKeyAlreadyInQueue = keyController.flyingKeys.includes(event.code)
+
+        if (!isKeyAlreadyInQueue) {
+            keyController.flyingKeys.push(event.code)
+        }
+
+        event.preventDefault()
+    }
+
+}
+
+export function updateFirstPersonPosition() {
+    setMoveOnKeyDown()
+    reduceFirstPersonPositionAcceleration()
+    topFirstPersonPositionAcceleration()
+    triggerFlyCode()
+
+    const {
+        camera,
+        cameraDirection,
+    } = mouseController
+    const {
+        acceleration,
+        chosenAxis,
+        rotation,
+    } = cameraVector
+
+    if (camera) {
+        camera.position.x += acceleration[chosenAxis] * Math.sin(cameraDirection.x + rotation)
+        camera.position.z += acceleration[chosenAxis] * Math.cos(cameraDirection.x + rotation)
+        
+        cameraVector.flySpeed.acceleration = Math.max(
+            0,
+            cameraVector.flySpeed.acceleration
+          - cameraVector.flySpeed.friction
+        )
+        cameraVector.position.y = Math.max(
+            cameraVector.position.min.y,
+            cameraVector.position.y
+          - cameraVector.flySpeed.acceleration
+          * cameraVector.flySpeed.direction
+        )
+        camera.position.y = cameraVector.position.y
+    }
+
+}
+
 export function setFirstPersonPosition(canvas: HTMLCanvasElement) {
     canvas.addEventListener('keydown', (event) => {
         const key = event.key.toLowerCase();
@@ -211,16 +268,13 @@ export function setFirstPersonPosition(canvas: HTMLCanvasElement) {
         addKeyToQueue(key)
         chooseKey()
 
-        const validCode = creativeKeys[event.code]
-
-        if (validCode) {
-            validCode()
-            event.preventDefault()
-        }
+        addFlyingKeyToQueue(event)
     })
     canvas.addEventListener('keyup', (event) => {
         const key = event.key.toLowerCase();
         deleteKeyFromQueue(key)
         chooseKey()
+
+        deleteFliyingKeyFromQueue(event)
     })
 }
