@@ -22,6 +22,9 @@ const cameraVector = {
         x: 0,
         z: 0,
         y: 2,
+        min: {
+            y: 2
+        }
     },
     flySpeed: {
         y: 1,
@@ -81,7 +84,10 @@ const move = {
         cameraVector.position.y += cameraVector.flySpeed.y
     },
     down() {
-        cameraVector.position.y -= cameraVector.flySpeed.y
+        cameraVector.position.y = Math.max(
+            cameraVector.position.min.y,
+            cameraVector.position.y - cameraVector.flySpeed.y
+        )
     },
 }
 

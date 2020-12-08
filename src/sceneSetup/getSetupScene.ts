@@ -78,7 +78,7 @@ function setCanvasToElementSize(canvasUtils: CanvasUtils, element: HTMLElement) 
 }
 
 function addFloor(scene: THREE.Scene): THREE.Mesh {
-    const material = new THREE.MeshStandardMaterial({ color: 0xeeeeee })
+    const material = new THREE.MeshStandardMaterial({ color: 0xcccccc })
     material.color.convertSRGBToLinear()
     const mesh = new THREE.Mesh(
         new THREE.PlaneGeometry(200, 200), 
@@ -108,7 +108,7 @@ function addDefaultObject(scene: THREE.Scene): THREE.Mesh {
 
 export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     const canvas = document.querySelector('canvas')
-    const camera = new THREE.PerspectiveCamera(32, getAspectRatio(canvas), 1)
+    const camera = new THREE.PerspectiveCamera(32, getAspectRatio(canvas), 0.1)
     const scene = new THREE.Scene()
     const renderer = new THREE.WebGLRenderer({
         canvas,
