@@ -1,6 +1,6 @@
 import {
     mouseController,
-} from '../direction'
+} from './setFirstPersonDirectionControllers'
 
 function deegresToRadians(degrees) {
     const normalizedDegrees = degrees / 360
@@ -21,7 +21,7 @@ const cameraVector = {
     position: {
         x: 0,
         z: 0,
-        y: 15,
+        y: 2,
     },
     flySpeed: {
         y: 1,
@@ -31,15 +31,15 @@ const cameraVector = {
         z: 0,
     },
     friqtion: {
-        x: 0.05,
-        z: 0.05,
+        x: 0.2,
+        z: 0.2,
     },
     rotation: 0,
     chosenAxis: 'z',
     top: {
         acceleration: {
-            x: 0.5,
-            z: 0.5,
+            x: 0.05,
+            z: 0.05,
         },
     },
 }

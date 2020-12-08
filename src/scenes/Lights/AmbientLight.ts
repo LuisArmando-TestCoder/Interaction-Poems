@@ -3,9 +3,9 @@ import getSetupScene from '../../sceneSetup/getSetupScene'
 // https://threejs.org/docs/api/en/lights/AmbientLight.html
 export default function AmbientLight() {
   getSetupScene({
-    setup({ renderer, scene, camera }) {
+    setup({ renderer, scene, camera, defaultSceneObjects }) {
     },
-    animate({ renderer, scene, camera }) {
+    animate({ renderer, scene, camera, defaultSceneObjects }) {
     },
   })
 }

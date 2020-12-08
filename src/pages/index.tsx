@@ -7,5 +7,5 @@ export default function Home() {
     getScene('RingBufferGeometry')
     .then(scene => scene())
   }, [])
-  return <canvas contentEditable="true"/>
+  return <canvas contentEditable="true" onContextMenu={e => e.preventDefault()}/>
 }

@@ -15,7 +15,6 @@ const height = 150
 const m = { o: Math.PI }
 
 function getSpinRings(amount: number): THREE.Group {
-  console.log(m);
   const group = new THREE.Group()
   for (let itemIndex = 0; itemIndex < amount; itemIndex++) {
     const ring = getRing({
@@ -79,23 +78,18 @@ function getRing({
   const mesh = new THREE.Mesh(geometry, material)
 
   mesh.position.y = y
-  // mesh.castShadow = true
-  // mesh.receiveShadow = false
 
   return mesh
 }
 
 export default function RingBufferGeometry() {
-  // const waveRings = getWaveRings(30) // n^2
-  const spinRings = getSpinRings(550) // n^3
+  const spinRings = getSpinRings(550)
 
   getSetupScene({
-    setup({ renderer, scene, camera }) {
-      // scene.add(waveRings)
+    setup({ renderer, scene, camera, defaultSceneObjects }) {
       scene.add(spinRings)
     },
-    animate({ renderer, scene, camera }) {
-      // updateWaveRings(waveRings)
+    animate({ renderer, scene, camera, defaultSceneObjects }) {
       updateSpinRings(spinRings)
     },
   })

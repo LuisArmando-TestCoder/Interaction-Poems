@@ -2,21 +2,31 @@ import * as THREE from 'three'
 import {
   setFirstPersonPositionControllers,
   updateFirstPersonPosition,
-} from './camera/controller/position'
-import setFirstPersonDirectionControllers from './camera/controller/direction'
+} from './camera/controller/setFirstPersonPositionControllers'
+import setFirstPersonDirectionControllers from './camera/controller/setFirstPersonDirectionControllers'
 
 const ambientColor = 0xffffff
 
 interface FrameUtils {
     renderer: THREE.Renderer,
     scene: THREE.Scene,
-    camera: THREE.Camera
+    camera: THREE.Camera,
+    defaultSceneObjects: {
+        floor: THREE.Mesh,
+        defaultObject: THREE.Mesh,
+        lighs: [THREE.HemisphereLight, THREE.DirectionalLight]
+    }
 }
 
 interface CanvasUtils {
     canvas: HTMLCanvasElement,
     renderer: THREE.Renderer,
     camera: THREE.Camera
+}
+
+interface SetupScene {
+    setup: Function,
+    animate: Function
 }
 
 function setAnimationFrame(frameUtils: FrameUtils, animate: Function) {
@@ -66,11 +76,6 @@ function setCanvasToElementSize(canvasUtils: CanvasUtils, element: HTMLElement) 
     canvasUtils.renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-interface SetupScene {
-    setup: Function,
-    animate: Function, 
-}
-
 function addFloor(scene: THREE.Scene): THREE.Object3D {
     const material = new THREE.MeshStandardMaterial({ color: 0xeeeeee })
     material.color.convertSRGBToLinear()
@@ -111,17 +116,22 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
         antialias: true,
     })
     const [hemiLight, dirLight] = getLight()
-    const frameUtils = { renderer, scene, camera }
+    const floor = addFloor(scene)
+    const defaultObject = addDefaultObject(scene)
+    const frameUtils = {
+        renderer,
+        scene,
+        camera,
+        defaultSceneObjects: {
+            floor,
+            defaultObject,
+            lighs: [hemiLight, dirLight]
+        }
+    }
 
     scene.fog = new THREE.Fog(ambientColor, 5, 1000)
     renderer.shadowMap.enabled = true
     renderer.outputEncoding = THREE.sRGBEncoding;
-
-    renderer.setClearColor(ambientColor, 1)
-    camera.lookAt(new THREE.Vector3())
-    scene.add(hemiLight)
-    scene.add(dirLight)
-    canvas.focus()
 
     setupScene.setup && setupScene.setup(frameUtils)
 
@@ -129,8 +139,12 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     setFirstPersonPositionControllers(canvas)
     setFirstPersonDirectionControllers(camera, canvas)
     handleCanvasSize({ canvas, renderer, camera })
-    addDefaultObject(scene)
-    addFloor(scene)
+
+    scene.add(hemiLight)
+    scene.add(dirLight)
+    renderer.setClearColor(ambientColor, 1)
+    camera.lookAt(new THREE.Vector3())
+    canvas.focus()
 
     return scene
 }
