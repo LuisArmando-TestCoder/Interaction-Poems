@@ -14,7 +14,7 @@ interface FrameUtils {
     defaultSceneObjects: {
         floor: THREE.Mesh,
         defaultObject: THREE.Mesh,
-        lighs: [THREE.HemisphereLight, THREE.DirectionalLight]
+        lights: [THREE.Light, THREE.Light]
     }
 }
 
@@ -40,7 +40,7 @@ function getAspectRatio(canvas) {
     return canvas.clientWidth / canvas.clientHeight
 }
 
-function getLight(): [THREE.Light, THREE.Light] {
+function getLights(): [THREE.Light, THREE.Light] {
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
     hemiLight.position.set(0, 20, 0)
     
@@ -76,7 +76,7 @@ function setCanvasToElementSize(canvasUtils: CanvasUtils, element: HTMLElement) 
     canvasUtils.renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-function addFloor(scene: THREE.Scene): THREE.Object3D {
+function addFloor(scene: THREE.Scene): THREE.Mesh {
     const material = new THREE.MeshStandardMaterial({ color: 0xeeeeee })
     material.color.convertSRGBToLinear()
     const mesh = new THREE.Mesh(
@@ -87,12 +87,11 @@ function addFloor(scene: THREE.Scene): THREE.Object3D {
     mesh.rotation.x = -Math.PI / 2  
     mesh.receiveShadow = true
     mesh.castShadow = false
-    scene.add(mesh)
 
     return mesh
 }
 
-function addDefaultObject(scene: THREE.Scene): THREE.Object3D {
+function addDefaultObject(scene: THREE.Scene): THREE.Mesh {
     const height = 1
     const material = new THREE.MeshStandardMaterial({ color: 0x44ffff })
     const mesh = new THREE.Mesh(
@@ -102,7 +101,6 @@ function addDefaultObject(scene: THREE.Scene): THREE.Object3D {
     mesh.position.y = height / 2
     mesh.castShadow = true
     mesh.receiveShadow = false
-    scene.add(mesh)
 
     return mesh
 }
@@ -115,7 +113,8 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
         canvas,
         antialias: true,
     })
-    const [hemiLight, dirLight] = getLight()
+    const lights = getLights()
+    const [hemiLight, dirLight] = lights
     const floor = addFloor(scene)
     const defaultObject = addDefaultObject(scene)
     const frameUtils = {
@@ -125,13 +124,13 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
         defaultSceneObjects: {
             floor,
             defaultObject,
-            lighs: [hemiLight, dirLight]
+            lights
         }
     }
 
     scene.fog = new THREE.Fog(ambientColor, 5, 1000)
     renderer.shadowMap.enabled = true
-    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.outputEncoding = THREE.sRGBEncoding
 
     setupScene.setup && setupScene.setup(frameUtils)
 
@@ -140,6 +139,8 @@ export default function getSetupScene(setupScene: SetupScene): THREE.Scene {
     setFirstPersonDirectionControllers(camera, canvas)
     handleCanvasSize({ canvas, renderer, camera })
 
+    scene.add(floor)
+    scene.add(defaultObject)
     scene.add(hemiLight)
     scene.add(dirLight)
     renderer.setClearColor(ambientColor, 1)
