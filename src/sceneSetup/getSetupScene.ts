@@ -73,7 +73,6 @@ export default function getSetupScene(setupScene: SetupScene, canvasSelector = '
         canvas,
         antialias: true,
     })
-    
     const sceneUtils = sceneUtilsGroup[canvasSelector] = new SceneUtils()
 
     sceneUtils.renderer = renderer

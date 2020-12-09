@@ -88,7 +88,6 @@ export default function RingBufferGeometry() {
   getSetupScene({
     setup({ renderer, scene, camera, defaultSceneObjects }) {
       scene.add(spinRings)
-      console.log('sceneUtilsGroup', sceneUtilsGroup)
     },
     animate({ renderer, scene, camera, defaultSceneObjects }) {
       updateSpinRings(spinRings)
