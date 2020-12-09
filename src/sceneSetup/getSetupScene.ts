@@ -8,46 +8,19 @@ import setFirstPersonZoom from './camera/controller/setFirstPersonZoom'
 import getLightGroup from './defaultObjects/getLightGroup'
 import getFloor from './defaultObjects/getFloor'
 import getSimpleCube from './defaultObjects/getSimpleCube'
-
-interface FrameUtils {
-    renderer: THREE.Renderer,
-    scene: THREE.Scene,
-    camera: THREE.Camera,
-    defaultSceneObjects: {
-        floor: THREE.Mesh,
-        defaultObject: THREE.Mesh,
-        lights: THREE.Group
-    }
-}
-
-interface CanvasUtils {
-    canvas: HTMLCanvasElement,
-    renderer: THREE.Renderer,
-    camera: THREE.Camera
-}
-
-interface SetupScene {
-    setup: Function,
-    animate: Function
-}
+import sceneUtilsGroup, {
+    CanvasUtils,
+    SetupScene,
+    SceneUtils
+} from './SceneUtilsGroup'
 
 const ambientColor = 0xffffff
-const frameUtils: FrameUtils = {
-    renderer: null,
-    scene: null,
-    camera: null,
-    defaultSceneObjects: {
-        floor: null,
-        defaultObject: null,
-        lights: null
-    }
-}
 
-function setAnimationFrame(frameUtils: FrameUtils, animate: Function) {
-    animate && animate(frameUtils)
+function setAnimationFrame(sceneUtils: SceneUtils, animate: Function) {
+    animate && animate(sceneUtils)
     updateFirstPersonPosition()
-    frameUtils.renderer.render(frameUtils.scene, frameUtils.camera)
-    requestAnimationFrame(() => setAnimationFrame(frameUtils, animate))
+    sceneUtils.renderer.render(sceneUtils.scene, sceneUtils.camera)
+    requestAnimationFrame(() => setAnimationFrame(sceneUtils, animate))
 }
 
 function getAspectRatio(canvas) {
@@ -73,18 +46,23 @@ function setCanvasToElementSize(canvasUtils: CanvasUtils, element: HTMLElement) 
     canvasUtils.renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-function setDefaultObjects(scene: THREE.Scene) {
+function setDefaultObjects(scene: THREE.Scene, sceneUtils: SceneUtils) {
     const lightGroup = getLightGroup()
     const floor = getFloor()
-    const defaultObject = getSimpleCube()
+    const simpleCube = getSimpleCube()
+    const objects = new THREE.Group()
+
+    objects.add(simpleCube)
 
     scene.add(floor)
-    scene.add(defaultObject)
+    scene.add(objects)
     scene.add(lightGroup)
 
-    frameUtils.defaultSceneObjects.floor = floor
-    frameUtils.defaultSceneObjects.defaultObject = defaultObject
-    frameUtils.defaultSceneObjects.lights = lightGroup
+    sceneUtils.defaultScene = {
+        floor,
+        objects,
+        lights: lightGroup
+    }
 }
 
 export default function getSetupScene(setupScene: SetupScene, canvasSelector = 'canvas'): THREE.Scene {
@@ -95,20 +73,22 @@ export default function getSetupScene(setupScene: SetupScene, canvasSelector = '
         canvas,
         antialias: true,
     })
+    
+    const sceneUtils = sceneUtilsGroup[canvasSelector] = new SceneUtils()
 
-    frameUtils.renderer = renderer
-    frameUtils.scene = scene
-    frameUtils.camera = camera
+    sceneUtils.renderer = renderer
+    sceneUtils.scene = scene
+    sceneUtils.camera = camera
 
     scene.fog = new THREE.Fog(ambientColor, 5, 1000)
 
     renderer.shadowMap.enabled = true
     renderer.outputEncoding = THREE.sRGBEncoding
 
-    setupScene.setup && setupScene.setup(frameUtils)
+    setupScene.setup && setupScene.setup(sceneUtils)
 
-    setDefaultObjects(scene)
-    setAnimationFrame(frameUtils, setupScene.animate)
+    setDefaultObjects(scene, sceneUtils)
+    setAnimationFrame(sceneUtils, setupScene.animate)
     setFirstPersonPosition(canvas)
     setFirstPersonDirection(camera, canvas)
     setFirstPersonZoom(camera)
