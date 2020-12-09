@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import getSetupScene from '../../sceneSetup/getSetupScene'
+import getSetupScene from '../../scenePreset/getSetupScene'
 // https://threejs.org/docs/api/en/materials/MeshBasicMaterial.html
 export default function MeshBasicMaterial() {
   getSetupScene({

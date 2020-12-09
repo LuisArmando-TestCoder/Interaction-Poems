@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import getSetupScene from '../../sceneSetup/getSetupScene'
+import getSetupScene from '../../scenePreset/getSetupScene'
 // import sceneUtilsGroup from '../../sceneSetup/SceneUtilsGroup'
 
 // https://threejs.org/docs/api/en/geometries/RingBufferGeometry.html
