@@ -7,8 +7,8 @@ export interface CanvasUtils {
 }
 
 export interface SetupScene {
-    setup: Function,
-    animate: Function
+    setup: (sceneUtils: SceneUtils) => void,
+    animate: (sceneUtils: SceneUtils) => void
 }
 
 export class SceneUtils {

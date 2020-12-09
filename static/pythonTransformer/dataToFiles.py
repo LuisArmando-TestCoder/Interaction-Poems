@@ -3,9 +3,9 @@ import os
 
 functionInsight =  "{\n"
 functionInsight += "  getSetupScene({\n"
-functionInsight += "    setup({ renderer, scene, camera, defaultSceneObjects }) {\n"
+functionInsight += "    setup({ renderer, scene, camera, defaultScene }) {\n"
 functionInsight += "    },\n"
-functionInsight += "    animate({ renderer, scene, camera, defaultSceneObjects }) {\n"
+functionInsight += "    animate({ renderer, scene, camera, defaultScene }) {\n"
 functionInsight += "    },\n"
 functionInsight += "  })\n"
 functionInsight += "}"

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import getScene from '../sceneSetup/getScene'
+import getScene from '../scenes/getScene'
 import Canvas from '../components/Canvas'
 import './global.css'
 

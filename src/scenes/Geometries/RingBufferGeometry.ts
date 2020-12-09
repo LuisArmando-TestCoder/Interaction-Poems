@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 import getSetupScene from '../../sceneSetup/getSetupScene'
-import sceneUtilsGroup from '../../sceneSetup/SceneUtilsGroup'
+// import sceneUtilsGroup from '../../sceneSetup/SceneUtilsGroup'
 
 // https://threejs.org/docs/api/en/geometries/RingBufferGeometry.html
 
@@ -86,10 +86,10 @@ export default function RingBufferGeometry() {
   const spinRings = getSpinRings(550)
 
   getSetupScene({
-    setup({ renderer, scene, camera, defaultSceneObjects }) {
+    setup({ scene }) {
       scene.add(spinRings)
     },
-    animate({ renderer, scene, camera, defaultSceneObjects }) {
+    animate() {
       updateSpinRings(spinRings)
     },
   })
