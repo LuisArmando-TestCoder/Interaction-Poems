@@ -7,19 +7,7 @@ import setFirstPersonDirection from './camera/controller/setFirstPersonDirection
 import setFirstPersonZoom from './camera/controller/setFirstPersonZoom'
 import getLightGroup from './defaultObjects/getLightGroup'
 import getFloor from './defaultObjects/getFloor'
-import getDefaultObject from './defaultObjects/getDefaultObject'
-
-const ambientColor = 0xffffff
-const frameUtils = {
-    renderer: null,
-    scene: null,
-    camera: null,
-    defaultSceneObjects: {
-        floor: null,
-        defaultObject: null,
-        lights: null
-    }
-}
+import getSimpleCube from './defaultObjects/getSimpleCube'
 
 interface FrameUtils {
     renderer: THREE.Renderer,
@@ -41,6 +29,18 @@ interface CanvasUtils {
 interface SetupScene {
     setup: Function,
     animate: Function
+}
+
+const ambientColor = 0xffffff
+const frameUtils: FrameUtils = {
+    renderer: null,
+    scene: null,
+    camera: null,
+    defaultSceneObjects: {
+        floor: null,
+        defaultObject: null,
+        lights: null
+    }
 }
 
 function setAnimationFrame(frameUtils: FrameUtils, animate: Function) {
@@ -76,7 +76,7 @@ function setCanvasToElementSize(canvasUtils: CanvasUtils, element: HTMLElement) 
 function setDefaultObjects(scene: THREE.Scene) {
     const lightGroup = getLightGroup()
     const floor = getFloor()
-    const defaultObject = getDefaultObject()
+    const defaultObject = getSimpleCube()
 
     scene.add(floor)
     scene.add(defaultObject)
