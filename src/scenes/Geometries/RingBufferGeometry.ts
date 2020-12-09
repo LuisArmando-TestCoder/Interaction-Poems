@@ -12,7 +12,6 @@ const colorPalette = [
   '#3DFF8C'
 ]
 const height = 150
-const m = { o: Math.PI }
 
 function getSpinRings(amount: number): THREE.Group {
   const group = new THREE.Group()
