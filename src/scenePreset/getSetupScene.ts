@@ -2,9 +2,9 @@ import * as THREE from 'three'
 import {
   setFirstPersonPosition,
   updateFirstPersonPosition,
-} from './camera/controller/setFirstPersonPosition'
-import setFirstPersonDirection from './camera/controller/setFirstPersonDirection'
-import setFirstPersonZoom from './camera/controller/setFirstPersonZoom'
+} from './camera/setFirstPersonPosition'
+import setFirstPersonDirection from './camera/setFirstPersonDirection'
+import setFirstPersonZoom from './camera/setFirstPersonZoom'
 import getLightGroup from './defaultObjects/getLightGroup'
 import getFloor from './defaultObjects/getFloor'
 import getSimpleCube from './defaultObjects/getSimpleCube'
