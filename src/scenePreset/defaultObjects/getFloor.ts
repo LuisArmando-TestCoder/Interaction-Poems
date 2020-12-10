@@ -13,6 +13,8 @@ export default function addFloor(): THREE.Mesh {
     mesh.rotation.x = -Math.PI / 2
     mesh.receiveShadow = true
     mesh.castShadow = false
+    mesh.name = 'defaultFloor'
+
 
     return mesh
 }

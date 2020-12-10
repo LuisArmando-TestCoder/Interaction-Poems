@@ -27,6 +27,8 @@ export default function getLights(): THREE.Group {
     const directionalLight = getDirectionalLight()
     const lightGroup = new THREE.Group()
 
+    lightGroup.name = 'defaultLightGroup'
+
     lightGroup.add(hemisphereLight)
     lightGroup.add(directionalLight)
 

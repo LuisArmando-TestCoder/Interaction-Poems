@@ -30,6 +30,8 @@ function getSpinRings(amount: number): THREE.Group {
       0,
       Math.cos(portion * spins) * spiralRadius
     )
+
+    group.name = 'spinningRings'
     
     group.add(ring)
   }

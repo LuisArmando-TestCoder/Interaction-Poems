@@ -52,6 +52,8 @@ function setDefaultObjects(scene: THREE.Scene, sceneUtils: SceneUtils) {
     const simpleCube = getSimpleCube()
     const objects = new THREE.Group()
 
+    objects.name = 'defaultObjects'
+
     objects.add(simpleCube)
 
     scene.add(floor)
