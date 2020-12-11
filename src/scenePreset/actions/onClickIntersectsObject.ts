@@ -83,10 +83,10 @@ export default function onClickIntersectsObject(
         canvas.addEventListener('click', (event: MouseEvent) => {
 
             const x = event.clientX
-                      / window.innerWidth
-                      * canvas.clientWidth
-                      + window.scrollX
-                      + canvas.getBoundingClientRect().left
+                    / window.innerWidth
+                    * canvas.clientWidth
+                    + window.scrollX
+                    + canvas.getBoundingClientRect().left
 
             const y = event.clientY
                     / window.innerHeight
@@ -96,7 +96,7 @@ export default function onClickIntersectsObject(
 
             mouse.set(
                 x / canvas.clientWidth * 2 - 1,
-                y / canvas.clientHeight * 2 + 1,
+                y / canvas.clientHeight * -2 + 1,
             )
 
             raycaster.setFromCamera(
