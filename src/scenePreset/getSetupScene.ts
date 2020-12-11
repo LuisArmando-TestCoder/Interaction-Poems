@@ -13,6 +13,7 @@ import sceneUtilsGroup, {
     SetupScene,
     SceneUtils
 } from './SceneUtilsGroup'
+import onClickIntersectsObject, { setCameraDirectionLookingAtObject } from './actions/onClickIntersectsObject'
 
 const ambientColor = 0xffffff
 
@@ -60,6 +61,8 @@ function setDefaultObjects(scene: THREE.Scene, sceneUtils: SceneUtils) {
     scene.add(objects)
     scene.add(lightGroup)
 
+    onClickIntersectsObject(objects.children, setCameraDirectionLookingAtObject)
+
     sceneUtils.defaultScene = {
         floor,
         objects,
@@ -82,6 +85,7 @@ export default function getSetupScene(setupScene: SetupScene, canvasSelector = '
     sceneUtils.camera = camera
 
     scene.fog = new THREE.Fog(ambientColor, 5, 1000)
+    scene.name = canvasSelector
 
     renderer.shadowMap.enabled = true
     renderer.outputEncoding = THREE.sRGBEncoding
