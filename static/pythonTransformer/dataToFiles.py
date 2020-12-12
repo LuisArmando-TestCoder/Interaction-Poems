@@ -2,7 +2,7 @@ import json
 import os
 
 functionInsight =  "{\n"
-functionInsight += "  getSetupScene({\n"
+functionInsight += "  presetScene({\n"
 functionInsight += "    setup({ renderer, scene, camera, defaultScene }) {\n"
 functionInsight += "    },\n"
 functionInsight += "    animate({ renderer, scene, camera, defaultScene }) {\n"
@@ -24,7 +24,7 @@ def createThreeJSFile(item, folderPath):
     file = open("../../src/scenes/" + folderPath + "/" + item["name"] + ".ts","w+")
 
     file.write("import * as THREE from 'three'\r\n")
-    file.write("import getSetupScene from '../../scenePreset/getSetupScene'\r\n")
+    file.write("import presetScene from '../../scenePreset'\r\n")
     file.write("// " + item["link"] + "\r\n")
     file.write("export default function " + item["name"] + r"() ")
     file.write(functionInsight)

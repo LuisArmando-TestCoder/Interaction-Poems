@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import getSetupScene from '../../scenePreset/getSetupScene'
+import presetScene from '../../scenePreset'
 // https://threejs.org/docs/api/en/geometries/TorusKnotBufferGeometry.html
 export default function TorusKnotBufferGeometry() {
-  getSetupScene({
+  presetScene({
     setup({ renderer, scene, camera, defaultScene }) {
     },
     animate({ renderer, scene, camera, defaultScene }) {

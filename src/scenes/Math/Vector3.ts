@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import getSetupScene from '../../scenePreset/getSetupScene'
+import presetScene from '../../scenePreset'
 // https://threejs.org/docs/api/en/math/Vector3.html
 export default function Vector3() {
-  getSetupScene({
+  presetScene({
     setup({ renderer, scene, camera, defaultScene }) {
     },
     animate({ renderer, scene, camera, defaultScene }) {

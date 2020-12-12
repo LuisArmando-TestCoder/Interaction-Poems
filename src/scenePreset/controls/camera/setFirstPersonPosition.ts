@@ -1,6 +1,5 @@
-import {
-    mouseController,
-} from './setFirstPersonDirection'
+import { mouseController } from './setFirstPersonDirection'
+import { CanvasState } from '../../canvasesState'
 
 function deegresToRadians(degrees) {
     const normalizedDegrees = degrees / 360
@@ -261,20 +260,24 @@ export function updateFirstPersonPosition() {
 
 }
 
-export function setFirstPersonPosition(canvas: HTMLCanvasElement) {
-    canvas.addEventListener('keydown', (event) => {
-        const key = event.key.toLowerCase();
+function setControlOnKeyDown(event: KeyboardEvent) {
+    const key = event.key.toLowerCase();
 
-        addKeyToQueue(key)
-        chooseKey()
+    addKeyToQueue(key)
+    chooseKey()
 
-        addFlyingKeyToQueue(event)
-    })
-    canvas.addEventListener('keyup', (event) => {
-        const key = event.key.toLowerCase();
-        deleteKeyFromQueue(key)
-        chooseKey()
+    addFlyingKeyToQueue(event)
+}
 
-        deleteFliyingKeyFromQueue(event)
-    })
+function setControlOnKeyUp(event: KeyboardEvent) {
+    const key = event.key.toLowerCase();
+    deleteKeyFromQueue(key)
+    chooseKey()
+
+    deleteFliyingKeyFromQueue(event)
+}
+
+export default function setFirstPersonPosition(canvasState: CanvasState) {
+    canvasState.canvas.addEventListener('keydown', setControlOnKeyDown)
+    canvasState.canvas.addEventListener('keyup', setControlOnKeyUp)
 }

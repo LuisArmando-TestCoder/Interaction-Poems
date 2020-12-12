@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import getSetupScene from '../../scenePreset/getSetupScene'
+import presetScene from '../../scenePreset'
 // https://threejs.org/docs/api/en/math/Spherical.html
 export default function Spherical() {
-  getSetupScene({
+  presetScene({
     setup({ renderer, scene, camera, defaultScene }) {
     },
     animate({ renderer, scene, camera, defaultScene }) {

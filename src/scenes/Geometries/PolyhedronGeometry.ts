@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import getSetupScene from '../../scenePreset/getSetupScene'
+import presetScene from '../../scenePreset'
 // https://threejs.org/docs/api/en/geometries/PolyhedronGeometry.html
 export default function PolyhedronGeometry() {
-  getSetupScene({
+  presetScene({
     setup({ renderer, scene, camera, defaultScene }) {
     },
     animate({ renderer, scene, camera, defaultScene }) {

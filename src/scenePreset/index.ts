@@ -1,16 +1,15 @@
-import getSetupScene from './getSetupScene'
-import sceneUtilsGroup, {
-    CanvasUtils,
-    SetupScene,
-    SceneUtils,
-    SceneUtilsGroup
-} from './SceneUtilsGroup'
+import presetScene from './presetScene'
+import canvasesState from './canvasesState'
+
+import * as events from './events'
+import * as actions from './actions'
+import * as controls from './controls'
 
 export {
-    getSetupScene,
-    sceneUtilsGroup,
-    CanvasUtils,
-    SetupScene,
-    SceneUtils,
-    SceneUtilsGroup
+    canvasesState,
+    events,
+    actions,
+    controls,
 }
+
+export default presetScene

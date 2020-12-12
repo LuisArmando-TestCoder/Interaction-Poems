@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import getSetupScene from '../../scenePreset/getSetupScene'
+import presetScene from '../../scenePreset'
 // https://threejs.org/docs/api/en/audio/PositionalAudio.html
 export default function PositionalAudio() {
-  getSetupScene({
+  presetScene({
     setup({ renderer, scene, camera, defaultScene }) {
     },
     animate({ renderer, scene, camera, defaultScene }) {

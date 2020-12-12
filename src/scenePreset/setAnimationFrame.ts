@@ -1,16 +1,13 @@
-import sceneUtilsGroup, {
-    SceneUtils
-} from './SceneUtilsGroup'
-
-type AnimationGroup = { [index: string]: Function[] }
-
-export const animationGroup: AnimationGroup = {}
+import canvasesState, { CanvasState } from './canvasesState'
 
 export default function setAnimationFrame(canvasSelector: string) {
-    const sceneUtils: SceneUtils = sceneUtilsGroup[canvasSelector]
-    animationGroup[canvasSelector].forEach(animation => {
-        animation(sceneUtils)
+    const canvasState: CanvasState = canvasesState[canvasSelector]
+
+    if (!canvasState.animations) canvasState.animations = []
+
+    canvasState.animations.forEach(animation => {
+        animation(canvasState)
     })
-    sceneUtils.renderer.render(sceneUtils.scene, sceneUtils.camera)
+    canvasState.renderer.render(canvasState.scene, canvasState.camera)
     requestAnimationFrame(() => setAnimationFrame(canvasSelector))
 }
