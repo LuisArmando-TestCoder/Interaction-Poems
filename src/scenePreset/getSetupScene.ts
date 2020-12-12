@@ -14,15 +14,9 @@ import sceneUtilsGroup, {
     SceneUtils
 } from './SceneUtilsGroup'
 import onClickIntersectsObject, { setCameraDirectionLookingAtObject } from './actions/onClickIntersectsObject'
+import setAnimationFrame, { animationGroup } from './setAnimationFrame'
 
 const ambientColor = 0xffffff
-
-function setAnimationFrame(sceneUtils: SceneUtils, animate: Function) {
-    animate && animate(sceneUtils)
-    updateFirstPersonPosition()
-    sceneUtils.renderer.render(sceneUtils.scene, sceneUtils.camera)
-    requestAnimationFrame(() => setAnimationFrame(sceneUtils, animate))
-}
 
 function getAspectRatio(canvas) {
     return canvas.clientWidth / canvas.clientHeight
@@ -93,11 +87,19 @@ export default function getSetupScene(setupScene: SetupScene, canvasSelector = '
     setupScene.setup && setupScene.setup(sceneUtils)
 
     setDefaultObjects(scene, sceneUtils)
-    setAnimationFrame(sceneUtils, setupScene.animate)
     setFirstPersonPosition(canvas)
     setFirstPersonDirection(camera, canvas)
     setFirstPersonZoom(camera)
     handleCanvasSize({ canvas, renderer, camera })
+
+    if (!animationGroup[canvasSelector]) {
+        animationGroup[canvasSelector] = [
+            setupScene.animate,
+            updateFirstPersonPosition,
+        ]
+
+        setAnimationFrame(canvasSelector)
+    }
 
     renderer.setClearColor(ambientColor, 1)
     camera.lookAt(new THREE.Vector3())
