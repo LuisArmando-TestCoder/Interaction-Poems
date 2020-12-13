@@ -1,5 +1,27 @@
 import * as THREE from 'three'
 
+export class PresetConfiguration {
+    ambient = {
+        color: 0xffffff,
+        alpha: 1,
+    }
+    renderer = {
+        antialias: true,
+    }
+    camera = {
+        fov: 32,
+        near: 0.1,
+        far: 2000,
+        zoom: {
+            max: 100,
+            min: 10,
+        }
+    }
+    shadowMapEnabled = true
+    near = 5
+    far = 1000
+}
+
 export interface PresetSceneCallbacks {
     setup: (canvasState: CanvasState) => void
     animate: (canvasState: CanvasState) => void
@@ -32,27 +54,7 @@ export class CanvasState {
 
     animations: Function[]
 
-    presetConfiguration = {
-        ambient: {
-            color: 0xffffff,
-            alpha: 1,
-        },
-        renderer: {
-            antialias: true,
-        },
-        camera: {
-            fov: 32,
-            near: 0.1,
-            far: 2000,
-            zoom: {
-                max: 100,
-                min: 10,
-            }
-        },
-        shadowMapEnabled: true,
-        near: 5,
-        far: 1000,
-    }
+    presetConfiguration = new PresetConfiguration()
 }
 
 export type CanvasesState = { [index: string]: CanvasState }

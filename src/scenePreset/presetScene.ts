@@ -63,7 +63,7 @@ function setDefaultObjects(canvasState: CanvasState) {
     }
 }
 
-class SceneSetup {
+class ScenePreset {
     canvasState: CanvasState
 
     constructor(canvasState: CanvasState) {
@@ -134,13 +134,13 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
     canvasState.scene = scene
     canvasState.camera = camera
 
-    const sceneSetup = new SceneSetup(canvasState)
+    const scenePreset = new ScenePreset(canvasState)
 
-    sceneSetup.setScene()
-    sceneSetup.setRenderer()
-    sceneSetup.setCamera()
-    sceneSetup.setCanvas()
-    sceneSetup.setSceneCallbacks(presetSceneCallbacks)
+    scenePreset.setScene()
+    scenePreset.setRenderer()
+    scenePreset.setCamera()
+    scenePreset.setCanvas()
+    scenePreset.setSceneCallbacks(presetSceneCallbacks)
 
     setDefaultObjects(canvasState)
     setFirstPersonPosition(canvasState)

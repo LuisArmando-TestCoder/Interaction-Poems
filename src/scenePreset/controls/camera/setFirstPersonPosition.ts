@@ -95,8 +95,8 @@ const move = {
 }
 
 const flyingKeys = {
-    KeyV: move.down,
-    KeyC: move.up,
+    KeyR: move.up,
+    KeyF: move.down,
 }
 
 const movementKeys = {
