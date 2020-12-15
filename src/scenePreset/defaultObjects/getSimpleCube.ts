@@ -11,7 +11,7 @@ export default function addDefaultObject(): THREE.Mesh {
     mesh.position.y = height / 2
     mesh.castShadow = true
     mesh.receiveShadow = false
-    mesh.name = 'defaultSimpleCube'
+    mesh.name = 'simpleCube'
 
     return mesh
 }

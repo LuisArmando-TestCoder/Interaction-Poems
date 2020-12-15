@@ -1,6 +1,11 @@
 import * as THREE from 'three'
 
 export class PresetConfiguration {
+    objectsFilter = {
+        whitelist: [],
+        blacklist: [],
+        disableAll: false,
+    }
     ambient = {
         color: 0xffffff,
         alpha: 1,

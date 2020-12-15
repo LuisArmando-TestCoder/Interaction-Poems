@@ -1,6 +1,10 @@
 import * as THREE from 'three'
 
-import * as defaultObjects from './defaultObjects'
+import {
+    filterDisabledObjects,
+    setDefaultObjects,
+    addDefaultObjects,
+} from './defaultObjects'
 
 import {
     setFirstPersonDirection,
@@ -40,27 +44,6 @@ function setCanvasToElementSize(canvasState: CanvasState, element: HTMLElement) 
 
     camera['updateProjectionMatrix']()
     renderer.setSize(window.innerWidth, window.innerHeight)
-}
-
-function setDefaultObjects(canvasState: CanvasState) {
-    const lights = defaultObjects.getLightGroup()
-    const floor = defaultObjects.getFloor()
-    const simpleCube = defaultObjects.getSimpleCube()
-    const objects = new THREE.Group()
-
-    objects.name = 'defaultObjects'
-
-    objects.add(simpleCube)
-
-    canvasState.scene.add(floor)
-    canvasState.scene.add(objects)
-    canvasState.scene.add(lights)
-
-    canvasState.defaultScene = {
-        floor,
-        objects,
-        lights
-    }
 }
 
 class ScenePreset {
@@ -143,6 +126,8 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
     scenePreset.setSceneCallbacks(presetSceneCallbacks)
 
     setDefaultObjects(canvasState)
+    addDefaultObjects(canvasState)
+    filterDisabledObjects(canvasState, canvasState.scene.children)
     setFirstPersonPosition(canvasState)
     setFirstPersonDirection(canvasState)
     setFirstPersonZoom(canvasState)
