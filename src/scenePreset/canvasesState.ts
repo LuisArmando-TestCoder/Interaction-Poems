@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+import componentNames from './componentNames'
+
 export class PresetConfiguration {
     objectsFilter = {
         whitelist: [],
@@ -7,6 +9,7 @@ export class PresetConfiguration {
         disableAll: false,
     }
     controlsBlacklist: string[] = []
+    componentNames = componentNames
     ambient = {
         color: 0xffffff,
         alpha: 1,

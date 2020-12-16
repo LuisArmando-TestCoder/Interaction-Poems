@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 
-export default function addFloor(): THREE.Mesh {
+import { CanvasState } from '../../canvasesState'
+
+export default function addFloor(canvasState: CanvasState): THREE.Mesh {
     const material = new THREE.MeshStandardMaterial({ color: 0xcccccc })
 
     material.color.convertSRGBToLinear()
@@ -13,7 +15,7 @@ export default function addFloor(): THREE.Mesh {
     mesh.rotation.x = -Math.PI / 2
     mesh.receiveShadow = true
     mesh.castShadow = false
-    mesh.name = 'floor'
+    mesh.name = canvasState.presetConfiguration.componentNames.FLOOR
 
     return mesh
 }

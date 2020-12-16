@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+import { CanvasState } from '../../canvasesState'
+
 function getHemisphereLight(): THREE.Light {
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
     hemiLight.position.set(0, 20, 0)
@@ -22,12 +24,12 @@ function getDirectionalLight(): THREE.Light {
     return directionalLight
 }
 
-export default function getLights(): THREE.Group {
+export default function getLights(canvasState: CanvasState): THREE.Group {
     const hemisphereLight = getHemisphereLight()
     const directionalLight = getDirectionalLight()
     const lightGroup = new THREE.Group()
 
-    lightGroup.name = 'lights'
+    lightGroup.name = canvasState.presetConfiguration.componentNames.LIGHTS
 
     lightGroup.add(hemisphereLight)
     lightGroup.add(directionalLight)

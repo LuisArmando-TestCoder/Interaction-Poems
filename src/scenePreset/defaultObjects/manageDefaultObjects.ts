@@ -71,12 +71,12 @@ export function filterDisabledObjects(canvasState: CanvasState, objects: THREE.O
 }
 
 export function setDefaultObjects(canvasState: CanvasState) {
-    const lights = defaultObjects.getLightGroup()
-    const floor = defaultObjects.getFloor()
-    const simpleCube = defaultObjects.getSimpleCube()
+    const lights = defaultObjects.getLightGroup(canvasState)
+    const floor = defaultObjects.getFloor(canvasState)
+    const simpleCube = defaultObjects.getSimpleCube(canvasState)
     const objects = new THREE.Group()
 
-    objects.name = 'objects'
+    objects.name = canvasState.presetConfiguration.componentNames.OBJECTS
 
     objects.add(simpleCube)
 
