@@ -1,11 +1,6 @@
 import { mouseController } from './setFirstPersonDirection'
 import { CanvasState } from '../../canvasesState'
 
-function deegresToRadians(degrees) {
-    const normalizedDegrees = degrees / 360
-    return normalizedDegrees * Math.PI
-}
-
 export const keyController = {
     keyAxes: {
         ws: [],
@@ -14,6 +9,8 @@ export const keyController = {
     chosenKey: "",
     flyingKeys: [],
 }
+
+const auxiliarCameraDirection = { x: Math.PI, y: Math.PI }
 
 const friqtionResistance = 2
 
@@ -27,12 +24,12 @@ const cameraVector = {
         }
     },
     flySpeed: {
-        force: 0.1,
+        force: 0.005,
         direction: 0,
-        friction: 0.025,
+        friction: 0.0025,
         acceleration: 0,
         max: {
-            acceleration: 0.5
+            acceleration: 0.1
         }
     },
     acceleration: {
@@ -112,6 +109,11 @@ const movementKeys = {
 }
 
 const validAxes = ['x', 'z']
+
+function deegresToRadians(degrees) {
+    const normalizedDegrees = degrees / 360
+    return normalizedDegrees * Math.PI
+}
 
 function reduceFirstPersonPositionAcceleration() {
     const key = 'acceleration'
@@ -230,7 +232,10 @@ function updateFirstPersonPosition(canvasState: CanvasState) {
     topFirstPersonPositionAcceleration()
     triggerFlyCode()
 
-    const { cameraDirection: direction } = mouseController
+
+    const { cameraDirection } = mouseController
+    const direction = cameraDirection || auxiliarCameraDirection
+
     const { camera } = canvasState
     const { acceleration, chosenAxis, rotation } = cameraVector
     

@@ -1,6 +1,13 @@
 import { CanvasState } from '../../canvasesState'
 
 function setCameraDirection(event) {
+    if (!mouseController.cameraDirection) {
+        mouseController.cameraDirection = {
+            x: 0,
+            y: 0,
+        }
+    }
+
     const {
         speedResistance,
         cameraDirection,
@@ -72,10 +79,7 @@ function setControlOnMouseUp(event: MouseEvent) {
 export const mouseController = {
     absoluteYSinLimit: 0.9,
     isPressed: false,
-    cameraDirection: {
-        x: Math.PI,
-        y: Math.PI,
-    },
+    cameraDirection: null,
     speedResistance: 450,
     lookAt: {
         x: null,
