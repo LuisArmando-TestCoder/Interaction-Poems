@@ -1,10 +1,4 @@
-import { CanvasState } from '../canvasesState'
-
-export default function setFirstPersonZoom(canvasState: CanvasState) {
-    window.addEventListener('wheel', event => {
-        setControlOnWheel(event, canvasState)
-    })
-}
+import { CanvasState } from '../../canvasesState'
 
 function setControlOnWheel(event: WheelEvent, canvasState: CanvasState) {
     const delta = -Math.sign(event.deltaY)
@@ -17,4 +11,10 @@ function setControlOnWheel(event: WheelEvent, canvasState: CanvasState) {
     )
     
     canvasState.camera['setFocalLength'](zoom)
+}
+
+export default function setFirstPersonZoom(canvasState: CanvasState) {
+    window.addEventListener('wheel', event => {
+        setControlOnWheel(event, canvasState)
+    })
 }

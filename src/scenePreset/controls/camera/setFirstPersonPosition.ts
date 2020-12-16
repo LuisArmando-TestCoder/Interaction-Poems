@@ -224,25 +224,19 @@ function addFlyingKeyToQueue(event: KeyboardEvent) {
 
 }
 
-export function updateFirstPersonPosition() {
+function updateFirstPersonPosition(canvasState: CanvasState) {
     setMoveOnKeyDown()
     reduceFirstPersonPositionAcceleration()
     topFirstPersonPositionAcceleration()
     triggerFlyCode()
 
-    const {
-        camera,
-        cameraDirection,
-    } = mouseController
-    const {
-        acceleration,
-        chosenAxis,
-        rotation,
-    } = cameraVector
-
+    const { cameraDirection: direction } = mouseController
+    const { camera } = canvasState
+    const { acceleration, chosenAxis, rotation } = cameraVector
+    
     if (camera) {
-        camera.position.x += acceleration[chosenAxis] * Math.sin(cameraDirection.x + rotation)
-        camera.position.z += acceleration[chosenAxis] * Math.cos(cameraDirection.x + rotation)
+        camera.position.x += acceleration[chosenAxis] * Math.sin(direction.x + rotation)
+        camera.position.z += acceleration[chosenAxis] * Math.cos(direction.x + rotation)
         
         cameraVector.flySpeed.acceleration = Math.max(
             0,
@@ -278,6 +272,8 @@ function setControlOnKeyUp(event: KeyboardEvent) {
 }
 
 export default function setFirstPersonPosition(canvasState: CanvasState) {
+    canvasState.animations.push(updateFirstPersonPosition)
+
     canvasState.canvas.addEventListener('keydown', setControlOnKeyDown)
     canvasState.canvas.addEventListener('keyup', setControlOnKeyUp)
 }

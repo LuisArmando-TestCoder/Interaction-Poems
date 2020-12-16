@@ -6,6 +6,7 @@ export class PresetConfiguration {
         blacklist: [],
         disableAll: false,
     }
+    controlsBlacklist: string[] = []
     ambient = {
         color: 0xffffff,
         alpha: 1,

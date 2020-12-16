@@ -73,8 +73,8 @@ export const mouseController = {
     absoluteYSinLimit: 0.9,
     isPressed: false,
     cameraDirection: {
-        x: 0,
-        y: 0,
+        x: Math.PI,
+        y: Math.PI,
     },
     speedResistance: 450,
     lookAt: {
@@ -85,7 +85,7 @@ export const mouseController = {
     camera: null,
 }
 
-export default function setFirstPersonDirectionControllers(canvasState: CanvasState) {
+export default function setFirstPersonDirection(canvasState: CanvasState) {
     mouseController.camera = canvasState.camera
 
     canvasState.canvas.addEventListener('mousemove', setCameraSight)

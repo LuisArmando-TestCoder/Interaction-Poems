@@ -7,10 +7,7 @@ import {
 } from './defaultObjects'
 
 import {
-    setFirstPersonDirection,
-    setFirstPersonZoom,
-    setFirstPersonPosition,
-    updateFirstPersonPosition,
+    setFilteredControls
 } from './controls'
 
 import setAnimationFrame from './setAnimationFrame'
@@ -88,7 +85,6 @@ class ScenePreset {
         if (!this.canvasState.animations) {
             this.canvasState.animations = [
                 presetSceneCallbacks.animate,
-                updateFirstPersonPosition,
             ]
     
             setAnimationFrame(this.canvasState.canvasSelector)
@@ -128,8 +124,6 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
     setDefaultObjects(canvasState)
     addDefaultObjects(canvasState)
     filterDisabledObjects(canvasState, canvasState.scene.children)
-    setFirstPersonPosition(canvasState)
-    setFirstPersonDirection(canvasState)
-    setFirstPersonZoom(canvasState)
+    setFilteredControls(canvasState)
     handleCanvasSize(canvasState)
 }

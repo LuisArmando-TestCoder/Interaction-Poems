@@ -1,6 +1,6 @@
-import getLightGroup from './getLightGroup'
-import getFloor from './getFloor'
-import getSimpleCube from './getSimpleCube'
+import getLightGroup from './objects/getLightGroup'
+import getFloor from './objects/getFloor'
+import getSimpleCube from './objects/getSimpleCube'
 
 import {
     filterDisabledObjects,
