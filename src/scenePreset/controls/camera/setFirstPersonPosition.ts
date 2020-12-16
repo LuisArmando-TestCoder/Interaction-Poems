@@ -37,8 +37,8 @@ const cameraVector = {
         z: 0,
     },
     friqtion: {
-        x: 0.2,
-        z: 0.2,
+        x: 0.005,
+        z: 0.005,
     },
     rotation: 0,
     chosenAxis: 'z',
