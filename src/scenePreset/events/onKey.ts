@@ -5,15 +5,14 @@ import canvasesState, {
     KeyLifeCycleObject,
     CanvasStateCallback,
     KeyCombinationOrder,
-    CombinationOrderKeyTuple,
 } from '../canvasesState'
+
+type KeyEventName = 'keydown' | 'keyup'
 
 class KeyLifeCycle {
     keyLifeCycleObject: KeyLifeCycleObject
 
-    constructor(canvasState: CanvasState, combinationOrderKeyTuple: CombinationOrderKeyTuple) {
-        const [order, keyCombination] = combinationOrderKeyTuple
-
+    constructor(canvasState: CanvasState, order: KeyCombinationOrder, keyCombination: string) {
         this.keyLifeCycleObject = canvasState.keyCombinationOrders[order][keyCombination]
     }
 
@@ -36,17 +35,47 @@ class KeyLifeCycle {
     }
 }
 
+class KeyHandler {
+    canvasState: CanvasState
+    keyEventNames: KeyEventName[] = ['keydown', 'keyup']
+
+    constructor(canvasState: CanvasState) {
+        this.canvasState = canvasState
+    }
+
+    keydown(key: string) {
+        const { keyCombinationsQueue: queue } = this.canvasState
+
+        addKeyToQueue(key, queue)
+        triggerQueue(queue.join(''), this.canvasState)
+    }
+
+    keyup(key: string) {
+        const { keyCombinationsQueue: queue } = this.canvasState
+
+        triggerQueue(queue.join(''), this.canvasState)
+        deleteKeyFromQueue(key, queue)
+    }
+
+    listenActions() {
+        this.keyEventNames.forEach(keyEventName => {
+            this.canvasState.canvas.addEventListener(
+                keyEventName,
+                (event: KeyboardEvent) => {
+                    this[keyEventName](event.key.toLowerCase())
+                }
+            ) 
+        })
+    }
+}
+
 function handleKeyboardActions(canvasState: CanvasState) {
     if (!canvasState.keyCombinationOrders) {
-        canvasState.canvas.addEventListener('keydown', (event: KeyboardEvent) => {
-            handleKeydown(canvasState, event.key.toLowerCase())
-        })
-        canvasState.canvas.addEventListener('keyup', (event: KeyboardEvent) => {
-            handleKeyup(canvasState, event.key.toLowerCase())
-        })
+        const keyHandler = new KeyHandler(canvasState)
 
         setKeyCombinationOrders(canvasState)
-
+        
+        keyHandler.listenActions()
         canvasState.animations.push(triggerPresentCallbacks)
     }
 }
@@ -58,26 +87,10 @@ function setKeyCombinationOrders(canvasState: CanvasState) {
     }
 }
 
-function setCombination(combinationOrderKeyTuple: CombinationOrderKeyTuple, canvasState: CanvasState) {
-    const [order, keyCombination] = combinationOrderKeyTuple
-
+function setCombination(order: KeyCombinationOrder, keyCombination: string, canvasState: CanvasState) {
     if (!canvasState.keyCombinationOrders[order][keyCombination]) {
         canvasState.keyCombinationOrders[order][keyCombination] = new KeyLifeCycleObject()
     }
-}
-
-function handleKeydown(canvasState: CanvasState, key: string) {
-    const { keyCombinationsQueue: queue } = canvasState
-
-    addKeyToQueue(key, queue)
-    triggerQueue(queue.join(''), canvasState)
-}
-
-function handleKeyup(canvasState: CanvasState, key: string) {
-    const { keyCombinationsQueue: queue } = canvasState
-
-    triggerQueue(queue.join(''), canvasState)
-    deleteKeyFromQueue(key, queue)
 }
 
 function addKeyToQueue(key: string, queue: string[]) {
@@ -149,11 +162,9 @@ export default function onKey(canvasSelector = 'canvas') {
 
     return {
         getKeptKeyLifeCycleMethods(order: KeyCombinationOrder, keyCombination: string) {
-            const combinationOrderKeyTuple: CombinationOrderKeyTuple = [order, keyCombination]
+            setCombination(order, keyCombination, canvasState)
 
-            setCombination(combinationOrderKeyTuple, canvasState)
-
-            return new KeyLifeCycle(canvasState, combinationOrderKeyTuple)
+            return new KeyLifeCycle(canvasState, order, keyCombination)
         },
         listenCombinations(combinations: KeyCombinationOrders) {
             // -

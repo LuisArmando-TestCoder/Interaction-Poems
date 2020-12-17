@@ -4,8 +4,6 @@ import componentNames from './componentNames'
 
 export type KeyCombinationOrder = 'unsorted' | 'sorted'
 
-export type CombinationOrderKeyTuple = [order: KeyCombinationOrder, keyCombination: string]
-
 export type CanvasStateCallback = (canvasState: CanvasState) => void
 
 export class KeyLifeCycleObject {
