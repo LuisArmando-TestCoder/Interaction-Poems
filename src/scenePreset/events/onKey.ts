@@ -7,8 +7,6 @@ import canvasesState, {
     KeyCombinationOrder,
 } from '../canvasesState'
 
-type KeyEventName = 'keydown' | 'keyup'
-
 class KeyLifeCycle {
     keyLifeCycleObject: KeyLifeCycleObject
 
@@ -37,7 +35,7 @@ class KeyLifeCycle {
 
 class KeyHandler {
     canvasState: CanvasState
-    keyEventNames: KeyEventName[] = ['keydown', 'keyup']
+    keyEventNames = ['keydown', 'keyup'] as const
 
     constructor(canvasState: CanvasState) {
         this.canvasState = canvasState
