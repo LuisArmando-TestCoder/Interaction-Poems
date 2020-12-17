@@ -2,6 +2,25 @@ import * as THREE from 'three'
 
 import componentNames from './componentNames'
 
+export type KeyCombinationOrder = 'unsorted' | 'sorted'
+
+export type CombinationOrderKeyTuple = [order: KeyCombinationOrder, keyCombination: string]
+
+export type CanvasStateCallback = (canvasState: CanvasState) => void
+
+export class KeyLifeCycleObject {
+    start: CanvasStateCallback[] = [] // executes callbacks once if combination was not present in queue
+    present: CanvasStateCallback[] = [] // executes callbacks on animation while combination is present in queue
+    end: CanvasStateCallback[] = [] // executes callbacks when eky combinations goes out of queue
+}
+
+export type KeyCombination = { [index: string]: KeyLifeCycleObject }
+
+export interface KeyCombinationOrders {
+    sorted: KeyCombination // accepts combination only in that order
+    unsorted: KeyCombination // accepts combination in any order
+}
+
 export class PresetConfiguration {
     objectsFilter = {
         whitelist: [],
@@ -32,8 +51,8 @@ export class PresetConfiguration {
 }
 
 export interface PresetSceneCallbacks {
-    setup: (canvasState: CanvasState) => void
-    animate: (canvasState: CanvasState) => void
+    setup: CanvasStateCallback
+    animate: CanvasStateCallback
 }
 
 export interface IntersectionUtils {
@@ -61,7 +80,9 @@ export class CanvasState {
     camera: THREE.Camera
     scene: THREE.Scene
 
-    animations: Function[]
+    animations: CanvasStateCallback[]
+    keyCombinationOrders: KeyCombinationOrders
+    keyCombinationsQueue: string[] = []
 
     presetConfiguration = new PresetConfiguration()
 }

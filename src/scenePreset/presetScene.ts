@@ -10,9 +10,22 @@ import {
     setFilteredControls
 } from './controls'
 
-import setAnimationFrame from './setAnimationFrame'
+import canvasesState, {
+    CanvasState,
+    PresetSceneCallbacks,
+    CanvasStateCallback,
+} from './canvasesState'
 
-import canvasesState, { CanvasState, PresetSceneCallbacks } from './canvasesState'
+function setAnimationFrame(canvasState: CanvasState) {
+    if (!canvasState.animations) canvasState.animations = []
+
+    canvasState.animations.forEach((animation: CanvasStateCallback) => {
+        animation(canvasState)
+    })
+    canvasState.renderer.render(canvasState.scene, canvasState.camera)
+
+    requestAnimationFrame(() => setAnimationFrame(canvasState))
+}
 
 function getAspectRatio(canvas) {
     return canvas.clientWidth / canvas.clientHeight
@@ -86,8 +99,8 @@ class ScenePreset {
             this.canvasState.animations = [
                 presetSceneCallbacks.animate,
             ]
-    
-            setAnimationFrame(this.canvasState.canvasSelector)
+
+            setAnimationFrame(this.canvasState)
         }
     }
 }
