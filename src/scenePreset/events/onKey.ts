@@ -1,8 +1,8 @@
 import canvasesState, {
     CanvasState,
-    KeyCombinationOrders,
     KeyLifeCycleObject,
     KeyCombinationOrder,
+    KeyCombinationOrders,
 } from '../canvasesState'
 
 import {
@@ -19,7 +19,7 @@ function handleKeyboardActions(canvasState: CanvasState) {
         setKeyCombinationOrders(canvasState)
 
         keyHandler.listenActions()
-        canvasState.animations.push(triggerer.triggerPresentCallbacks.bind({ canvasState }))
+        canvasState.animations.push(triggerer.triggerPresentCallbacks.bind(triggerer))
     }
 }
 
@@ -30,7 +30,7 @@ function setKeyCombinationOrders(canvasState: CanvasState) {
     }
 }
 
-function setCombination(order: KeyCombinationOrder, keyCombination: string, canvasState: CanvasState) {
+function setCombinationKeyLifeCycle(order: KeyCombinationOrder, keyCombination: string, canvasState: CanvasState) {
     if (!canvasState.keyCombinationOrders[order][keyCombination]) {
         canvasState.keyCombinationOrders[order][keyCombination] = new KeyLifeCycleObject()
     }
@@ -43,12 +43,29 @@ export default function onKey(canvasSelector = 'canvas') {
 
     return {
         getKeptKeyLifeCycleMethods(order: KeyCombinationOrder, keyCombination: string) {
-            setCombination(order, keyCombination, canvasState)
+            setCombinationKeyLifeCycle(order, keyCombination, canvasState)
 
             return new KeyLifeCycle(canvasState, order, keyCombination)
         },
-        listenCombinations(combinations: KeyCombinationOrders) {
-            // -
+        listenCombinations(combinationOrders: KeyCombinationOrders) {
+            const orders = ['sorted', 'unsorted'] as const
+
+            for (const orderKey of orders) {
+                const oldCombinations = canvasState.keyCombinationOrders[orderKey]
+                const newCombinations = combinationOrders[orderKey]
+
+                for (const newKeyCombination in newCombinations) {
+                    if (!oldCombinations[newKeyCombination]) {
+                        setCombinationKeyLifeCycle(orderKey, newKeyCombination, canvasState)
+                    }
+
+                    for (const lifeCycleName in oldCombinations[newKeyCombination]) {
+                        oldCombinations[newKeyCombination][lifeCycleName].push(
+                            ...newCombinations[newKeyCombination][lifeCycleName]
+                        )
+                    }
+                }
+            }
         }
     }
 }

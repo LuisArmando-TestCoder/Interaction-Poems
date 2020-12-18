@@ -3,6 +3,7 @@ import {
     KeyCombination,
     KeyLifeCycleObject,
     CanvasStateCallback,
+    LifeCycleKey,
 } from '../canvasesState'
 
 export default class Triggerer {
@@ -12,38 +13,33 @@ export default class Triggerer {
         this.canvasState = canvasState
     }
 
-    triggerQueue(queue: string) {
+    triggerQueue(queue: string, lifeCycleKey: LifeCycleKey) {
         const { sorted, unsorted } = this.canvasState.keyCombinationOrders
 
-        if (sorted && sorted[queue]) this.triggerSortedQueue(sorted[queue])
-        if (unsorted) this.triggerUnsortedQueue(unsorted, queue)
+        if (sorted && sorted[queue]) this.triggerSortedQueue(sorted[queue], lifeCycleKey)
+        if (unsorted) this.triggerUnsortedQueue(unsorted, queue, lifeCycleKey)
     }
     
-    triggerSortedQueue(keyLifeCycleObject: KeyLifeCycleObject) {
-        for (const lifeCycleKey in keyLifeCycleObject) {
-            const callbacks = keyLifeCycleObject[lifeCycleKey]
+    triggerSortedQueue(keyLifeCycleObject: KeyLifeCycleObject, lifeCycleKey: LifeCycleKey) {
+        const callbacks = keyLifeCycleObject[lifeCycleKey]
 
-            callbacks.forEach((callback: CanvasStateCallback) => {
-                callback(this.canvasState)
-            })
-        }
+        callbacks.forEach((callback: CanvasStateCallback) => {
+            callback(this.canvasState)
+        })
     }
     
-    triggerUnsortedQueue(keyCombination: KeyCombination, queue: string) {
+    triggerUnsortedQueue(keyCombination: KeyCombination, queue: string, lifeCycleKey: LifeCycleKey) {
         for (const key in keyCombination) {
             const sortedQueue = getSortedString(queue)
             const sortedKey = getSortedString(key)
 
             if (sortedQueue === sortedKey) {
-                const keyLifeCycleObject = keyCombination[key]          
+                const keyLifeCycleObject = keyCombination[key]
+                const callbacks = keyLifeCycleObject[lifeCycleKey]
 
-                for (const lifeCycleKey in keyLifeCycleObject) {
-                    const callbacks = keyLifeCycleObject[lifeCycleKey]
-
-                    callbacks.forEach((callback: CanvasStateCallback) => {
-                        callback(this.canvasState)
-                    })
-                }
+                callbacks.forEach((callback: CanvasStateCallback) => {
+                    callback(this.canvasState)
+                })
             }
         }
     }
@@ -51,7 +47,7 @@ export default class Triggerer {
     triggerPresentCallbacks() {
         const { keyCombinationsQueue: queue } = this.canvasState
 
-        this.triggerQueue(queue.join(''))
+        this.triggerQueue(queue.join(''), 'present')
     }
 }
 

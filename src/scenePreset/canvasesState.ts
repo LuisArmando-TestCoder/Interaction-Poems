@@ -6,6 +6,8 @@ export type KeyCombinationOrder = 'unsorted' | 'sorted'
 
 export type CanvasStateCallback = (canvasState: CanvasState) => void
 
+export type LifeCycleKey = 'start' | 'present' | 'end'
+
 export class KeyLifeCycleObject {
     start: CanvasStateCallback[] = [] // executes callbacks once if combination was not present in queue
     present: CanvasStateCallback[] = [] // executes callbacks on animation while combination is present in queue

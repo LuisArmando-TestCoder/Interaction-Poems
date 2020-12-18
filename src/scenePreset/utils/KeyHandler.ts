@@ -17,14 +17,19 @@ export default class KeyHandler {
     keydown(key: string) {
         const { keyCombinationsQueue: queue } = this.canvasState
 
-        addKeyToQueue(key, queue)
-        this.triggerer.triggerQueue(queue.join(''))
+        // adding key to queue
+        if (!queue.includes(key)) {
+            queue.push(key)
+
+            // executes start just once
+            this.triggerer.triggerQueue(queue.join(''), 'start')
+        }
     }
 
     keyup(key: string) {
         const { keyCombinationsQueue: queue } = this.canvasState
 
-        this.triggerer.triggerQueue(queue.join(''))
+        this.triggerer.triggerQueue(queue.join(''), 'end')
         deleteKeyFromQueue(key, queue)
     }
 
@@ -37,12 +42,6 @@ export default class KeyHandler {
                 }
             ) 
         })
-    }
-}
-
-function addKeyToQueue(key: string, queue: string[]) {
-    if (!queue.includes(key)) {
-        queue.push(key)
     }
 }
 
