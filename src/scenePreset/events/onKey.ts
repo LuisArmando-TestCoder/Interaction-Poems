@@ -42,7 +42,7 @@ export default function onKey(canvasSelector = 'canvas') {
     handleKeyboardActions(canvasState)
 
     return {
-        getKeptKeyLifeCycleMethods(order: KeyCombinationOrder, keyCombination: string) {
+        getKeptKeyLifeCycleMethods(keyCombination: string, order: KeyCombinationOrder = 'sorted') {
             setCombinationKeyLifeCycle(order, keyCombination, canvasState)
 
             return new KeyLifeCycle(canvasState, order, keyCombination)
@@ -59,7 +59,7 @@ export default function onKey(canvasSelector = 'canvas') {
                         setCombinationKeyLifeCycle(orderKey, newKeyCombination, canvasState)
                     }
 
-                    for (const lifeCycleName in oldCombinations[newKeyCombination]) {
+                    for (const lifeCycleName in newCombinations[newKeyCombination]) {
                         oldCombinations[newKeyCombination][lifeCycleName].push(
                             ...newCombinations[newKeyCombination][lifeCycleName]
                         )
