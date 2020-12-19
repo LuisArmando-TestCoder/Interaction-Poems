@@ -1,9 +1,7 @@
 import {
     CanvasState,
-    KeyCombination,
-    KeyLifeCycleObject,
     CanvasStateCallback,
-    LifeCycleKey,
+    KeyLifeCycleName,
 } from '../canvasesState'
 
 export default class Triggerer {
@@ -13,29 +11,14 @@ export default class Triggerer {
         this.canvasState = canvasState
     }
 
-    triggerQueue(queue: string, lifeCycleKey: LifeCycleKey) {
-        const { sorted, unsorted } = this.canvasState.keyCombinationOrders
+    triggerQueue(keyLifeCycleName: KeyLifeCycleName) {
+        const { keys, keysQueue: queue } = this.canvasState
 
-        if (sorted && sorted[queue]) this.triggerSortedQueue(sorted[queue], lifeCycleKey)
-        if (unsorted) this.triggerUnsortedQueue(unsorted, queue, lifeCycleKey)
-    }
-    
-    triggerSortedQueue(keyLifeCycleObject: KeyLifeCycleObject, lifeCycleKey: LifeCycleKey) {
-        const callbacks = keyLifeCycleObject[lifeCycleKey]
+        for (const key of queue) {
+            const lifeCycle = keys[key]
 
-        callbacks.forEach((callback: CanvasStateCallback) => {
-            callback(this.canvasState)
-        })
-    }
-    
-    triggerUnsortedQueue(keyCombination: KeyCombination, queue: string, lifeCycleKey: LifeCycleKey) {
-        for (const key in keyCombination) {
-            const sortedQueue = getSortedString(queue)
-            const sortedKey = getSortedString(key)
-
-            if (sortedQueue === sortedKey) {
-                const keyLifeCycleObject = keyCombination[key]
-                const callbacks = keyLifeCycleObject[lifeCycleKey]
+            if (lifeCycle) {
+                const callbacks = lifeCycle[keyLifeCycleName]
 
                 callbacks.forEach((callback: CanvasStateCallback) => {
                     callback(this.canvasState)
@@ -45,18 +28,6 @@ export default class Triggerer {
     }
     
     triggerPresentCallbacks() {
-        const { keyCombinationsQueue: queue } = this.canvasState
-
-        this.triggerQueue(queue.join(''), 'present')
+        this.triggerQueue('present')
     }
-}
-
-function getSortedString(string: string) {
-    const array = string.split('')
-    const numberMap = array.map(character => character.charCodeAt(0))
-    const sortedArray = numberMap.sort((a, b) => b - a)
-    const stringMap = sortedArray.map(number => String.fromCharCode(number))
-    const stringNumberValue = stringMap.join('')
-
-    return stringNumberValue
 }

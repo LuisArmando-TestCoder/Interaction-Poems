@@ -1,8 +1,6 @@
 import canvasesState, {
     CanvasState,
     KeyLifeCycleObject,
-    KeyCombinationOrder,
-    KeyCombinationOrders,
 } from '../canvasesState'
 
 import {
@@ -12,60 +10,24 @@ import {
 } from '../utils'
 
 function handleKeyboardActions(canvasState: CanvasState) {
-    if (!canvasState.keyCombinationOrders) {
+    if (!canvasState.keys) {
         const triggerer = new Triggerer(canvasState)
         const keyHandler = new KeyHandler(canvasState, triggerer)
 
-        setKeyCombinationOrders(canvasState)
-
         keyHandler.listenActions()
         canvasState.animations.push(triggerer.triggerPresentCallbacks.bind(triggerer))
+
+        // initialize keys
+        canvasState.keys = {}
     }
 }
 
-function setKeyCombinationOrders(canvasState: CanvasState) {
-    canvasState.keyCombinationOrders = {
-        sorted: {},
-        unsorted: {},
-    }
-}
-
-function setCombinationKeyLifeCycle(order: KeyCombinationOrder, keyCombination: string, canvasState: CanvasState) {
-    if (!canvasState.keyCombinationOrders[order][keyCombination]) {
-        canvasState.keyCombinationOrders[order][keyCombination] = new KeyLifeCycleObject()
-    }
-}
-
-export default function onKey(canvasSelector = 'canvas') {
+export default function onKey(key: string, canvasSelector = 'canvas') {
     const canvasState: CanvasState = canvasesState[canvasSelector]
 
     handleKeyboardActions(canvasState)
 
-    return {
-        getKeptKeyLifeCycleMethods(keyCombination: string, order: KeyCombinationOrder = 'sorted') {
-            setCombinationKeyLifeCycle(order, keyCombination, canvasState)
+    canvasState.keys[key] = canvasState.keys[key] || new KeyLifeCycleObject()
 
-            return new KeyLifeCycle(canvasState, order, keyCombination)
-        },
-        listenCombinations(combinationOrders: KeyCombinationOrders) {
-            const orders = ['sorted', 'unsorted'] as const
-
-            for (const orderKey of orders) {
-                const oldCombinations = canvasState.keyCombinationOrders[orderKey]
-                const newCombinations = combinationOrders[orderKey]
-
-                for (const newKeyCombination in newCombinations) {
-                    if (!oldCombinations[newKeyCombination]) {
-                        setCombinationKeyLifeCycle(orderKey, newKeyCombination, canvasState)
-                    }
-
-                    for (const lifeCycleName in newCombinations[newKeyCombination]) {
-                        oldCombinations[newKeyCombination][lifeCycleName].push(
-                            ...newCombinations[newKeyCombination][lifeCycleName]
-                        )
-                    }
-                }
-            }
-        }
-    }
+    return new KeyLifeCycle(canvasState, key)
 }

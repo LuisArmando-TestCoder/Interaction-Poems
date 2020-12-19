@@ -6,7 +6,7 @@ export type KeyCombinationOrder = 'unsorted' | 'sorted'
 
 export type CanvasStateCallback = (canvasState: CanvasState) => void
 
-export type LifeCycleKey = 'start' | 'present' | 'end'
+export type KeyLifeCycleName = 'start' | 'present' | 'end'
 
 export class KeyLifeCycleObject {
     start: CanvasStateCallback[] = [] // executes callbacks once if combination was not present in queue
@@ -14,12 +14,7 @@ export class KeyLifeCycleObject {
     end: CanvasStateCallback[] = [] // executes callbacks when eky combinations goes out of queue
 }
 
-export type KeyCombination = { [index: string]: KeyLifeCycleObject }
-
-export interface KeyCombinationOrders {
-    sorted: KeyCombination // accepts combination only in that order
-    unsorted: KeyCombination // accepts combination in any order
-}
+export type Keys = { [index: string]: KeyLifeCycleObject }
 
 export class PresetConfiguration {
     objectsFilter = {
@@ -81,8 +76,8 @@ export class CanvasState {
     scene: THREE.Scene
 
     animations: CanvasStateCallback[]
-    keyCombinationOrders: KeyCombinationOrders
-    keyCombinationsQueue: string[] = []
+    keys: Keys
+    keysQueue: string[] = []
 
     presetConfiguration = new PresetConfiguration()
 }

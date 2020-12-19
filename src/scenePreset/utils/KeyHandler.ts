@@ -15,22 +15,24 @@ export default class KeyHandler {
     }
 
     keydown(key: string) {
-        const { keyCombinationsQueue: queue } = this.canvasState
+        const { keysQueue: queue } = this.canvasState
 
         // adding key to queue
         if (!queue.includes(key)) {
             queue.push(key)
 
             // executes start just once
-            this.triggerer.triggerQueue(queue.join(''), 'start')
+            this.triggerer.triggerQueue('start')
         }
     }
 
     keyup(key: string) {
-        const { keyCombinationsQueue: queue } = this.canvasState
+        const { keysQueue: queue } = this.canvasState
 
-        this.triggerer.triggerQueue(queue.join(''), 'end')
-        deleteKeyFromQueue(key, queue)
+        this.triggerer.triggerQueue('end')
+
+        // deleting key from queue
+        queue.splice(queue.indexOf(key), 1)
     }
 
     listenActions() {
@@ -43,8 +45,4 @@ export default class KeyHandler {
             ) 
         })
     }
-}
-
-function deleteKeyFromQueue(key: string, queue: string[]) {
-    queue.splice(queue.indexOf(key), 1)
 }

@@ -86,8 +86,6 @@ function getRing({
 export default function RingBufferGeometry() {
   const spinRings = getSpinRings(550)
 
-  console.log(events)
-
   presetScene({
     setup({ scene }) {
       scene.add(spinRings)

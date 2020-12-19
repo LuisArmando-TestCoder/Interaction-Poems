@@ -2,14 +2,13 @@ import {
     CanvasState,
     KeyLifeCycleObject,
     CanvasStateCallback,
-    KeyCombinationOrder,
 } from '../canvasesState'
 
 export default class KeyLifeCycle {
     keyLifeCycleObject: KeyLifeCycleObject
 
-    constructor(canvasState: CanvasState, order: KeyCombinationOrder, keyCombination: string) {
-        this.keyLifeCycleObject = canvasState.keyCombinationOrders[order][keyCombination]
+    constructor(canvasState: CanvasState, key: string) {
+        this.keyLifeCycleObject = canvasState.keys[key]
     }
 
     start(callback: CanvasStateCallback) {
