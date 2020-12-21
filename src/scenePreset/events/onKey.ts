@@ -1,7 +1,7 @@
 import canvasesState, {
     CanvasState,
     KeyLifeCycleObject,
-} from '../canvasesState'
+} from '../state/canvases'
 
 import {
     KeyHandler,

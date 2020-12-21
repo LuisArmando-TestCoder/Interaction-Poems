@@ -14,7 +14,7 @@ import canvasesState, {
     CanvasState,
     PresetSceneCallbacks,
     CanvasStateCallback,
-} from './canvasesState'
+} from './state/canvases'
 
 function setAnimationFrame(canvasState: CanvasState) {
     if (!canvasState.animations) canvasState.animations = []

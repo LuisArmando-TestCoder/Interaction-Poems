@@ -1,5 +1,5 @@
 import { mouseController } from './setFirstPersonDirection'
-import { CanvasState } from '../../canvasesState'
+import { CanvasState } from '../../state/canvases'
 
 export const keyController = {
     keyAxes: {

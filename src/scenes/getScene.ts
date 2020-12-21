@@ -5,6 +5,26 @@ interface ThreeJSImport {
     link: string
 }
 
+export function getScenes(scenesNames: string[]): Promise<Function[]> {
+    const scenes = []
+
+    return new Promise((resolve, reject) => {
+        scenesNames.forEach(async (scenesName) => {
+            try { 
+                const scene = await getScene(scenesName)
+
+                scenes.push(scene)
+
+                if (scenes.length === scenesNames.length) {
+                    resolve(scenes)
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
 export default function getScene(sceneName: string): Promise<Function> {
     return new Promise((resolve, reject) => {
         for (const folder in threeJSImports) {

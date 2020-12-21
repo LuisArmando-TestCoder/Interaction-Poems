@@ -1,4 +1,4 @@
-import { CanvasState } from '../../canvasesState'
+import { CanvasState } from '../../state/canvases'
 
 function setCameraDirection(event) {
     if (!mouseController.cameraDirection) {

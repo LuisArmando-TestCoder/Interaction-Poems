@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import componentNames from './componentNames'
+import componentNames from '../componentNames'
 
 export type KeyCombinationOrder = 'unsorted' | 'sorted'
 

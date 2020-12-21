@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 import * as defaultObjects  from './defaultObjects'
 
-import { CanvasState } from '../canvasesState'
+import { CanvasState } from '../state/canvases'
 
 interface FilterListParemeters {
     canvasState: CanvasState

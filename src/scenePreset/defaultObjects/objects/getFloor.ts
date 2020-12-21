@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { CanvasState } from '../../canvasesState'
+import { CanvasState } from '../../state/canvases'
 
 export default function addFloor(canvasState: CanvasState): THREE.Mesh {
     const material = new THREE.MeshStandardMaterial({ color: 0xcccccc })

@@ -1,4 +1,4 @@
-import { CanvasState } from '../canvasesState'
+import { CanvasState } from '../state/canvases'
 
 import setFirstPersonDirection from './camera/setFirstPersonDirection'
 import setFirstPersonZoom from './camera/setFirstPersonZoom'

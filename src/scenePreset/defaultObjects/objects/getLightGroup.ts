@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { CanvasState } from '../../canvasesState'
+import { CanvasState } from '../../state/canvases'
 
 function getHemisphereLight(): THREE.Light {
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)

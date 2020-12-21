@@ -2,7 +2,7 @@ import {
     CanvasState,
     KeyLifeCycleObject,
     CanvasStateCallback,
-} from '../canvasesState'
+} from '../state/canvases'
 
 export default class KeyLifeCycle {
     keyLifeCycleObject: KeyLifeCycleObject

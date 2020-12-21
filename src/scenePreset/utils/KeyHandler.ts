@@ -1,6 +1,6 @@
 import {
     CanvasState,
-} from '../canvasesState'
+} from '../state/canvases'
 
 import Triggerer from './Triggerer'
 

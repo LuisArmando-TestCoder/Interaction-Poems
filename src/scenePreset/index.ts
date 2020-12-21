@@ -1,16 +1,18 @@
 import presetScene from './presetScene'
-import canvasesState from './canvasesState'
 import componentNames from './componentNames'
 
+import * as state from './state'
 import * as events from './events'
 import * as actions from './actions'
 import * as controls from './controls'
+import * as consulters from './consulters'
 
 export {
-    canvasesState,
+    state,
     events,
     actions,
     controls,
+    consulters,
     componentNames,
 }
 

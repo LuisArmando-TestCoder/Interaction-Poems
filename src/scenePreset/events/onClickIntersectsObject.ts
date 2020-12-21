@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import canvasesState from '../canvasesState'
+import canvasesState from '../state/canvases'
 
 const mouse = new THREE.Vector2()
 

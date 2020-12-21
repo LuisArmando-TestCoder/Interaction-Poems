@@ -2,7 +2,7 @@ import {
     CanvasState,
     CanvasStateCallback,
     KeyLifeCycleName,
-} from '../canvasesState'
+} from '../state/canvases'
 
 export default class Triggerer {
     canvasState: CanvasState

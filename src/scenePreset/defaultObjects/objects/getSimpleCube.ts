@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { CanvasState } from '../../canvasesState'
+import { CanvasState } from '../../state/canvases'
 
 export default function addDefaultObject(canvasState: CanvasState): THREE.Mesh {
     const height = 1
