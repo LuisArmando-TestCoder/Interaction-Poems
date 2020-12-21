@@ -16,10 +16,10 @@ import canvasesState, {
     CanvasStateCallback,
 } from './state/canvases'
 
-function setAnimationFrame(canvasState: CanvasState) {
-    if (!canvasState.animations) canvasState.animations = []
+import animations from './state/animations'
 
-    canvasState.animations.forEach((animation: CanvasStateCallback) => {
+function setAnimationFrame(canvasState: CanvasState) {
+    animations.forEach((animation: CanvasStateCallback) => {
         animation(canvasState)
     })
     canvasState.renderer.render(canvasState.scene, canvasState.camera)
@@ -91,7 +91,7 @@ class ScenePreset {
     }
 
     setSceneCallbacks(presetSceneCallbacks: PresetSceneCallbacks) {
-        if (!this.canvasState.animations.length) {
+        if (!animations.length) {
             setAnimationFrame(this.canvasState)
         }
 
@@ -100,7 +100,7 @@ class ScenePreset {
         }
 
         if (presetSceneCallbacks.animate) {
-            this.canvasState.animations.push(presetSceneCallbacks.animate)
+            animations.push(presetSceneCallbacks.animate)
         }
     }
 }

@@ -3,6 +3,8 @@ import canvasesState, {
     KeyLifeCycleObject,
 } from '../state/canvases'
 
+import animations from '../state/animations'
+
 import {
     KeyHandler,
     KeyLifeCycle,
@@ -15,7 +17,7 @@ function handleKeyboardActions(canvasState: CanvasState) {
         const keyHandler = new KeyHandler(canvasState, triggerer)
 
         keyHandler.listenActions()
-        canvasState.animations.push(triggerer.triggerPresentCallbacks.bind(triggerer))
+        animations.push(triggerer.triggerPresentCallbacks.bind(triggerer))
 
         // initialize keys
         canvasState.keys = {}

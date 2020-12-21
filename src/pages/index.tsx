@@ -10,7 +10,7 @@ export default function Home() {
   }, [])
   return (
     <div>
-      <audio controls={true} id='audio' src='../static/audio/'></audio>
+      <audio controls={true} id='audio' src='../audio/Only You.mp3'></audio>
       <Canvas/>
     </div>
   )

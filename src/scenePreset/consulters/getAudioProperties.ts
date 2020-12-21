@@ -1,21 +1,9 @@
-import audiosState from '../state/audios'
-
-interface AudioProperties {
-    audio: HTMLMediaElement;
-    audioContext: AudioContext;
-    analyser: AnalyserNode;
-    source: MediaElementAudioSourceNode;
-    frequencies: Uint8Array;
-    amplitudes: Uint8Array;
-    averageFrequecy: number;
-    averageAmplitude: number;
-}
+import animations from '../state/animations'
+import audiosState, { AudioProperties } from '../state/audios'
 
 const {
     audios,
-    audioContexts,
-    analysers,
-    sources,
+    audioPropertiesGroup
 } = audiosState
 
 function getAverage(array: Uint8Array): number {
@@ -44,36 +32,42 @@ function setNewAudioStateItems(audio: HTMLMediaElement) {
     const source = audioContext.createMediaElementSource(audio)
 
     audios.push(audio)
-    audioContexts.push(audioContext)
-    analysers.push(analyser)
-    sources.push(source)
+    audioPropertiesGroup.push({
+        audioContext,
+        analyser,
+        source,
+        frequencies: null,
+        amplitudes: null,
+        averageFrequecy: null,
+        averageAmplitude: null,
+    })
 
     source.connect(analyser)
     analyser.connect(audioContext.destination)
 }
 
-function getProcessedAudioProperties(audio: HTMLMediaElement): AudioProperties {
-    const audioIndex = audios.indexOf(audio)
-    const analyser = analysers[audioIndex]
+function setProcessedAudioProperties(audio: HTMLMediaElement, audioIndex: number) {
+    const audioProperties = audioPropertiesGroup[audioIndex]
+    const { analyser } = audioProperties
     const frequencies = getFrequencies(analyser)
     const amplitudes = getAmplitudes(analyser)
 
-    return {
-        audio,
-        audioContext: audioContexts[audioIndex],
-        analyser,
-        source: sources[audioIndex],
-        frequencies,
-        amplitudes,
-        averageFrequecy: getAverage(frequencies),
-        averageAmplitude: getAverage(amplitudes),
-    }
+    audioProperties.frequencies = frequencies
+    audioProperties.amplitudes = amplitudes
+    audioProperties.averageFrequecy = getAverage(frequencies)
+    audioProperties.averageAmplitude = getAverage(amplitudes)
 }
 
 export default function getAudioProperties(audio: HTMLMediaElement): AudioProperties {
     if (!audios.includes(audio)) {
         setNewAudioStateItems(audio)
+
+        animations.push(() => setProcessedAudioProperties(audio, audios.indexOf(audio)))
     }
 
-    return getProcessedAudioProperties(audio)
+    const audioIndex = audios.indexOf(audio)
+
+    setProcessedAudioProperties(audio, audioIndex)
+
+    return audioPropertiesGroup[audioIndex]
 }
