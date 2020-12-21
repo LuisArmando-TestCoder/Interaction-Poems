@@ -3,11 +3,13 @@ import { CanvasState } from '../state/canvases'
 import setFirstPersonDirection from './camera/setFirstPersonDirection'
 import setFirstPersonZoom from './camera/setFirstPersonZoom'
 import setFirstPersonPosition from './camera/setFirstPersonPosition'
+import setCanvasAutoFocus from './canvas/setCanvasAutoFocus'
 
 const controls = {
     setFirstPersonDirection,
     setFirstPersonZoom,
     setFirstPersonPosition,
+    setCanvasAutoFocus,
 }
 
 function blacklistControls(controlsBlacklist: string[], controlNames: string[]) {

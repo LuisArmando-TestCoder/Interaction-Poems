@@ -75,7 +75,7 @@ export class CanvasState {
     camera: THREE.Camera
     scene: THREE.Scene
 
-    animations: CanvasStateCallback[]
+    animations: CanvasStateCallback[] = []
     keys: Keys
     keysQueue: string[] = []
 

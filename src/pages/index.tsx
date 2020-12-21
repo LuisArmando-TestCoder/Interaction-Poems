@@ -6,7 +6,12 @@ import './global.css'
 export default function Home() {
   useEffect(() => {
     getScenes(['RingBufferGeometry', 'WireframeGeometry'])
-    .then(scenes => scenes.forEach(scene => scene()))
+    .then(scenes => scenes.forEach(scene => scene())) 
   }, [])
-  return <Canvas/>
+  return (
+    <div>
+      <audio controls={true} id='audio' src='../static/audio/'></audio>
+      <Canvas/>
+    </div>
+  )
 }

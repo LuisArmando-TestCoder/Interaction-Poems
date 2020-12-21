@@ -91,52 +91,60 @@ class ScenePreset {
     }
 
     setSceneCallbacks(presetSceneCallbacks: PresetSceneCallbacks) {
+        if (!this.canvasState.animations.length) {
+            setAnimationFrame(this.canvasState)
+        }
+
         if (presetSceneCallbacks.setup) {
             presetSceneCallbacks.setup(this.canvasState)
         }
 
-        if (!this.canvasState.animations) {
-            this.canvasState.animations = [
-                presetSceneCallbacks.animate,
-            ]
-
-            setAnimationFrame(this.canvasState)
+        if (presetSceneCallbacks.animate) {
+            this.canvasState.animations.push(presetSceneCallbacks.animate)
         }
     }
 }
 
 export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, canvasSelector = 'canvas') {
-    const canvasState = canvasesState[canvasSelector] = new CanvasState()
-    const canvas: HTMLCanvasElement = document.querySelector(canvasSelector)
-    const camera = new THREE.PerspectiveCamera(
-        canvasState.presetConfiguration.camera.fov,
-        getAspectRatio(canvas),
-        canvasState.presetConfiguration.camera.near,
-        canvasState.presetConfiguration.camera.far
-    )
-    const scene = new THREE.Scene()
-    const renderer = new THREE.WebGLRenderer({
-        canvas,
-        ...canvasState.presetConfiguration.renderer,
-    })
+    if (!canvasesState[canvasSelector]) {
+        const canvasState = canvasesState[canvasSelector] = new CanvasState()
+        const canvas: HTMLCanvasElement = document.querySelector(canvasSelector)
+        const camera = new THREE.PerspectiveCamera(
+            canvasState.presetConfiguration.camera.fov,
+            getAspectRatio(canvas),
+            canvasState.presetConfiguration.camera.near,
+            canvasState.presetConfiguration.camera.far
+        )
+        const scene = new THREE.Scene()
+        const renderer = new THREE.WebGLRenderer({
+            canvas,
+            ...canvasState.presetConfiguration.renderer,
+        })
+    
+        canvasState.canvasSelector = canvasSelector
+        canvasState.canvas = canvas
+        canvasState.renderer = renderer
+        canvasState.scene = scene
+        canvasState.camera = camera
 
-    canvasState.canvasSelector = canvasSelector
-    canvasState.canvas = canvas
-    canvasState.renderer = renderer
-    canvasState.scene = scene
-    canvasState.camera = camera
+        const scenePreset = new ScenePreset(canvasState)
 
-    const scenePreset = new ScenePreset(canvasState)
+        scenePreset.setScene()
+        scenePreset.setRenderer()
+        scenePreset.setCamera()
+        scenePreset.setCanvas()
+        scenePreset.setSceneCallbacks(presetSceneCallbacks)
+    
+        setDefaultObjects(canvasState)
+        addDefaultObjects(canvasState)
+        filterDisabledObjects(canvasState, canvasState.scene.children)
+        setFilteredControls(canvasState)
+        handleCanvasSize(canvasState)
 
-    scenePreset.setScene()
-    scenePreset.setRenderer()
-    scenePreset.setCamera()
-    scenePreset.setCanvas()
+        return
+    }
+
+    const scenePreset = new ScenePreset(canvasesState[canvasSelector])
+
     scenePreset.setSceneCallbacks(presetSceneCallbacks)
-
-    setDefaultObjects(canvasState)
-    addDefaultObjects(canvasState)
-    filterDisabledObjects(canvasState, canvasState.scene.children)
-    setFilteredControls(canvasState)
-    handleCanvasSize(canvasState)
 }
