@@ -6,6 +6,7 @@ export class AudioProperties {
     amplitudes: Uint8Array
     averageFrequecy: number
     averageAmplitude: number
+    initialized: boolean = false
 }
 
 

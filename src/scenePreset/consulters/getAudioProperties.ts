@@ -41,6 +41,7 @@ function setNewAudioStateItems(audio: HTMLMediaElement) {
     audioProperties.audioContext = audioContext
     audioProperties.analyser = analyser
     audioProperties.source = source
+    audioProperties.initialized = true
 
     source.connect(analyser)
     analyser.connect(audioContext.destination)
@@ -58,14 +59,21 @@ function setProcessedAudioProperties(audio: HTMLMediaElement, audioIndex: number
     audioProperties.averageAmplitude = getAverage(amplitudes)
 }
 
+function listenAudioPropertiesIntialization(audio: HTMLMediaElement) {
+    audio.addEventListener('play', () => {
+        const isAudioInitialized = audioPropertiesGroup[audios.indexOf(audio)].initialized
+
+        if (!isAudioInitialized) setNewAudioStateItems(audio)
+    })
+}
+
 export default function getAudioProperties(audio: HTMLMediaElement): AudioProperties {
-    if (!audios.includes(audio)) { // set addeventlistener audio,pla
+    if (!audios.includes(audio)) {
         audios.push(audio)
         audioPropertiesGroup.push(new AudioProperties())
         animations.push(() => setProcessedAudioProperties(audio, audios.indexOf(audio)))
-        audio.addEventListener('play', () => {
-            setNewAudioStateItems(audio)
-        })
+
+        listenAudioPropertiesIntialization(audio)
     }
 
     const audioIndex = audios.indexOf(audio)
