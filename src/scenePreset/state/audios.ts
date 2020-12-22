@@ -1,4 +1,4 @@
-export interface AudioProperties {
+export class AudioProperties {
     audioContext: AudioContext
     analyser: AnalyserNode
     source: MediaElementAudioSourceNode

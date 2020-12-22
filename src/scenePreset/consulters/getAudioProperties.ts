@@ -6,22 +6,28 @@ const {
     audioPropertiesGroup
 } = audiosState
 
+function getAudioArray(analyser) {
+    const defaultFrequencyBinCount = 1024
+
+    return new Uint8Array(analyser ? analyser.frequencyBinCount : defaultFrequencyBinCount)
+}
+
 function getAverage(array: Uint8Array): number {
     return array.reduce((a, b) => a + b) / array.length
 }
 
 function getFrequencies(analyser: AnalyserNode): Uint8Array {
-    const audioArray = new Uint8Array(analyser.frequencyBinCount)
+    const audioArray = getAudioArray(analyser)
 
-    analyser.getByteFrequencyData(audioArray)
+    if (analyser) analyser.getByteFrequencyData(audioArray)
 
     return audioArray
 }
 
 function getAmplitudes(analyser: AnalyserNode): Uint8Array {
-    const audioArray = new Uint8Array(analyser.frequencyBinCount)
+    const audioArray = getAudioArray(analyser)
 
-    analyser.getByteTimeDomainData(audioArray)
+    if (analyser) analyser.getByteTimeDomainData(audioArray)
 
     return audioArray
 }
@@ -30,17 +36,11 @@ function setNewAudioStateItems(audio: HTMLMediaElement) {
     const audioContext = new AudioContext()
     const analyser = audioContext.createAnalyser()
     const source = audioContext.createMediaElementSource(audio)
+    const audioProperties = audioPropertiesGroup[audioPropertiesGroup.length - 1]
 
-    audios.push(audio)
-    audioPropertiesGroup.push({
-        audioContext,
-        analyser,
-        source,
-        frequencies: null,
-        amplitudes: null,
-        averageFrequecy: null,
-        averageAmplitude: null,
-    })
+    audioProperties.audioContext = audioContext
+    audioProperties.analyser = analyser
+    audioProperties.source = source
 
     source.connect(analyser)
     analyser.connect(audioContext.destination)
@@ -59,10 +59,13 @@ function setProcessedAudioProperties(audio: HTMLMediaElement, audioIndex: number
 }
 
 export default function getAudioProperties(audio: HTMLMediaElement): AudioProperties {
-    if (!audios.includes(audio)) {
-        setNewAudioStateItems(audio)
-
+    if (!audios.includes(audio)) { // set addeventlistener audio,pla
+        audios.push(audio)
+        audioPropertiesGroup.push(new AudioProperties())
         animations.push(() => setProcessedAudioProperties(audio, audios.indexOf(audio)))
+        audio.addEventListener('play', () => {
+            setNewAudioStateItems(audio)
+        })
     }
 
     const audioIndex = audios.indexOf(audio)
