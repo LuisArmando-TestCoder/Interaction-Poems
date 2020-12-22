@@ -76,9 +76,5 @@ export default function getAudioProperties(audio: HTMLMediaElement): AudioProper
         listenAudioPropertiesIntialization(audio)
     }
 
-    const audioIndex = audios.indexOf(audio)
-
-    setProcessedAudioProperties(audio, audioIndex)
-
-    return audioPropertiesGroup[audioIndex]
+    return audioPropertiesGroup[audios.indexOf(audio)]
 }
