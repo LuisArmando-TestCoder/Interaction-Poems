@@ -78,16 +78,13 @@ export default function WireframeGeometry() {
     configuration.scale,
   )
   const dancingTribe = getObjectDancingTribe(geometry)
-  let audioProperties: AudioProperties
-
-  audioProperties = consulters.getAudioProperties(audio)
 
   presetScene({
     setup({ scene, }) {
       scene.add(dancingTribe)
     },
     animate() {
-      makeTribeDance(audioProperties, dancingTribe)
+      makeTribeDance(consulters.getAudioProperties(audio), dancingTribe)
     },
   })
 }

@@ -11,7 +11,7 @@ const colorPalette = [
   '#35D3DE',
   '#3DFF8C'
 ]
-const height = 150
+const height = 25
 
 function getSpinRings(amount: number): THREE.Group {
   const group = new THREE.Group()
@@ -62,8 +62,8 @@ function spinSphereRings(ring, itemIndex, waveRings) {
 }
 
 function getRing({
-  innerRadius = 2.1,
-  outerRadius = 6,
+  innerRadius = 0.5,
+  outerRadius = 2,
   thetaSegments = 3,
   phiSegments = 1,
   thetaStart = 1,

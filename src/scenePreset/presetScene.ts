@@ -69,6 +69,7 @@ class ScenePreset {
 
     setRenderer() {
         this.canvasState.renderer['shadowMap'].enabled = this.canvasState.presetConfiguration.shadowMapEnabled
+        this.canvasState.renderer['shadowMap'].type = THREE.PCFSoftShadowMap
         this.canvasState.renderer['outputEncoding'] = THREE.sRGBEncoding
 
         this.canvasState.renderer['setClearColor'](
