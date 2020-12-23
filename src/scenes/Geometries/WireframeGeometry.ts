@@ -17,17 +17,15 @@ let averageFrequecy = 0
 
 function getWireframedObject(geometry): THREE.Object3D {
   const copiedGeometry = geometry.clone()
-  const wireframe = new THREE.WireframeGeometry(copiedGeometry)
-  const material = new THREE.MeshStandardMaterial({ color: 0x000 })
-  const line = new THREE.LineSegments(wireframe, material)
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x000,
+    wireframe: true,
+  })
+  const mesh = new THREE.Mesh(copiedGeometry, material)
 
-  line.material['depthTest'] = false
-  line.material['opacity'] = 0.25
-  line.material['transparent'] = true
+  mesh.position.set(0, configuration.y, 0)
 
-  line.position.set(0, configuration.scale, 0)
-
-  return line
+  return mesh
 }
 
 function getObjectDancingTribe(geometry): THREE.Group {
@@ -77,6 +75,7 @@ export default function WireframeGeometry() {
     configuration.scale,
     configuration.scale,
   )
+
   const dancingTribe = getObjectDancingTribe(geometry)
 
   presetScene({

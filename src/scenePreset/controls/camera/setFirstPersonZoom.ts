@@ -21,11 +21,14 @@ export default function setFirstPersonZoom(canvasState: CanvasState) {
     canvasState.canvas.addEventListener('wheel', event => {
         setControlOnWheel(event, canvasState)
     })
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', (event) => {
+        event.preventDefault()
+
         if (canvasState.canvas === document.activeElement) {
             window.scrollTo(scroll.x, scroll.y)
             return
         }
+
         scroll.x = window.scrollX
         scroll.y = window.scrollY
     })
