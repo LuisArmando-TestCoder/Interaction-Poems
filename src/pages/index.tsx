@@ -8,6 +8,7 @@ export default function Home() {
     getScenes([
       'RingBufferGeometry',
       'WireframeGeometry',
+      'CylinderBufferGeometry',
     ])
     .then(scenes => scenes.forEach(scene => scene())) 
   }, [])

@@ -11,8 +11,8 @@ const configuration = {
 function getCylinder({
   radiusTop = 0,
   height = 1,
-  radialSegments = 5,
-  color = 0xffff00
+  radialSegments = 3,
+  color = 0x990000
 }): THREE.Object3D {
   const radiusBottom = 10
   const geometry = new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, radialSegments);
@@ -29,11 +29,7 @@ function getRitual(distance: number): THREE.Group {
 
   for (let i = 0; i < distance / 10; i++) {
     const step = i / (distance / 10 + 1) * (Math.PI * 2)
-    const cylinder = getCylinder({
-      radiusTop: Math.round(Math.random() * 10), // min 0 max 10
-      height: (distance / 100) ** 2,
-      radialSegments: Math.round(Math.random() * 18 + 3), // min 3 max 21
-    })
+    const cylinder = getCylinder({ height: (distance / 60) ** 2 })
 
     cylinder.position.x = Math.sin(step) * (distance / 2.5)
     cylinder.position.z = Math.cos(step) * (distance / 2.5)
