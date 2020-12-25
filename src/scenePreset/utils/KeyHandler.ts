@@ -1,25 +1,19 @@
-import {
-    CanvasState,
-} from '../state/canvases'
+import keysState from '../state/keys'
 
 import Triggerer from './Triggerer'
 
 export default class KeyHandler {
-    canvasState: CanvasState
     triggerer: Triggerer
     keyEventNames = ['keydown', 'keyup'] as const
 
-    constructor(canvasState: CanvasState, triggerer: Triggerer) {
-        this.canvasState = canvasState
+    constructor(triggerer: Triggerer) {
         this.triggerer = triggerer
     }
 
     keydown(key: string) {
-        const { keysQueue: queue } = this.canvasState
-
         // adding key to queue
-        if (!queue.includes(key)) {
-            queue.push(key)
+        if (!keysState.queue.includes(key)) {
+            keysState.queue.push(key)
 
             // executes start just once
             this.triggerer.triggerQueue('start')
@@ -27,20 +21,21 @@ export default class KeyHandler {
     }
 
     keyup(key: string) {
-        const { keysQueue: queue } = this.canvasState
-
         this.triggerer.triggerQueue('end')
 
         // deleting key from queue
-        queue.splice(queue.indexOf(key), 1)
+        keysState.queue.splice(keysState.queue.indexOf(key), 1)
     }
 
     listenActions() {
         this.keyEventNames.forEach(keyEventName => {
-            this.canvasState.canvas.addEventListener(
+            window.addEventListener(
                 keyEventName,
                 (event: KeyboardEvent) => {
-                    this[keyEventName](event.key.toLowerCase())
+                    const key = event.key.toLowerCase()
+
+                    keysState.events[key] = event
+                    this[keyEventName](key)
                 }
             ) 
         })

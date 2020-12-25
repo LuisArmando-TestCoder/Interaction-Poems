@@ -1,35 +1,33 @@
-import canvasesState, {
-    CanvasState,
-    KeyLifeCycleObject,
-} from '../state/canvases'
-
 import animations from '../state/animations'
 
+import keysState, {
+    KeyLifeCycleObject,
+} from '../state/keys'
 import {
     KeyHandler,
     KeyLifeCycle,
     Triggerer,
 } from '../utils'
 
-function handleKeyboardActions(canvasState: CanvasState) {
-    if (!canvasState.keys) {
-        const triggerer = new Triggerer(canvasState)
-        const keyHandler = new KeyHandler(canvasState, triggerer)
+function handleKeyboardActions() {
+    if (!keysState.keys) {
+        const triggerer = new Triggerer()
+        const keyHandler = new KeyHandler(triggerer)
 
         keyHandler.listenActions()
         animations.push(triggerer.triggerPresentCallbacks.bind(triggerer))
 
         // initialize keys
-        canvasState.keys = {}
+        keysState.keys = {}
     }
 }
 
-export default function onKey(key: string, canvasSelector = 'canvas') {
-    const canvasState: CanvasState = canvasesState[canvasSelector]
+export default function onKey(keyName: string) {
+    const key = keyName.toLowerCase()
 
-    handleKeyboardActions(canvasState)
+    handleKeyboardActions()
 
-    canvasState.keys[key] = canvasState.keys[key] || new KeyLifeCycleObject()
+    keysState.keys[key] = keysState.keys[key] || new KeyLifeCycleObject()
 
-    return new KeyLifeCycle(canvasState, key)
+    return new KeyLifeCycle(key)
 }

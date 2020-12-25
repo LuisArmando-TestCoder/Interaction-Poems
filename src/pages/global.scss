@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+html::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+html::-webkit-scrollbar-track {
+    background: #fff; 
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #004; 
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #044; 
+}

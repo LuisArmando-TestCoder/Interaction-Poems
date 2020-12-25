@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
+
 import { getScenes } from '../scenes/getScene'
+
 import Canvas from '../components/Canvas'
-import './global.css'
+import Keyboard from '../components/KeyBoard'
+
+import './global.scss'
 
 export default function Home() {
   useEffect(() => {
@@ -15,7 +19,8 @@ export default function Home() {
   return (
     <div>
       <Canvas/>
-      <audio controls={true} id='audio' src='../audio/Only You.mp3'></audio>
+      <Keyboard/>
+      <audio controls={true} id='audio' src='../audio/Only You.mp3'/>
     </div>
   )
 }

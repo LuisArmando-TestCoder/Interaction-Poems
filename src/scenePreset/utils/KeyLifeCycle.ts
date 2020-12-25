@@ -1,29 +1,27 @@
-import {
-    CanvasState,
+import keysState, {
     KeyLifeCycleObject,
-    CanvasStateCallback,
-} from '../state/canvases'
+} from '../state/keys'
 
 export default class KeyLifeCycle {
     keyLifeCycleObject: KeyLifeCycleObject
 
-    constructor(canvasState: CanvasState, key: string) {
-        this.keyLifeCycleObject = canvasState.keys[key]
+    constructor(key: string) {
+        this.keyLifeCycleObject = keysState.keys[key]
     }
 
-    start(callback: CanvasStateCallback) {
+    start(callback: Function) {
         this.keyLifeCycleObject.start.push(callback)
 
         return this.keyLifeCycleObject.start
     }
 
-    present(callback: CanvasStateCallback) {
+    present(callback: Function) {
         this.keyLifeCycleObject.present.push(callback)
 
         return this.keyLifeCycleObject.present
     }
 
-    end(callback: CanvasStateCallback) {
+    end(callback: Function) {
         this.keyLifeCycleObject.end.push(callback)
 
         return this.keyLifeCycleObject.end

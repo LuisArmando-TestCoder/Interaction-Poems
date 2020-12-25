@@ -1,0 +1,29 @@
+.key-board {
+    --height: 30vh;
+    --gap: 50px;
+    --top: calc(100vh - var(--height));
+
+    position: absolute;
+    left: var(--gap);
+    top: calc(var(--top) - var(--gap));
+    height: var(--height);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    grid-template-areas: '. W . R' 
+                         'A S D F';
+
+    $class-list: W, A, S, D, R, F;
+
+    @for $i from 1 through length($class-list) {
+        $class: nth($class-list, $i);
+
+        .#{$class}{
+            grid-area: $class;
+        }
+    }
+
+    @media (min-width: 1024px + 1) {
+        pointer-events: none;
+    }
+}

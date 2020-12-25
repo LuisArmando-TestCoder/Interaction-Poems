@@ -1,27 +1,17 @@
-import {
-    CanvasState,
-    CanvasStateCallback,
+import keysState, {
     KeyLifeCycleName,
-} from '../state/canvases'
+} from '../state/keys'
 
 export default class Triggerer {
-    canvasState: CanvasState
-
-    constructor(canvasState: CanvasState) {
-        this.canvasState = canvasState
-    }
-
     triggerQueue(keyLifeCycleName: KeyLifeCycleName) {
-        const { keys, keysQueue: queue } = this.canvasState
-
-        for (const key of queue) {
-            const lifeCycle = keys[key]
+        for (const key of keysState.queue) {
+            const lifeCycle = keysState.keys[key]
 
             if (lifeCycle) {
                 const callbacks = lifeCycle[keyLifeCycleName]
 
-                callbacks.forEach((callback: CanvasStateCallback) => {
-                    callback(this.canvasState)
+                callbacks.forEach((callback: Function) => {
+                    callback(keysState.events[key])
                 })
             }
         }
