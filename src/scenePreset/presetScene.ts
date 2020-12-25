@@ -92,8 +92,9 @@ class ScenePreset {
     }
 
     setSceneCallbacks(presetSceneCallbacks: PresetSceneCallbacks) {
-        if (!animations.length) {
+        if (!this.canvasState.initialized) {
             setAnimationFrame(this.canvasState)
+            this.canvasState.initialized = true
         }
 
         if (presetSceneCallbacks.setup) {

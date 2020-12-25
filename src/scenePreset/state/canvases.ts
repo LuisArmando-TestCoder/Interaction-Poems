@@ -56,6 +56,7 @@ export class CanvasState {
     intersectionUtils: IntersectionUtils
     defaultScene: DefaultScene
     
+    initialized: boolean = false
     canvasSelector: string
     canvas: HTMLCanvasElement
 
