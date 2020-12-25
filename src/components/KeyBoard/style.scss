@@ -1,6 +1,7 @@
 .key-board {
-    --height: 30vh;
     --gap: 50px;
+    --grid-gap: 10px;
+    --height: 20vw;
     --top: calc(100vh - var(--height));
 
     position: absolute;
@@ -9,7 +10,7 @@
     height: var(--height);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
+    grid-gap: var(--grid-gap);
     grid-template-areas: '. W . R' 
                          'A S D F';
 
@@ -23,7 +24,9 @@
         }
     }
 
-    @media (min-width: 1024px + 1) {
+    @media (min-width: 640px) {
+        --height: 150px;
+
         pointer-events: none;
     }
 }
