@@ -21,11 +21,12 @@ export default class Triggerer {
 
             return
         }
+
         for (const key of keysState.queue) {
             this.triggerCallbacks(keyLifeCycleName, key)
         }
     }
-    
+
     triggerPresentCallbacks() {
         this.triggerQueue('present') // ALL KEYS IN QUEUE
     }

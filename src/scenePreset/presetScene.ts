@@ -16,15 +16,17 @@ import canvasesState, {
     CanvasStateCallback,
 } from './state/canvases'
 
-import animations from './state/animations'
+import animations, {
+    animationsState
+} from './state/animations'
 
-function setAnimationFrame(canvasState: CanvasState) {
+function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCallback[]) {
     animations.forEach((animation: CanvasStateCallback) => {
         animation(canvasState)
     })
     canvasState.renderer.render(canvasState.scene, canvasState.camera)
 
-    requestAnimationFrame(() => setAnimationFrame(canvasState))
+    requestAnimationFrame(() => setAnimationFrame(canvasState, animations))
 }
 
 function getAspectRatio(canvas) {
@@ -93,7 +95,8 @@ class ScenePreset {
 
     setSceneCallbacks(presetSceneCallbacks: PresetSceneCallbacks) {
         if (!this.canvasState.initialized) {
-            setAnimationFrame(this.canvasState)
+            setAnimationFrame(this.canvasState, this.canvasState.sceneAnimations)
+
             this.canvasState.initialized = true
         }
 
@@ -142,6 +145,7 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
         filterDisabledObjects(canvasState, canvasState.scene.children)
         setFilteredControls(canvasState)
         handleCanvasSize(canvasState)
+        initializeGlobalAnimations(canvasState)
 
         return
     }
@@ -149,4 +153,12 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
     const scenePreset = new ScenePreset(canvasesState[canvasSelector])
 
     scenePreset.setSceneCallbacks(presetSceneCallbacks)
+}
+
+function initializeGlobalAnimations(canvasState: CanvasState) {
+    if (!animationsState.initialized) {
+        setAnimationFrame(canvasState, animations)
+
+        animationsState.initialized = true
+    }
 }

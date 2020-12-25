@@ -57,6 +57,7 @@ export class CanvasState {
     defaultScene: DefaultScene
     
     initialized: boolean = false
+    sceneAnimations: CanvasStateCallback[] = []
     canvasSelector: string
     canvas: HTMLCanvasElement
 
