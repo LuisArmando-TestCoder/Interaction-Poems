@@ -3,21 +3,30 @@ import keysState, {
 } from '../state/keys'
 
 export default class Triggerer {
-    triggerQueue(keyLifeCycleName: KeyLifeCycleName) {
+    triggerCallbacks(keyLifeCycleName: KeyLifeCycleName, key) {
+        const lifeCycle = keysState.keys[key]
+
+        if (lifeCycle) {
+            const callbacks = lifeCycle[keyLifeCycleName]
+
+            callbacks.forEach((callback: Function) => {
+                callback(keysState.events[key])
+            })
+        }
+    }
+
+    triggerQueue(keyLifeCycleName: KeyLifeCycleName, chosenKey = '') {
+        if (chosenKey) {
+            this.triggerCallbacks(keyLifeCycleName, chosenKey)
+
+            return
+        }
         for (const key of keysState.queue) {
-            const lifeCycle = keysState.keys[key]
-
-            if (lifeCycle) {
-                const callbacks = lifeCycle[keyLifeCycleName]
-
-                callbacks.forEach((callback: Function) => {
-                    callback(keysState.events[key])
-                })
-            }
+            this.triggerCallbacks(keyLifeCycleName, key)
         }
     }
     
     triggerPresentCallbacks() {
-        this.triggerQueue('present')
+        this.triggerQueue('present') // ALL KEYS IN QUEUE
     }
 }

@@ -16,12 +16,12 @@ export default class KeyHandler {
             keysState.queue.push(key)
 
             // executes start just once
-            this.triggerer.triggerQueue('start')
+            this.triggerer.triggerQueue('start', key)
         }
     }
 
     keyup(key: string) {
-        this.triggerer.triggerQueue('end')
+        this.triggerer.triggerQueue('end', key)
 
         // deleting key from queue
         keysState.queue.splice(keysState.queue.indexOf(key), 1)

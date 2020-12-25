@@ -3,7 +3,7 @@ import audiosState, { AudioProperties } from '../state/audios'
 
 const {
     audios,
-    audioPropertiesGroup
+    audioPropertiesGroup,
 } = audiosState
 
 function getAudioArray(analyser) {
