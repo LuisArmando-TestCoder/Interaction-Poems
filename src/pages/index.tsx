@@ -13,6 +13,7 @@ export default function Home() {
       'RingBufferGeometry',
       'WireframeGeometry',
       'CylinderBufferGeometry',
+      'TorusBufferGeometry',
     ])
     .then(scenes => scenes.forEach(scene => scene())) 
   }, [])
@@ -20,7 +21,7 @@ export default function Home() {
     <div>
       <Canvas/>
       <Keyboard/>
-      <audio controls={true} id='audio' src='../audio/Only You.mp3'/>
+      <audio controls={true} id='audio' src='../audio/Jósean Log - Beso.mp3'/>
     </div>
   )
 }

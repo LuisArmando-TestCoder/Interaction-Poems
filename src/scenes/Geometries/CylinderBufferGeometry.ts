@@ -15,9 +15,9 @@ function getCylinder({
   color = 0x990000
 }): THREE.Object3D {
   const radiusBottom = 10
-  const geometry = new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, radialSegments);
-  const material = new THREE.MeshStandardMaterial({ color });
-  const mesh = new THREE.Mesh(geometry, material);
+  const geometry = new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, radialSegments)
+  const material = new THREE.MeshStandardMaterial({ color })
+  const mesh = new THREE.Mesh(geometry, material)
 
   mesh.position.y = height / 2
 

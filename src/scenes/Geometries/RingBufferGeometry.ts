@@ -12,6 +12,7 @@ const colorPalette = [
   '#3DFF8C'
 ]
 const height = 25
+const amount = 100
 
 function getSpinRings(amount: number): THREE.Group {
   const group = new THREE.Group()
@@ -84,7 +85,7 @@ function getRing({
 }
 
 export default function RingBufferGeometry() {
-  const spinRings = getSpinRings(250)
+  const spinRings = getSpinRings(amount)
 
   presetScene({
     setup({ scene }) {
