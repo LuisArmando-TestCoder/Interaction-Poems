@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { events } from '../../scenePreset'
 import './style.scss'
 
-const index = ({ keyName }) => {
+const index = ({ keyName, style }) => {
     const [isSelected, setIsSelected] = useState(false)
     
     useEffect(() => {
@@ -10,7 +10,7 @@ const index = ({ keyName }) => {
         events.onKey(keyName).end(() => setIsSelected(false))
     }, [])
 
-    return <button className={
+    return <button style={style} className={
         `key ${ keyName } ${ isSelected ? 'selected' : '' }`
     }>{ keyName.toUpperCase() }</button>
 }
