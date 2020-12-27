@@ -19,20 +19,28 @@ function getSphere({
   return mesh
 }
 
+function getBallTimeline(position: THREE.Vector3): TimelineMax {
+  const timeline = new TimelineMax()
+
+  timeline
+  .set(position, { y: 0 })
+  .to(position, { y: 2 })
+  .duration(1)
+
+  return timeline
+}
+
 export default function SphereBufferGeometry() {
   const sphere = getSphere({})
-  const tl = new TimelineMax()
+  const ballTimeline = getBallTimeline(sphere.position)
+
+  ballTimeline.pause()
 
   events.onKey('u')
     .start(() => {
-      tl
-        .set(sphere.position, {
-          x: 0, y: 0, z: 0,
-        })
-        .to(sphere.position, { x: 0, y: 2, z: 0 })
-        .duration(1)
+      ballTimeline.restart()
     })
-    .end(() => { })
+    .end(() => { /* Fireworks? */ })
 
   presetScene({
     setup({ scene }) {
