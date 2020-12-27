@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { TimelineMax } from 'gsap'
 
 import presetScene, { events } from '../../scenePreset'
 
@@ -20,9 +21,18 @@ function getSphere({
 
 export default function SphereBufferGeometry() {
   const sphere = getSphere({})
+  const tl = new TimelineMax()
+
   events.onKey('u')
-  .start(() => {})
-  .end(() => {})
+    .start(() => {
+      tl
+        .set(sphere.position, {
+          x: 0, y: 0, z: 0,
+        })
+        .to(sphere.position, { x: 0, y: 2, z: 0 })
+        .duration(1)
+    })
+    .end(() => { })
 
   presetScene({
     setup({ scene }) {
