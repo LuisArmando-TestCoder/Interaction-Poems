@@ -34,8 +34,8 @@ export class PresetConfiguration {
 }
 
 export interface PresetSceneCallbacks {
-    setup: CanvasStateCallback
-    animate: CanvasStateCallback
+    setup?: CanvasStateCallback
+    animate?: CanvasStateCallback
 }
 
 export interface IntersectionUtils {

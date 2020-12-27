@@ -10,10 +10,10 @@ import './global.scss'
 export default function Home() {
   useEffect(() => {
     getScenes([
-      'RingBufferGeometry',
       'WireframeGeometry',
       'CylinderBufferGeometry',
       'TorusBufferGeometry',
+      'SphereBufferGeometry',
     ])
     .then(scenes => scenes.forEach(scene => scene())) 
   }, [])
