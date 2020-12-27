@@ -5,11 +5,8 @@ import presetScene, { events } from '../../scenePreset'
 // https://threejs.org/docs/api/en/geometries/RingBufferGeometry.html
 
 const colorPalette = [
-  '#EF2BFA',
-  '#6A35DE',
-  '#477EF5',
-  '#35D3DE',
-  '#3DFF8C'
+  '#f00',
+  '#f99',
 ]
 const height = 25
 const amount = 100
@@ -69,7 +66,7 @@ function getRing({
   phiSegments = 1,
   thetaStart = 1,
   thetaLength = Math.PI * 2,
-  color = 'rgb(68, 255, 255)',
+  color = 'rgb(255, 68, 68)',
   y = 10
 }): THREE.Object3D {
   const geometry = new THREE.RingBufferGeometry(

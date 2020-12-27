@@ -14,6 +14,7 @@ export default function Home() {
       'CylinderBufferGeometry',
       'TorusBufferGeometry',
       'SphereBufferGeometry',
+      'RingBufferGeometry',
     ])
     .then(scenes => scenes.forEach(scene => scene())) 
   }, [])

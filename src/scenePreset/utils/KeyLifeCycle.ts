@@ -12,18 +12,18 @@ export default class KeyLifeCycle {
     start(callback: Function) {
         this.keyLifeCycleObject.start.push(callback)
 
-        return this.keyLifeCycleObject.start
+        return this
     }
 
     present(callback: Function) {
         this.keyLifeCycleObject.present.push(callback)
 
-        return this.keyLifeCycleObject.present
+        return this
     }
 
     end(callback: Function) {
         this.keyLifeCycleObject.end.push(callback)
 
-        return this.keyLifeCycleObject.end
+        return this
     }
 }

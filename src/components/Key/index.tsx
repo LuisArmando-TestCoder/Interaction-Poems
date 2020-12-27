@@ -6,8 +6,9 @@ const index = ({ keyName, style }) => {
     const [isSelected, setIsSelected] = useState(false)
     
     useEffect(() => {
-        events.onKey(keyName).start(() => setIsSelected(true))
-        events.onKey(keyName).end(() => setIsSelected(false))
+        events.onKey(keyName)
+        .start(() => setIsSelected(true))
+        .end(() => setIsSelected(false))
     }, [])
 
     return <button style={style} className={
