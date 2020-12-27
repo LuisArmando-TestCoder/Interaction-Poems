@@ -6,7 +6,7 @@ import './style.scss'
 
 const gridTemplateAreas = `
 . W . R . . U I O
-A S D F . . . K L
+A S D F . H J K .
 `.trim()
 
 function getGridRowLength(): number {
