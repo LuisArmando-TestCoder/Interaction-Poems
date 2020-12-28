@@ -7,32 +7,77 @@ import presetScene, { events } from '../../scenePreset'
 
 const configuration = {
   segments: 100,
+  height: 3,
 }
 
 function getSphere({
-  radius = 0.5
+  radius = 0.5,
+  color = 0xee0000
 }): THREE.Object3D {
-  const geometry = new THREE.SphereBufferGeometry(radius, configuration.segments, configuration.segments);
-  const material = new THREE.MeshStandardMaterial({ color: 0x990000 });
-  const mesh = new THREE.Mesh(geometry, material);
+  const geometry = new THREE.SphereBufferGeometry(radius, configuration.segments, configuration.segments)
+  const material = new THREE.MeshStandardMaterial({ color })
+  const mesh = new THREE.Mesh(geometry, material)
 
   return mesh
 }
 
-function getBallTimeline(position: THREE.Vector3): TimelineMax {
+function getExplodingSpheres(amount = 12): THREE.Group {
+  const group = new THREE.Group()
+
+  for (let i = 0; i < amount; i++) {
+    const sphere = getSphere({ radius: Math.random() / 5 })
+
+    sphere.position.y = configuration.height
+
+    group.add(sphere)
+  }
+
+  group.visible = false
+
+  return group
+}
+
+function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax {
+  const distance = 0.01
   const timeline = new TimelineMax()
 
   timeline
-  .set(position, { y: 0 })
-  .to(position, { y: 2 })
+  .set(group, { visible: false })
+  .set(ball.position, { y: 0.5 })
+  .set(ball.scale, { x: 0, y: 0, z: 0 })
+  .to(ball.scale, { x: configuration.height / 2, y: configuration.height / 2, z: configuration.height / 2 }, 0)
+  .to(ball.position, { y: configuration.height }, 0)
+  .to(ball.scale, { y: 0, x: 0, z: 0 })
   .duration(1)
+  .set(group, { visible: true })
+  .call(() => {
+    group.children.forEach((particle, i) => {
+      const getAxisPosition = axis => 
+                              particle.position[axis]
+                            + Math.sin(Math.random() * Math.PI * 2)
+                            * (i * particle.scale[axis] + 1) ** 2
+                            * distance
+
+      timeline
+      .set(particle.position, { x: 0, y: configuration.height, z: 0 }, 1)
+      .to(particle.position, {
+        x: getAxisPosition('x'),
+        y: getAxisPosition('y'),
+        z: getAxisPosition('z'),
+      }, 1)
+      .to(particle.scale, { x: 0, y: 0, z: 0 }, 1)
+      .set(particle.position, { x: 0, y: configuration.height, z: 0 }, 1)
+    })
+  })
+  .duration(1.5)
 
   return timeline
 }
 
 export default function SphereBufferGeometry() {
   const sphere = getSphere({})
-  const ballTimeline = getBallTimeline(sphere.position)
+  const explodingSpheres = getExplodingSpheres()
+  const ballTimeline = getBallTimeline(sphere, explodingSpheres)
 
   ballTimeline.pause()
 
@@ -43,8 +88,9 @@ export default function SphereBufferGeometry() {
     .end(() => { /* Fireworks? */ })
 
   presetScene({
-    setup({ scene }) {
+    setup({ scene, defaultScene }) {
       scene.add(sphere)
+      scene.add(explodingSpheres)
     },
   })
 }
