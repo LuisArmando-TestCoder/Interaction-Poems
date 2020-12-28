@@ -42,16 +42,16 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
   const timeline = new TimelineMax()
 
   timeline
-  .set(group, { visible: false })
   .set(ball.position, { y: 0.5 })
   .set(ball.scale, { x: 0, y: 0, z: 0 })
   .to(ball.scale, { x: configuration.height / 2, y: configuration.height / 2, z: configuration.height / 2 }, 0)
   .to(ball.position, { y: configuration.height }, 0)
   .to(ball.scale, { y: 0, x: 0, z: 0 })
   .duration(1)
-  .set(group, { visible: true })
+  .to(group, { visible: true })
   .call(() => {
     group.children.forEach((particle, i) => {
+      const timelinePosition = 1
       const getAxisPosition = axis => 
                               particle.position[axis]
                             + Math.sin(Math.random() * Math.PI * 2)
@@ -59,17 +59,18 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
                             * distance
 
       timeline
-      .set(particle.position, { x: 0, y: configuration.height, z: 0 }, 1)
+      .set(particle.position, { x: 0, y: configuration.height, z: 0 }, timelinePosition)
       .to(particle.position, {
         x: getAxisPosition('x'),
         y: getAxisPosition('y'),
         z: getAxisPosition('z'),
-      }, 1)
-      .to(particle.scale, { x: 0, y: 0, z: 0 }, 1)
-      .set(particle.position, { x: 0, y: configuration.height, z: 0 }, 1)
+      }, timelinePosition)
+      .to(particle.scale, { x: 0, y: 0, z: 0 }, timelinePosition)
+      .set(particle.position, { x: 0, y: configuration.height, z: 0 }, timelinePosition)
     })
   })
-  .duration(1.5)
+  .duration(1)
+  .set(group, { visible: false })
 
   return timeline
 }
@@ -79,7 +80,7 @@ export default function SphereBufferGeometry() {
   const explodingSpheres = getExplodingSpheres()
   const ballTimeline = getBallTimeline(sphere, explodingSpheres)
 
-  ballTimeline.pause()
+  ballTimeline.restart()
 
   events.onKey('u')
     .start(() => {
