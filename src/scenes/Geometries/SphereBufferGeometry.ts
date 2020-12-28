@@ -25,7 +25,7 @@ function getExplodingSpheres(amount = 12): THREE.Group {
   const group = new THREE.Group()
 
   for (let i = 0; i < amount; i++) {
-    const sphere = getSphere({ radius: Math.random() / 5 })
+    const sphere = getSphere({ radius: Math.random() / 5, color: 0x009999 })
 
     sphere.position.y = configuration.height
 

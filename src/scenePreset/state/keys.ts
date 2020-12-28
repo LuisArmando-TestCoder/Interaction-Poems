@@ -14,6 +14,7 @@ export class KeysState {
     keys: Keys
     queue: string[] = []
     events: Events = {}
+    watchers: Function[] = []
 }
 
 const keysState = new KeysState()
