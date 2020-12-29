@@ -19,7 +19,7 @@ function toggleAudio() {
 const index = ({ src }) => {
     useEffect(toggleAudio, [])
 
-    return <audio controls={true} id='audio' src={src}/>
+    return <audio id='audio' src={src}/>
 }
 
 export default index
