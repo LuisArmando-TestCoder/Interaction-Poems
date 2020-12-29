@@ -14,7 +14,7 @@ const configuration = {
 
 function getSphere({
   radius = 0.5,
-  color = 0xee0000,
+  color = 0x009999,
   x = 0,
   z = 0,
   y = 0,
@@ -32,7 +32,7 @@ function getExplodingSpheres(amount = 12): THREE.Group {
   const group = new THREE.Group()
 
   for (let i = 0; i < amount; i++) {
-    const sphere = getSphere({ radius: Math.random() / 5, color: 0x009999, y: configuration.height })
+    const sphere = getSphere({ radius: Math.random() / 5, y: configuration.height })
 
     group.add(sphere)
   }
@@ -47,13 +47,17 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
   const timeline = new TimelineMax()
 
   timeline
-  .set(ball.position, { y: 0.5 })
+  .set(group, { visible: false })
   .set(ball.scale, { x: 0, y: 0, z: 0 })
-  .to(ball.scale, { x: configuration.height / 2, y: configuration.height / 2, z: configuration.height / 2 }, 0)
-  .to(ball.position, { y: configuration.height }, 0)
-  .to(ball.scale, { y: 0, x: 0, z: 0 })
+  .to(ball.scale, {
+    x: configuration.height / 2,
+    y: configuration.height / 2,
+    z: configuration.height / 2
+  })
   .duration(1)
-  .to(group, { visible: true })
+  .to(ball.scale, { x: 0, y: 0, z: 0 })
+  .duration(1)
+  .set(group, { visible: true })
   .call(() => {
     group.children.forEach((particle, i) => {
       const timelinePosition = 1
@@ -75,16 +79,9 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
         z: getAxisPosition('z'),
       }, timelinePosition)
       .to(particle.scale, { x: 0, y: 0, z: 0 }, timelinePosition)
-      .set(particle.position, {
-        x: ball.position.x,
-        y: configuration.height,
-        z: ball.position.z
-      }, timelinePosition)
     })
   })
-  .duration(2)
-  .set(group, { visible: false })
-  .set(ball.position, { y: 0 }, 0)
+  .duration(1)
 
   return timeline
 }
@@ -98,6 +95,7 @@ class Fireworks {
       const rotation = i / amount * Math.PI * 2
 
       const sphere = getSphere({
+        y: configuration.height,
         x: Math.sin(rotation) * configuration.distance,
         z: Math.cos(rotation) * configuration.distance,
       })
