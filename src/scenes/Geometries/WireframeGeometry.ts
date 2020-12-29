@@ -5,9 +5,11 @@ import { AudioProperties } from '../../scenePreset/state/audios'
 
 // https://threejs.org/docs/api/en/geometries/WireframeGeometry.html
 
+const { getAudioProperties } = consulters
+
 const configuration = {
-  distance: 10,
-  y: 3,
+  distance: 15,
+  y: 50,
   scale: 1,
   amount: 20,
   speed: 0.001,
@@ -79,11 +81,18 @@ export default function WireframeGeometry() {
   const dancingTribe = getObjectDancingTribe(geometry)
 
   presetScene({
-    setup({ scene, }) {
+    setup({ scene }) {
+
       scene.add(dancingTribe)
     },
-    animate() {
-      makeTribeDance(consulters.getAudioProperties(audio), dancingTribe)
+    animate({ defaultScene }) {
+      if (defaultScene) {
+        const simpleCube: THREE.Object3D = defaultScene.objects.getObjectByName('simpleCube')
+
+        simpleCube.position.y = configuration.y
+      }
+
+      makeTribeDance(getAudioProperties(audio), dancingTribe)
     },
   })
 }

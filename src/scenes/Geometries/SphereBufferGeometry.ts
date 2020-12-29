@@ -8,8 +8,8 @@ import presetScene, { events } from '../../scenePreset'
 const configuration = {
   segments: 10,
   height: 3,
-  particlesAmount: 30,
-  distance: 20,
+  particlesAmount: 100,
+  distance: 50,
 }
 
 function getSphere({
@@ -45,6 +45,7 @@ function getExplodingSpheres(amount = 12): THREE.Group {
 function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax {
   const distance = 0.01
   const timeline = new TimelineMax()
+  const timelinePosition = 1
 
   timeline
   .set(group, { visible: false })
@@ -60,7 +61,6 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
   .set(group, { visible: true })
   .call(() => {
     group.children.forEach((particle, i) => {
-      const timelinePosition = 1
       const getAxisPosition = axis => 
                             + ball.position[axis]
                             + Math.sin(Math.random() * Math.PI * 2)
@@ -78,10 +78,12 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
         y: getAxisPosition('y'),
         z: getAxisPosition('z'),
       }, timelinePosition)
-      .to(particle.scale, { x: 0, y: 0, z: 0 }, timelinePosition)
+      .to(particle.position, {
+        y: `+= 50`,
+      }, timelinePosition)
+      .duration(10)
     })
   })
-  .duration(1)
 
   return timeline
 }
@@ -89,6 +91,7 @@ function getBallTimeline(ball: THREE.Object3D, group: THREE.Group): TimelineMax 
 class Fireworks {
   objects: THREE.Group = new THREE.Group()
   timelines: TimelineMax[] = []
+  areRestarted = false
 
   constructor(amount: number = 10) {
     for (let i = 0; i < amount; i++) {
@@ -109,14 +112,22 @@ class Fireworks {
   }
 
   restart() {
-    this.timelines.forEach(timeline => timeline.restart())
+    if (!this.areRestarted) {
+      this.areRestarted = true
+
+      this.timelines.forEach(timeline => timeline.restart())
+    }
+  }
+
+  pause() {
+    this.timelines.forEach(timeline => timeline.pause())
   }
 }
 
 export default function SphereBufferGeometry() {
   const fireworks = new Fireworks()
   
-  fireworks.restart()
+  fireworks.pause()
 
   events.onKey('u')
     .start(() => {
@@ -124,7 +135,7 @@ export default function SphereBufferGeometry() {
     })
 
   presetScene({
-    setup({ scene, defaultScene }) {
+    setup({ scene }) {
       scene.add(fireworks.objects)
     },
   })

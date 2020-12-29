@@ -23,7 +23,7 @@ export default function Home() {
     <div>
       <Canvas/>
       <Keyboard/>
-      <Audio src='../audio/Jósean Log - Beso.mp3'/>
+      <Audio src='../audio/Palace - Heaven Up There.mp3'/>
     </div>
   )
 }
