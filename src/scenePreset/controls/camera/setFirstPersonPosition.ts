@@ -1,5 +1,6 @@
 import { mouseController } from './setFirstPersonDirection'
 import { CanvasState } from '../../state/canvases'
+import { onKey } from '../../events'
 import animations from '../../state/animations'
 
 export const keyController = {
@@ -279,6 +280,10 @@ function setControlOnKeyUp(event: KeyboardEvent) {
 
 export default function setFirstPersonPosition(canvasState: CanvasState) {
     animations.push(updateFirstPersonPosition)
+    
+    const controls = ['w', 's', 'd', 'a', 'r', 'f']
+
+    controls.forEach(onKey)
 
     canvasState.canvas.addEventListener('keydown', setControlOnKeyDown)
     canvasState.canvas.addEventListener('keyup', setControlOnKeyUp)

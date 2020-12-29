@@ -87,6 +87,7 @@ export const mouseController = {
         z: null,
     },
     camera: null,
+    // cameraDirection
 }
 
 export default function setFirstPersonDirection(canvasState: CanvasState) {
