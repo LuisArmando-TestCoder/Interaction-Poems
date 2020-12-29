@@ -4,6 +4,7 @@ import { getScenes } from '../scenes/getScene'
 
 import Canvas from '../components/Canvas'
 import Keyboard from '../components/KeyBoard'
+import Audio from '../components/Audio'
 
 import './global.scss'
 
@@ -22,7 +23,7 @@ export default function Home() {
     <div>
       <Canvas/>
       <Keyboard/>
-      <audio controls={true} id='audio' src='../audio/Jósean Log - Beso.mp3'/>
+      <Audio src='../audio/Jósean Log - Beso.mp3'/>
     </div>
   )
 }
