@@ -19,6 +19,9 @@ export default function BoxBufferGeometry() {
       events.onKey('k').end(() => {
         actions.toggleFullscreen(mainSceneWrapper)
       })
+      events.onKey('p').end(() => {
+        actions.toggleVR('canvas')
+      })
       actions.blacklistObjects({ scene, blacklist: ['floor'] })
     },
     animate({ defaultScene }) {

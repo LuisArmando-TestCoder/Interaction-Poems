@@ -14,6 +14,10 @@ export class PresetConfiguration {
     renderer = {
         antialias: true,
         preserveDrawingBuffer: true,
+        shadowMapEnabled: true,
+        shadowMapType: THREE.PCFSoftShadowMap,
+        outputEncoding: THREE.sRGBEncoding,
+        XREnabled: true,
     }
     camera = {
         fov: 32,
@@ -24,7 +28,6 @@ export class PresetConfiguration {
             min: 10,
         }
     }
-    shadowMapEnabled = true
     near = 5
     far = 1000
 }
@@ -56,8 +59,9 @@ export class CanvasState {
     sceneAnimations: CanvasStateCallback[] = []
     canvasSelector: string
     canvas: HTMLCanvasElement
+    VRToggler: HTMLElement
 
-    renderer: THREE.Renderer
+    renderer: THREE.WebGLRenderer
     camera: THREE.Camera
     scene: THREE.Scene
 

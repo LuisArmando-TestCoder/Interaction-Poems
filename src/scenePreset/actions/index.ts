@@ -4,6 +4,7 @@ import blacklistObjects from './blacklistObjects'
 import whitelistObjects from './whitelistObjects'
 import saveCanvasScreen from './saveCanvasScreen'
 import toggleFullscreen from './toggleFullscreen'
+import toggleVR from './toggleVR'
 
 export {
     setCameraPositionNearOfObject,
@@ -12,4 +13,5 @@ export {
     whitelistObjects,
     saveCanvasScreen,
     toggleFullscreen,
+    toggleVR,
 }

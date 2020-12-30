@@ -24,8 +24,9 @@ function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCall
         animation(canvasState)
     })
     canvasState.renderer.render(canvasState.scene, canvasState.camera)
-
-    requestAnimationFrame(() => setAnimationFrame(canvasState, animations))
+    canvasState.renderer.setAnimationLoop(() => {
+        setAnimationFrame(canvasState, animations)
+    })
 }
 
 function getAspectRatio(canvas) {
@@ -69,10 +70,14 @@ class ScenePreset {
     }
 
     setRenderer() {
-        this.canvasState.renderer['shadowMap'].enabled = this.canvasState.presetConfiguration.shadowMapEnabled
-        this.canvasState.renderer['shadowMap'].type = THREE.PCFSoftShadowMap
-        this.canvasState.renderer['outputEncoding'] = THREE.sRGBEncoding
+        const { renderer: configurationRenderer } = this.canvasState.presetConfiguration
 
+        this.canvasState.renderer['shadowMap'].enabled = configurationRenderer.shadowMapEnabled
+        this.canvasState.renderer['shadowMap'].type = configurationRenderer.shadowMapType
+        this.canvasState.renderer['outputEncoding'] = configurationRenderer.outputEncoding
+        this.canvasState.renderer['xr'].enabled = configurationRenderer.XREnabled
+
+        this.canvasState.renderer['xr'].setReferenceSpaceType('local')
         this.canvasState.renderer['setClearColor'](
             this.canvasState.presetConfiguration.ambient.color,
             this.canvasState.presetConfiguration.ambient.alpha
