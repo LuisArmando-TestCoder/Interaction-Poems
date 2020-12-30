@@ -13,6 +13,7 @@ export class PresetConfiguration {
     }
     renderer = {
         antialias: true,
+        preserveDrawingBuffer: true,
     }
     camera = {
         fov: 32,
