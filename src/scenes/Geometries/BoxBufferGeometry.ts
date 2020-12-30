@@ -9,10 +9,15 @@ const configuration = {
 }
 
 export default function BoxBufferGeometry() {
+  const mainSceneWrapper = document.getElementById('mainSceneWrapper')
+
   presetScene({
     setup({ scene, canvas }) {
       events.onKey('j').end(() => {
         actions.saveCanvasScreen(canvas)
+      })
+      events.onKey('k').end(() => {
+        actions.toggleFullscreen(mainSceneWrapper)
       })
       actions.blacklistObjects({ scene, blacklist: ['floor'] })
     },

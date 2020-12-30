@@ -21,7 +21,7 @@ export default function Home() {
     .then(scenes => scenes.forEach(scene => scene())) 
   }, [])
   return (
-    <div>
+    <div id="mainSceneWrapper">
       <Canvas/>
       <Keyboard/>
       <Audio src='../audio/Palace - Heaven Up There.mp3'/>
