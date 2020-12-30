@@ -5,11 +5,6 @@ import componentNames from '../componentNames'
 export type CanvasStateCallback = (canvasState: CanvasState) => void
 
 export class PresetConfiguration {
-    objectsFilter = {
-        whitelist: [],
-        blacklist: [],
-        disableAll: false,
-    }
     controlsBlacklist: string[] = []
     componentNames = componentNames
     ambient = {

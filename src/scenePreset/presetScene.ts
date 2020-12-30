@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 
 import {
-    filterDisabledObjects,
     setDefaultObjects,
     addDefaultObjects,
 } from './defaultObjects'
@@ -142,7 +141,6 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
     
         setDefaultObjects(canvasState)
         addDefaultObjects(canvasState)
-        filterDisabledObjects(canvasState, canvasState.scene.children)
         setFilteredControls(canvasState)
         handleCanvasSize(canvasState)
         initializeGlobalAnimations(canvasState)

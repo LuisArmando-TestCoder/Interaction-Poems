@@ -85,13 +85,7 @@ export default function WireframeGeometry() {
 
       scene.add(dancingTribe)
     },
-    animate({ defaultScene }) {
-      if (defaultScene) {
-        const simpleCube: THREE.Object3D = defaultScene.objects.getObjectByName('simpleCube')
-
-        simpleCube.position.y = configuration.y
-      }
-
+    animate() {
       makeTribeDance(getAudioProperties(audio), dancingTribe)
     },
   })
