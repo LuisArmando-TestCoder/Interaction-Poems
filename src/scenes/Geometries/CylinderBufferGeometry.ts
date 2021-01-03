@@ -60,7 +60,7 @@ export default function CylinderBufferGeometry() {
     setup({ scene }) {
       scene.add(rituals)
     },
-    animate({ renderer, scene, camera, defaultScene }) {
+    animate({ renderer, scene, camera }) {
     },
   })
 }

@@ -23,13 +23,11 @@ export default function BoxBufferGeometry() {
         actions.toggleVR('canvas')
       })
       actions.blacklistObjects({ scene, blacklist: ['floor'] })
-    },
-    animate({ defaultScene }) {
-      if (defaultScene) {
-        const simpleCube: THREE.Object3D = defaultScene.objects.getObjectByName('simpleCube')
 
-        simpleCube.position.y = configuration.y
-      }
+      // elevating default SimpleCube
+      const simpleCube: THREE.Object3D = scene.getObjectByName('SimpleCube')
+
+      simpleCube.position.y = configuration.y
     },
   })
 }

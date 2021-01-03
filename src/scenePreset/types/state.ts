@@ -10,7 +10,6 @@ import {
     PresetConfiguration,
     PresetSceneCallbacks,
     IntersectionUtils,
-    DefaultScene,
     CanvasState,
     CanvasesState,
 } from '../state/canvases'
@@ -36,7 +35,6 @@ export {
     PresetConfiguration,
     PresetSceneCallbacks,
     IntersectionUtils,
-    DefaultScene,
     CanvasState,
     CanvasesState,
     ComponentNames,

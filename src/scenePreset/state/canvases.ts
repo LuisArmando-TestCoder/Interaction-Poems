@@ -45,15 +45,8 @@ export interface IntersectionUtils {
     raycaster: THREE.Raycaster
 }
 
-export interface DefaultScene {
-    floor: THREE.Mesh
-    objects: THREE.Group
-    lights: THREE.Group
-}
-
 export class CanvasState {
     intersectionUtils: IntersectionUtils
-    defaultScene: DefaultScene
     
     initialized: boolean = false
     sceneAnimations: CanvasStateCallback[] = []
