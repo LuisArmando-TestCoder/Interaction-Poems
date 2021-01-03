@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { CanvasState } from '../../state/canvases'
+import { componentNames } from '../../state'
 
 function getHemisphereLight(): THREE.Light {
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -24,15 +24,17 @@ function getDirectionalLight(): THREE.Light {
     return directionalLight
 }
 
-export default function getLights(canvasState: CanvasState): THREE.Group {
-    const hemisphereLight = getHemisphereLight()
-    const directionalLight = getDirectionalLight()
-    const lightGroup = new THREE.Group()
+export default class simpleLightSet {
+    hemisphereLight = getHemisphereLight()
+    directionalLight = getDirectionalLight()
+    lightGroup = new THREE.Group()
 
-    lightGroup.name = canvasState.presetConfiguration.componentNames.LIGHTS
+    constructor(): THREE.Group {
+        this.lightGroup.name = componentNames.SimpleLightSet
 
-    lightGroup.add(hemisphereLight)
-    lightGroup.add(directionalLight)
+        this.lightGroup.add(this.hemisphereLight)
+        this.lightGroup.add(this.directionalLight)
 
-    return lightGroup
+        return this.lightGroup
+    }
 }

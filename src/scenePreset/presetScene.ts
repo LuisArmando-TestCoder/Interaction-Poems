@@ -1,23 +1,13 @@
 import * as THREE from 'three'
 
-import {
-    setDefaultObjects,
-    addDefaultObjects,
-} from './defaultObjects'
-
-import {
-    setFilteredControls
-} from './controls'
-
+import { addDefaultObjects } from './utils'
+import { setFilteredControls } from './controls'
+import animations, { animationsState } from './state/animations'
 import canvasesState, {
     CanvasState,
     PresetSceneCallbacks,
     CanvasStateCallback,
 } from './state/canvases'
-
-import animations, {
-    animationsState
-} from './state/animations'
 
 function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCallback[]) {
     animations.forEach((animation: CanvasStateCallback) => {
@@ -143,8 +133,7 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
         scenePreset.setCamera()
         scenePreset.setCanvas()
         scenePreset.setSceneCallbacks(presetSceneCallbacks)
-    
-        setDefaultObjects(canvasState)
+
         addDefaultObjects(canvasState)
         setFilteredControls(canvasState)
         handleCanvasSize(canvasState)
