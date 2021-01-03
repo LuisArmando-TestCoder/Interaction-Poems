@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import presetScene, { events, actions } from '../../scenePreset'
 
 // https://threejs.org/docs/api/en/geometries/RingBufferGeometry.html
-const fragmentShader = `
+const fragmentShader = /* cs */ `
 uniform float iTime;
 uniform vec2 iResolution;
 uniform vec2 iGeometryResolution;

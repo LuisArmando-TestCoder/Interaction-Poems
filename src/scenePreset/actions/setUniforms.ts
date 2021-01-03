@@ -23,7 +23,7 @@ function getBaseUniforms(material: THREE.ShaderMaterial): CustomUniform {
     return {
         iResolution: () => new THREE.Vector2(window.innerWidth, window.innerHeight),
         iTime: () => parseFloat(iTime.toFixed(3)),
-        iTimeDelta: () => new Date().getSeconds() / 60, // normalized minute
+        iTimeDelta: () => new Date().getSeconds() / 60,
         iMouse: () => iMouse,
         // iFrame: () => null,
         // iChannelTime: () => null,

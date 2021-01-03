@@ -5,7 +5,7 @@ import presetScene, { actions } from '../../scenePreset'
 // https://threejs.org/docs/api/en/geometries/PlaneBufferGeometry.html
 
 // const vertexShader = ``
-const fragmentShader = `
+const fragmentShader = /* cs */ `
 uniform float iTime;
 uniform vec2 iResolution;
 
