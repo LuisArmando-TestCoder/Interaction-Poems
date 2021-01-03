@@ -1,6 +1,5 @@
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
-import { CanvasState } from '../../state/canvases'
-
+import { CanvasState } from '../../types/state'
 
 export default function setCameraAutoFocus(canvasState: CanvasState) {
     canvasState.canvas.addEventListener('mouseout', () => {

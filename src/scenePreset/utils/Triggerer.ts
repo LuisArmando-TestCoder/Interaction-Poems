@@ -1,6 +1,7 @@
-import keysState, {
+import keysState from '../state/keys'
+import {
     KeyLifeCycleName,
-} from '../state/keys'
+} from '../types/state'
 
 export default class Triggerer {
     triggerCallbacks(keyLifeCycleName: KeyLifeCycleName, key) {

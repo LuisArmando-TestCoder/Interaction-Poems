@@ -1,5 +1,6 @@
 import animations from '../state/animations'
-import audiosState, { AudioProperties } from '../state/audios'
+import audiosState from '../state/audios'
+import { AudioProperties } from '../types/state'
 
 const {
     audios,

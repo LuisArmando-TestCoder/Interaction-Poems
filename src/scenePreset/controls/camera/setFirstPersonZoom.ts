@@ -1,4 +1,4 @@
-import { CanvasState } from '../../state/canvases'
+import { CanvasState } from '../../types/state'
 
 function setControlOnWheel(event: WheelEvent, canvasState: CanvasState) {
     const delta = -Math.sign(event.deltaY)

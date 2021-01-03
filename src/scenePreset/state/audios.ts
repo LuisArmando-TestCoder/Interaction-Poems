@@ -12,7 +12,6 @@ export class AudioProperties {
 
 export class AudiosState {
     audios: HTMLMediaElement[] = []
-    // put everything but audios in objects
     audioPropertiesGroup: AudioProperties[] = []
 }
 

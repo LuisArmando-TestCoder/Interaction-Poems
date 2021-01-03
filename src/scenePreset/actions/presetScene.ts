@@ -1,13 +1,14 @@
 import * as THREE from 'three'
 
-import { addDefaultObjects } from './utils'
-import { setFilteredControls } from './controls'
-import animations, { animationsState } from './state/animations'
-import canvasesState, {
+import { addDefaultObjects } from '../utils'
+import { setFilteredControls } from '../controls'
+import animations, { animationsState } from '../state/animations'
+import canvasesState from '../state/canvases'
+import {
     CanvasState,
     PresetSceneCallbacks,
     CanvasStateCallback,
-} from './state/canvases'
+} from '../types/state'
 
 function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCallback[]) {
     animations.forEach((animation: CanvasStateCallback) => {

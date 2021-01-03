@@ -1,6 +1,7 @@
 import keysState from '../state/keys'
-
-import Triggerer from './Triggerer'
+import {
+    Triggerer,
+} from '../types/utils'
 
 export default class KeyHandler {
     triggerer: Triggerer

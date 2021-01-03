@@ -1,6 +1,7 @@
-import keysState, {
+import keysState from '../state/keys'
+import {
     KeyLifeCycleObject,
-} from '../state/keys'
+} from '../types/state'
 
 export default class KeyLifeCycle {
     keyLifeCycleObject: KeyLifeCycleObject

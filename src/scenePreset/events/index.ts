@@ -1,9 +1,9 @@
 import onClickIntersectsObject from './onClickIntersectsObject'
 import onKey from './onKey'
-import onNewKey from './onNewKey'
+import onKeyRegister from './onKeyRegister'
 
 export {
     onClickIntersectsObject,
     onKey,
-    onNewKey,
+    onKeyRegister,
 }

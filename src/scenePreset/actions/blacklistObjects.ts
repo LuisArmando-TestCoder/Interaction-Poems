@@ -1,4 +1,4 @@
-interface BlacklistParameters {
+export interface BlacklistParameters {
     scene: THREE.Scene
     blacklist: string[]
     objects?: THREE.Object3D[]

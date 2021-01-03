@@ -1,4 +1,4 @@
-interface CanvasSave {
+export interface CanvasSave {
     image: HTMLImageElement,
     event: Event
 }

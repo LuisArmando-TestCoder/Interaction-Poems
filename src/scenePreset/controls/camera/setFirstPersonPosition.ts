@@ -1,31 +1,33 @@
 import { mouseController } from './setFirstPersonDirection'
-import { CanvasState } from '../../state/canvases'
+import { CanvasState } from '../../types/state'
 import { onKey } from '../../events'
 import animations from '../../state/animations'
 
-export const keyController = {
-    keyAxes: {
+export class KeyController {
+    keyAxes = {
         ws: [],
-        ad: []
-    },
-    chosenKey: "",
-    flyingKeys: [],
+        ad: [],
+    }
+    chosenKey = ""
+    flyingKeys = []
 }
+
+export const keyController = new KeyController()
 
 const auxiliarCameraDirection = { x: Math.PI, y: Math.PI }
 
 const friqtionResistance = 2
 
-const cameraVector = {
-    position: {
+export class CameraProperties {
+    position = {
         x: 0,
         z: 0,
         y: 2,
         min: {
             y: 2
         }
-    },
-    flySpeed: {
+    }
+    flySpeed = {
         force: 0.005,
         direction: 0,
         friction: 0.0025,
@@ -33,63 +35,65 @@ const cameraVector = {
         max: {
             acceleration: 0.1
         }
-    },
-    acceleration: {
+    }
+    acceleration = {
         x: 0,
         z: 0,
-    },
-    friqtion: {
+    }
+    friqtion = {
         x: 0.005,
         z: 0.005,
-    },
-    rotation: 0,
-    chosenAxis: 'z',
-    top: {
+    }
+    rotation = 0
+    chosenAxis = 'z'
+    top = {
         acceleration: {
             x: 0.05,
             z: 0.05,
         },
-    },
+    }
 }
+
+export const cameraProperties = new CameraProperties()
 
 const move = {
     right_forward() {
-        cameraVector.rotation = deegresToRadians(-90)
-        cameraVector.chosenAxis = 'z'
+        cameraProperties.rotation = deegresToRadians(-90)
+        cameraProperties.chosenAxis = 'z'
     },
     left_forward() {
-        cameraVector.rotation = deegresToRadians(90)
-        cameraVector.chosenAxis = 'z'
+        cameraProperties.rotation = deegresToRadians(90)
+        cameraProperties.chosenAxis = 'z'
     },
     right_backward() {
-        cameraVector.rotation = deegresToRadians(-270)
-        cameraVector.chosenAxis = 'x'
+        cameraProperties.rotation = deegresToRadians(-270)
+        cameraProperties.chosenAxis = 'x'
     },
     left_backward() {
-        cameraVector.rotation = deegresToRadians(270)
-        cameraVector.chosenAxis = 'x'
+        cameraProperties.rotation = deegresToRadians(270)
+        cameraProperties.chosenAxis = 'x'
     },
     forward() {
-        cameraVector.rotation = 0
-        cameraVector.chosenAxis = 'z'
+        cameraProperties.rotation = 0
+        cameraProperties.chosenAxis = 'z'
     },
     backward() {
-        cameraVector.rotation = deegresToRadians(360)
-        cameraVector.chosenAxis = 'z'
+        cameraProperties.rotation = deegresToRadians(360)
+        cameraProperties.chosenAxis = 'z'
     },
     right() {
-        cameraVector.rotation = deegresToRadians(-180)
-        cameraVector.chosenAxis = 'x'
+        cameraProperties.rotation = deegresToRadians(-180)
+        cameraProperties.chosenAxis = 'x'
     },
     left() {
-        cameraVector.rotation = deegresToRadians(180)
-        cameraVector.chosenAxis = 'x'
+        cameraProperties.rotation = deegresToRadians(180)
+        cameraProperties.chosenAxis = 'x'
     },
     up() {
-        cameraVector.flySpeed.direction = -1
+        cameraProperties.flySpeed.direction = -1
     },
     down() {
-        cameraVector.flySpeed.direction = 1
+        cameraProperties.flySpeed.direction = 1
     },
 }
 
@@ -119,7 +123,7 @@ function deegresToRadians(degrees) {
 
 function reduceFirstPersonPositionAcceleration() {
     const key = 'acceleration'
-    const obj = cameraVector
+    const obj = cameraProperties
     validAxes.forEach((axis) => {
         const surpassingFriqtion = Math.abs(obj[key][axis]) > obj.friqtion[axis] / 2
         if (surpassingFriqtion) {
@@ -132,11 +136,11 @@ function reduceFirstPersonPositionAcceleration() {
 
 function topFirstPersonPositionAcceleration() {
     validAxes.forEach((axis) => {
-        if (cameraVector.acceleration[axis] > cameraVector.top.acceleration[axis]) {
-            cameraVector.acceleration[axis] = cameraVector.top.acceleration[axis]
+        if (cameraProperties.acceleration[axis] > cameraProperties.top.acceleration[axis]) {
+            cameraProperties.acceleration[axis] = cameraProperties.top.acceleration[axis]
         }
-        if (cameraVector.acceleration[axis] < -cameraVector.top.acceleration[axis]) {
-            cameraVector.acceleration[axis] = -cameraVector.top.acceleration[axis]
+        if (cameraProperties.acceleration[axis] < -cameraProperties.top.acceleration[axis]) {
+            cameraProperties.acceleration[axis] = -cameraProperties.top.acceleration[axis]
         }
     })
 }
@@ -145,7 +149,7 @@ function setMoveOnKeyDown() {
     if (movementKeys[keyController.chosenKey]) {
         movementKeys[keyController.chosenKey]()
 
-        const { acceleration, friqtion, chosenAxis } = cameraVector
+        const { acceleration, friqtion, chosenAxis } = cameraProperties
 
         acceleration[chosenAxis] += friqtion[chosenAxis] * friqtionResistance
     }
@@ -191,10 +195,10 @@ function deleteKeyFromQueue(key: string) {
 function triggerFlyCode() {
     if (keyController.flyingKeys.length) {
         // fly force increase
-        cameraVector.flySpeed.acceleration = Math.min(
-            cameraVector.flySpeed.max.acceleration,
-            cameraVector.flySpeed.acceleration
-          + cameraVector.flySpeed.force
+        cameraProperties.flySpeed.acceleration = Math.min(
+            cameraProperties.flySpeed.max.acceleration,
+            cameraProperties.flySpeed.acceleration
+          + cameraProperties.flySpeed.force
         )
 
         flyingKeys[
@@ -239,24 +243,24 @@ function updateFirstPersonPosition(canvasState: CanvasState) {
     const direction = cameraDirection || auxiliarCameraDirection
 
     const { camera } = canvasState
-    const { acceleration, chosenAxis, rotation } = cameraVector
+    const { acceleration, chosenAxis, rotation } = cameraProperties
     
     if (camera) {
         camera.position.x += acceleration[chosenAxis] * Math.sin(direction.x + rotation)
         camera.position.z += acceleration[chosenAxis] * Math.cos(direction.x + rotation)
         
-        cameraVector.flySpeed.acceleration = Math.max(
+        cameraProperties.flySpeed.acceleration = Math.max(
             0,
-            cameraVector.flySpeed.acceleration
-          - cameraVector.flySpeed.friction
+            cameraProperties.flySpeed.acceleration
+          - cameraProperties.flySpeed.friction
         )
-        cameraVector.position.y = Math.max(
-            cameraVector.position.min.y,
-            cameraVector.position.y
-          - cameraVector.flySpeed.acceleration
-          * cameraVector.flySpeed.direction
+        cameraProperties.position.y = Math.max(
+            cameraProperties.position.min.y,
+            cameraProperties.position.y
+          - cameraProperties.flySpeed.acceleration
+          * cameraProperties.flySpeed.direction
         )
-        camera.position.y = cameraVector.position.y
+        camera.position.y = cameraProperties.position.y
     }
 
 }

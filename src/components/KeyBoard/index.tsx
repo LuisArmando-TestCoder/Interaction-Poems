@@ -74,7 +74,7 @@ const index = () => {
     const [keyBoardStyles, setKeyBoardStyles] = useState({})
 
     useEffect(() => {
-        events.onNewKey(keys => {
+        events.onKeyRegister(keys => {
             const gridTemplateAreas = getGridTemplateAreas(keys)
 
             setKeys(getKeys(gridTemplateAreas))

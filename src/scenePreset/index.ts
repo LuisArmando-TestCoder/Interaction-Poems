@@ -1,5 +1,3 @@
-import presetScene from './presetScene'
-
 // utils is internal only
 import * as types from './types'
 import * as state from './state'
@@ -17,4 +15,4 @@ export {
     consulters,
 }
 
-export default presetScene
+export default actions.presetScene

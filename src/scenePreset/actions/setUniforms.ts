@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 import { ShaderMaterial } from 'three'
 import { materials, animations, customUniforms } from '../state'
-import { CustomUniform } from '../state/customUniforms'
+import { CustomUniform } from '../types/state'
 
 // uniform vec3      iResolution;           // viewport resolution (in pixels)
 // uniform float     iTime;                 // shader playback time (in seconds)

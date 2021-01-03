@@ -1,4 +1,4 @@
-type ComponentNames = { [index: string]: string }
+export type ComponentNames = { [index: string]: string }
 
 function getComponentNames(breaklinedComponentNames: TemplateStringsArray) {
     const componentNames: ComponentNames = {}

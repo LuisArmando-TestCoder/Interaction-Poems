@@ -1,4 +1,4 @@
-import { CanvasState } from '../../state/canvases'
+import { CanvasState } from '../../types/state'
 
 function setCameraDirection(event) {
     if (!mouseController.cameraDirection) {
@@ -76,19 +76,20 @@ function setControlOnMouseUp(event: MouseEvent) {
     mouseController.isPressed = false
 }
 
-export const mouseController = {
-    absoluteYSinLimit: 0.9,
-    isPressed: false,
-    cameraDirection: null,
-    speedResistance: 450,
-    lookAt: {
+export class MouseController {
+    absoluteYSinLimit = 0.9
+    isPressed = false
+    cameraDirection = null
+    speedResistance = 450
+    lookAt = {
         x: null,
         y: null,
         z: null,
-    },
-    camera: null,
-    // cameraDirection
+    }
+    camera = null
 }
+
+export const mouseController = new MouseController()
 
 export default function setFirstPersonDirection(canvasState: CanvasState) {
     mouseController.camera = canvasState.camera

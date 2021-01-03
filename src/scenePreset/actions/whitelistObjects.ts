@@ -1,4 +1,4 @@
-interface WhitelistParameters {
+export interface WhitelistParameters {
     scene: THREE.Scene
     whitelist: string[]
     objects?: THREE.Object3D[]

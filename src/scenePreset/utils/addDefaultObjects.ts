@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { CanvasState } from '../state/canvases'
+import { CanvasState } from '../types/state'
 import { componentNames } from '../state'
 
 import { SimpleLightSet, SimpleFloor, SimpleCube } from '../components'

@@ -1,6 +1,6 @@
-import { CanvasStateCallback } from './canvases'
+import { CanvasStateCallback } from '../types/state'
 
-class AnimationsState {
+export class AnimationsState {
     initialized = false
 }
 

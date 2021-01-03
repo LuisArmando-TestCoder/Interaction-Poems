@@ -1,3 +1,4 @@
+import presetScene from './presetScene'
 import setCameraDirectionLookingAtObject from './setCameraDirectionLookingAtObject'
 import setCameraPositionNearOfObject from './setCameraPositionNearOfObject'
 import blacklistObjects from './blacklistObjects'
@@ -9,6 +10,7 @@ import setUniforms from './setUniforms'
 import toggleVR from './toggleVR'
 
 export {
+    presetScene,
     setCameraPositionNearOfObject,
     setCameraDirectionLookingAtObject,
     blacklistObjects,

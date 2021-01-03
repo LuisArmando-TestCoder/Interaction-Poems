@@ -1,13 +1,14 @@
 import animations from '../state/animations'
 
-import keysState, {
+import keysState from '../state/keys'
+import {
     KeyLifeCycleObject,
-} from '../state/keys'
+} from '../types/state'
 import {
     KeyHandler,
     KeyLifeCycle,
     Triggerer,
-} from '../utils'
+} from '../types/utils'
 
 function handleKeyboardActions() {
     if (!keysState.keys) {
