@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { componentNames } from '../../state'
+import { componentNames } from '../state'
 
 function getHemisphereLight(): THREE.Light {
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
@@ -24,17 +24,15 @@ function getDirectionalLight(): THREE.Light {
     return directionalLight
 }
 
-export default class simpleLightSet {
+export default class SimpleLightSet {
     hemisphereLight = getHemisphereLight()
     directionalLight = getDirectionalLight()
     lightGroup = new THREE.Group()
 
-    constructor(): THREE.Group {
+    constructor() {
         this.lightGroup.name = componentNames.SimpleLightSet
 
         this.lightGroup.add(this.hemisphereLight)
         this.lightGroup.add(this.directionalLight)
-
-        return this.lightGroup
     }
 }

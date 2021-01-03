@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 
-import { componentNames } from '../../state'
+import { componentNames } from '../state'
 
 export default class SimpleFloor {
     material = new THREE.MeshStandardMaterial({ color: 0xcccccc })
     geometry = new THREE.PlaneGeometry(200, 200)
     mesh: THREE.Mesh
 
-    constructor(): THREE.Mesh {
+    constructor() {
 
         this.material.color.convertSRGBToLinear()
 
@@ -17,7 +17,5 @@ export default class SimpleFloor {
         this.mesh.receiveShadow = true
         this.mesh.castShadow = false
         this.mesh.name = componentNames.SimpleFloor
-
-        return this.mesh
-}
+    }
 }

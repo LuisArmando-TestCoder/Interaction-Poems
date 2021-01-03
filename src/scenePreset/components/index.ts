@@ -1,6 +1,6 @@
-import SimpleLightSet from './objects/SimpleLightSet'
-import SimpleFloor from './objects/SimpleFloor'
-import SimpleCube from './objects/SimpleCube'
+import SimpleLightSet from './SimpleLightSet'
+import SimpleFloor from './SimpleFloor'
+import SimpleCube from './SimpleCube'
 
 export {
     SimpleLightSet,
