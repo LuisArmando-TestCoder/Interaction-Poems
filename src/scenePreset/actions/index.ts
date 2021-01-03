@@ -4,6 +4,8 @@ import blacklistObjects from './blacklistObjects'
 import whitelistObjects from './whitelistObjects'
 import saveCanvasScreen from './saveCanvasScreen'
 import toggleFullscreen from './toggleFullscreen'
+import embedShader from './embedShader'
+import setUniforms from './setUniforms'
 import toggleVR from './toggleVR'
 
 export {
@@ -13,5 +15,7 @@ export {
     whitelistObjects,
     saveCanvasScreen,
     toggleFullscreen,
+    embedShader,
+    setUniforms,
     toggleVR,
 }

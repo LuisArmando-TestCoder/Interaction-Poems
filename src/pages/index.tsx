@@ -17,6 +17,7 @@ export default function Home() {
       'SphereBufferGeometry',
       'RingBufferGeometry',
       'BoxBufferGeometry',
+      'PlaneBufferGeometry',
     ])
     .then(scenes => scenes.forEach(scene => scene())) 
   }, [])
