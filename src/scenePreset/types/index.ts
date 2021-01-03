@@ -6,7 +6,7 @@ import * as events from './events'
 import * as state from './state'
 import * as utils from './utils'
 
-import {
+export {
     utils,
     state,
     events,

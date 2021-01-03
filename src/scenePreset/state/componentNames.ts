@@ -1,8 +1,8 @@
 type ComponentNames = { [index: string]: string }
 
-function getComponentNames(breaklinedComponentNames: string) {
+function getComponentNames(breaklinedComponentNames: TemplateStringsArray) {
     const componentNames: ComponentNames = {}
-    const parsedBreaklinedComponentNames: string[] = breaklinedComponentNames.trim().split('\n')
+    const parsedBreaklinedComponentNames: string[] = breaklinedComponentNames.raw[0].trim().split('\n')
 
     parsedBreaklinedComponentNames.forEach(componentName => {
         componentNames[componentName] = componentName

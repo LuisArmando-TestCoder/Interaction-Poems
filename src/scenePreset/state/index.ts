@@ -4,6 +4,7 @@ import audiosState from './audios'
 import keysState from './keys'
 import materials from './materials'
 import customUniforms from './customUniforms'
+import componentNames from './componentNames'
 
 export {
     animations,
@@ -13,4 +14,5 @@ export {
     keysState,
     materials,
     customUniforms,
+    componentNames,
 }
