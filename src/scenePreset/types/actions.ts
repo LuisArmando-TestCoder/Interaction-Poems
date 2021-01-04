@@ -6,7 +6,7 @@ import {
 } from '../actions/whitelistObjects'
 import {
     CanvasSave,
-} from '../actions/saveCanvasScreen'
+} from '../actions/screenshotCanvas'
 
 export {
     BlacklistParameters,

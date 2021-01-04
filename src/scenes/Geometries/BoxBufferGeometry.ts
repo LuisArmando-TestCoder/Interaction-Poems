@@ -14,7 +14,7 @@ export default function BoxBufferGeometry() {
   presetScene({
     setup({ scene, canvas }) {
       events.onKey('j').end(() => {
-        actions.saveCanvasScreen(canvas)
+        actions.screenshotCanvas(canvas)
       })
       events.onKey('k').end(() => {
         actions.toggleFullscreen(mainSceneWrapper)

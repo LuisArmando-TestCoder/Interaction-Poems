@@ -3,7 +3,7 @@ import setCameraDirectionLookingAtObject from './setCameraDirectionLookingAtObje
 import setCameraPositionNearOfObject from './setCameraPositionNearOfObject'
 import blacklistObjects from './blacklistObjects'
 import whitelistObjects from './whitelistObjects'
-import saveCanvasScreen from './saveCanvasScreen'
+import screenshotCanvas from './screenshotCanvas'
 import toggleFullscreen from './toggleFullscreen'
 import embedShader from './embedShader'
 import setUniforms from './setUniforms'
@@ -15,7 +15,7 @@ export {
     setCameraDirectionLookingAtObject,
     blacklistObjects,
     whitelistObjects,
-    saveCanvasScreen,
+    screenshotCanvas,
     toggleFullscreen,
     embedShader,
     setUniforms,
