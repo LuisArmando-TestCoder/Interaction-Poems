@@ -22,6 +22,17 @@ export default function BoxBufferGeometry() {
       events.onKey('p').end(() => {
         actions.toggleVR('canvas')
       })
+
+      const recorder = actions.getCanvasRecorder(canvas)
+
+      actions.downloadCanvasRecordingOnStop(recorder)
+
+      events.onKey('l').start(() => {
+        const switchKey = recorder.state !== 'recording' ? 'start' : 'stop'
+
+        recorder[switchKey]()
+      })
+
       actions.blacklistObjects({ scene, blacklist: ['floor'] })
 
       // elevating default SimpleCube
