@@ -40,7 +40,7 @@ export default function Home() {
     <div id="mainSceneWrapper">
       <Canvas/>
       <Keyboard/>
-      <Audio src='../audio/Palace - Heaven Up There.mp3'/>
+      <Audio src='../audio/samba do moço bonito.mp3'/>
     </div>
   )
 }

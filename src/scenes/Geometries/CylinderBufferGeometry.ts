@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 
-import presetScene from '../../scenePreset'
+import presetScene, { actions } from '../../scenePreset'
+
+import { fragmentShader } from '../Shaders/MisticalColors'
 
 // https://threejs.org/docs/api/en/geometries/CylinderBufferGeometry.html
 
@@ -16,7 +18,12 @@ function getCylinder({
 }): THREE.Object3D {
   const radiusBottom = 10
   const geometry = new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, radialSegments)
-  const material = new THREE.MeshStandardMaterial({ color })
+  const material = new THREE.ShaderMaterial({
+    fragmentShader,
+    side: THREE.DoubleSide,
+  })
+
+  actions.setUniforms(material)
   const mesh = new THREE.Mesh(geometry, material)
 
   mesh.position.y = height / 2
