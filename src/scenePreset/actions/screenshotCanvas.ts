@@ -3,12 +3,12 @@ export interface CanvasSave {
     event: Event
 }
 
-const downloadAnchor = document.createElement('a')
-
-downloadAnchor.download = 'canvasScreen.png'
-
 function downloadImage(base64: string) {
+    const downloadAnchor = document.createElement('a')
+    
+    downloadAnchor.download = 'canvasScreen.png'
     downloadAnchor.href = base64
+
     downloadAnchor.click()
 }
 

@@ -4,13 +4,11 @@ export default function downloadCanvasRecordingOnStop(mediaRecorder: MediaRecord
     mediaRecorder.ondataavailable = event => chunks.push(event.data)
     mediaRecorder.onstop = () => {
         const blob = new Blob(chunks, {type: 'video/webm'})
-        if (window) {
-            const anchor: any = window.document.createElement('a')
+        const anchor: any = document.createElement('a')
 
-            anchor.download = 'myvid.webm'
-            anchor.href = URL.createObjectURL(blob)
-    
-            anchor.click()
-        }
+        anchor.download = 'myvid.webm'
+        anchor.href = URL.createObjectURL(blob)
+
+        anchor.click()
     }
 }
