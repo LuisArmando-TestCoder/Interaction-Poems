@@ -33,7 +33,7 @@ export default function BoxBufferGeometry() {
         recorder[switchKey]()
       })
 
-      actions.blacklistObjects({ scene, blacklist: ['floor'] })
+      actions.blacklistObjects({ scene, blacklist: ['SimpleFloor'] })
 
       // elevating default SimpleCube
       const simpleCube: THREE.Object3D = scene.getObjectByName('SimpleCube')

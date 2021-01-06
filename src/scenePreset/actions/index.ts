@@ -3,6 +3,7 @@ import setCameraDirectionLookingAtObject from './setCameraDirectionLookingAtObje
 import setCameraPositionNearOfObject from './setCameraPositionNearOfObject'
 import downloadCanvasRecordingOnStop from './downloadCanvasRecordingOnStop'
 import getCanvasRecorder from './getCanvasRecorder'
+import addSceneSetupIntrude from './addSceneSetupIntrude'
 import blacklistObjects from './blacklistObjects'
 import whitelistObjects from './whitelistObjects'
 import screenshotCanvas from './screenshotCanvas'
@@ -16,6 +17,7 @@ export {
     setCameraPositionNearOfObject,
     setCameraDirectionLookingAtObject,
     downloadCanvasRecordingOnStop,
+    addSceneSetupIntrude,
     getCanvasRecorder,
     blacklistObjects,
     whitelistObjects,

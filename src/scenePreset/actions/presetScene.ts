@@ -2,13 +2,25 @@ import * as THREE from 'three'
 
 import { addDefaultObjects } from '../utils'
 import { setFilteredControls } from '../controls'
-import animations, { animationsState } from '../state/animations'
-import canvasesState from '../state/canvases'
 import {
     CanvasState,
     PresetSceneCallbacks,
     CanvasStateCallback,
 } from '../types/state'
+import {
+    animations,
+    canvasesState,
+    animationsState,
+    sceneSetupIntrudes,
+} from '../state'
+
+function intrudeSceneSetup(canvasState: CanvasState) {
+    sceneSetupIntrudes[
+        canvasState.canvasSelector
+    ].forEach(intrude => {
+        intrude(canvasState)
+    })
+}
 
 function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCallback[]) {
     animations.forEach((animation: CanvasStateCallback) => {
@@ -49,7 +61,7 @@ function setCanvasToElementSize(canvasState: CanvasState, element: HTMLElement) 
     renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-class ScenePreset {
+class SceneSetup {
     canvasState: CanvasState
 
     constructor(canvasState: CanvasState) {
@@ -127,13 +139,15 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
         canvasState.scene = scene
         canvasState.camera = camera
 
-        const scenePreset = new ScenePreset(canvasState)
+        intrudeSceneSetup(canvasState)
 
-        scenePreset.setScene()
-        scenePreset.setRenderer()
-        scenePreset.setCamera()
-        scenePreset.setCanvas()
-        scenePreset.setSceneCallbacks(presetSceneCallbacks)
+        const sceneSetup = new SceneSetup(canvasState)
+
+        sceneSetup.setScene()
+        sceneSetup.setRenderer()
+        sceneSetup.setCamera()
+        sceneSetup.setCanvas()
+        sceneSetup.setSceneCallbacks(presetSceneCallbacks)
 
         addDefaultObjects(canvasState)
         setFilteredControls(canvasState)
@@ -143,9 +157,9 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
         return
     }
 
-    const scenePreset = new ScenePreset(canvasesState[canvasSelector])
+    const sceneSetup = new SceneSetup(canvasesState[canvasSelector])
 
-    scenePreset.setSceneCallbacks(presetSceneCallbacks)
+    sceneSetup.setSceneCallbacks(presetSceneCallbacks)
 }
 
 function initializeGlobalAnimations(canvasState: CanvasState) {

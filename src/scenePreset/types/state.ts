@@ -26,6 +26,9 @@ import {
     Events,
     KeysState,
 } from '../state/keys'
+import {
+    SceneSetupIntrudes
+} from '../state/sceneSetupIntrudes'
 
 export {
     AnimationsState,
@@ -44,4 +47,5 @@ export {
     Keys,
     Events,
     KeysState,
+    SceneSetupIntrudes,
 }
