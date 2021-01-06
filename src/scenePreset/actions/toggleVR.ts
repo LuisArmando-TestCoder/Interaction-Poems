@@ -1,17 +1,13 @@
-import * as THREE from 'three'
-
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
 
-import canvasesState from '../state/canvases'
-
-let VRToggler: HTMLElement
+import { getCanvasState } from '../consulters'
 
 export default function toggleVR(canvasSelector: string) {
-    const renderer: THREE.WebGLRenderer = canvasesState[canvasSelector].renderer
+    const canvasState = getCanvasState(canvasSelector)
 
-    if (!VRToggler) {
-        VRToggler = VRButton.createButton(renderer)
+    if (!canvasState.VRToggler) {
+        canvasState.VRToggler = VRButton.createButton(canvasState.renderer)
     }
 
-    VRToggler.click()
+    canvasState.VRToggler.click()
 }

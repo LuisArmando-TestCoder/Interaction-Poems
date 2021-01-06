@@ -2,6 +2,7 @@ import * as THREE from 'three'
 
 import { addDefaultObjects } from '../utils'
 import { setFilteredControls } from '../controls'
+import { getCanvasState } from '../consulters'
 import {
     CanvasState,
     PresetSceneCallbacks,
@@ -15,11 +16,16 @@ import {
 } from '../state'
 
 function intrudeSceneSetup(canvasState: CanvasState) {
-    sceneSetupIntrudes[
-        canvasState.canvasSelector
-    ].forEach(intrude => {
-        intrude(canvasState)
+    Object.keys(sceneSetupIntrudes).forEach(canvasSelector => {
+        const currentCanvasState = getCanvasState(canvasSelector)
+
+        if (currentCanvasState === canvasState) {
+            sceneSetupIntrudes[canvasSelector].forEach(intrude => {
+                intrude(canvasState)
+            })
+        }
     })
+    
 }
 
 function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCallback[]) {
@@ -118,8 +124,13 @@ class SceneSetup {
 }
 
 export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, canvasSelector = 'canvas') {
-    if (!canvasesState[canvasSelector]) {
-        const canvasState = canvasesState[canvasSelector] = new CanvasState()
+    const canvasState = getCanvasState(canvasSelector)
+
+    if (!canvasState) {
+        const canvasState = new CanvasState()
+
+        canvasesState.push(canvasState)
+
         const canvas: HTMLCanvasElement = document.querySelector(canvasSelector)
         const camera = new THREE.PerspectiveCamera(
             canvasState.presetConfiguration.camera.fov,
@@ -157,7 +168,7 @@ export default function presetScene(presetSceneCallbacks: PresetSceneCallbacks, 
         return
     }
 
-    const sceneSetup = new SceneSetup(canvasesState[canvasSelector])
+    const sceneSetup = new SceneSetup(getCanvasState(canvasSelector))
 
     sceneSetup.setSceneCallbacks(presetSceneCallbacks)
 }

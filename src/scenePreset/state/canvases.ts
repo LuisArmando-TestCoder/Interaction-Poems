@@ -61,8 +61,8 @@ export class CanvasState {
     presetConfiguration = new PresetConfiguration()
 }
 
-export type CanvasesState = { [index: string]: CanvasState }
+export type CanvasesState = CanvasState[]
 
-const canvasesState: CanvasesState = {}
+const canvasesState: CanvasesState = []
 
 export default canvasesState

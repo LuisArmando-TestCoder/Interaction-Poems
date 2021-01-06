@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 
-import canvasesState from '../state/canvases'
+import { canvasesState } from '../state'
+import { getCanvasState } from '../consulters'
 
 const mouse = new THREE.Vector2()
 
 function handleObjectIntersection(canvasSelector: string) {
-    const { canvas, intersectionUtils } = canvasesState[canvasSelector]
+    const { intersectionUtils } = getCanvasState(canvasSelector)
     const { matrices, raycaster } = intersectionUtils
     const { objects: objectMatrix, callbacks: callbackMatrix } = matrices
 
@@ -19,8 +20,7 @@ function handleObjectIntersection(canvasSelector: string) {
 
                 callback({
                     object,
-                    canvas,
-                    canvasesState: canvasesState[canvasSelector]
+                    canvasesState: getCanvasState(canvasSelector)
                 })
             })
         }
@@ -32,11 +32,11 @@ export default function onClickIntersectsObject(
     callback: Function,
     canvasSelector = 'canvas'
 ) {
-    if (!canvasesState[canvasSelector]) {
+    if (!getCanvasState(canvasSelector)) {
         const canvas: HTMLCanvasElement = document.querySelector(canvasSelector)
         const raycaster = new THREE.Raycaster()
 
-        canvasesState[canvasSelector].intersectionUtils = {
+        getCanvasState(canvasSelector).intersectionUtils = {
             raycaster,
             matrices: {
                 callbacks: [],
@@ -65,14 +65,14 @@ export default function onClickIntersectsObject(
 
             raycaster.setFromCamera(
                 mouse,
-                canvasesState[canvasSelector].camera
+                getCanvasState(canvasSelector).camera
             )
 
             handleObjectIntersection(canvasSelector)
         })
     }
 
-    const { matrices } = canvasesState[canvasSelector].intersectionUtils
+    const { matrices } = getCanvasState(canvasSelector).intersectionUtils
     const { objects: objectMatrix, callbacks: callbackMatrix } = matrices
     const indexOfObjects = objectMatrix.indexOf(objectsForIntersection)
     const existingObjects = callbackMatrix[indexOfObjects]
