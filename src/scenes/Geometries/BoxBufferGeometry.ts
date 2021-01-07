@@ -1,11 +1,27 @@
 import * as THREE from 'three'
 
-import presetScene, { actions, events } from '../../scenePreset'
+import presetScene, { actions, events, consulters } from '../../scenePreset'
 
 // https://threejs.org/docs/api/en/geometries/BoxBufferGeometry.html
 
+import { fragmentShader } from '../Shaders/MisticalColors'
+
 const configuration = {
   y: 50,
+}
+
+function getBox(size = 2): THREE.Object3D {
+  const geometry = new THREE.BoxBufferGeometry(size, size, size)
+  const material = new THREE.ShaderMaterial({
+    fragmentShader,
+    side: THREE.DoubleSide,
+  })
+
+  actions.setUniforms(material)
+
+  const mesh = new THREE.Mesh(geometry, material)
+
+  return mesh
 }
 
 export default function BoxBufferGeometry() {
@@ -23,7 +39,7 @@ export default function BoxBufferGeometry() {
         actions.toggleVR('canvas')
       })
 
-      const recorder = actions.getCanvasRecorder(canvas)
+      const recorder = consulters.getCanvasRecorder(canvas)
 
       actions.downloadCanvasRecordingOnStop(recorder)
 
@@ -33,12 +49,13 @@ export default function BoxBufferGeometry() {
         recorder[switchKey]()
       })
 
-      actions.blacklistObjects({ scene, blacklist: ['SimpleFloor'] })
+      actions.blacklistObjects({ scene, blacklist: ['SimpleCube'] })
 
-      // elevating default SimpleCube
-      const simpleCube: THREE.Object3D = scene.getObjectByName('SimpleCube')
+      const box = getBox()
 
-      simpleCube.position.y = configuration.y
+      box.position.y = configuration.y
+
+      scene.add(box)
     },
   })
 }

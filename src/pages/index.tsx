@@ -18,7 +18,6 @@ function setScenes() {
     'SphereBufferGeometry',
     'RingBufferGeometry',
     'BoxBufferGeometry',
-    'PlaneBufferGeometry',
   ])
   .then(scenes => {
     scenes.forEach(scene => scene())
@@ -28,6 +27,7 @@ function setScenes() {
 function changeState() {
   actions.addSceneSetupIntrude((canvasState: types.state.CanvasState) => {
     // canvasState.presetConfiguration.ambient.color = 0x101010
+    
   })
 }
 

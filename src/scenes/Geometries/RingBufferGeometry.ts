@@ -1,10 +1,8 @@
 import * as THREE from 'three'
 
-import presetScene, { events, actions } from '../../scenePreset'
+import presetScene from '../../scenePreset'
 
 // https://threejs.org/docs/api/en/geometries/RingBufferGeometry.html
-
-import { fragmentShader } from '../Shaders/MisticalColors'
 
 const colorPalette = [
   '#f00',
@@ -75,13 +73,11 @@ function getRing({
     innerRadius, outerRadius, thetaSegments,
     phiSegments, thetaStart, thetaLength
   )
-  const material = new THREE.ShaderMaterial({
-    fragmentShader,
+  const material = new THREE.MeshStandardMaterial({
+    color,
     side: THREE.DoubleSide,
   })
   const mesh = new THREE.Mesh(geometry, material)
-
-  actions.setUniforms(material)
 
   mesh.position.y = y
 

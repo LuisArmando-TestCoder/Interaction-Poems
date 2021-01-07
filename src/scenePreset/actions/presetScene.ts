@@ -25,7 +25,7 @@ function intrudeSceneSetup(canvasState: CanvasState) {
             })
         }
     })
-    
+
 }
 
 function setAnimationFrame(canvasState: CanvasState, animations: CanvasStateCallback[]) {
