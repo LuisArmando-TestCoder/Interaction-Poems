@@ -3,7 +3,6 @@ import * as types from './types'
 import * as state from './state'
 import * as events from './events'
 import * as actions from './actions'
-import * as controls from './controls'
 import * as consulters from './consulters'
 
 export {
@@ -11,7 +10,6 @@ export {
     state,
     events,
     actions,
-    controls,
     consulters,
 }
 

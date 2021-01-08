@@ -1,7 +1,7 @@
 import { mouseController } from './setFirstPersonDirection'
-import { CanvasState } from '../../types/state'
-import { onKey } from '../../events'
-import animations from '../../state/animations'
+import { CanvasState } from '../types/state'
+import { onKey } from '../events'
+import animations from '../state/animations'
 
 export class KeyController {
     keyAxes = {

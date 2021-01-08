@@ -1,9 +1,9 @@
 import { CanvasState } from '../types/state'
 
-import setFirstPersonDirection from './camera/setFirstPersonDirection'
-import setFirstPersonZoom from './camera/setFirstPersonZoom'
-import setFirstPersonPosition from './camera/setFirstPersonPosition'
-import setCanvasAutoFocus from './canvas/setCanvasAutoFocus'
+import setFirstPersonDirection from './setFirstPersonDirection'
+import setFirstPersonZoom from './setFirstPersonZoom'
+import setFirstPersonPosition from './setFirstPersonPosition'
+import setCanvasAutoFocus from './setCanvasAutoFocus'
 
 const controls = {
     setFirstPersonDirection,

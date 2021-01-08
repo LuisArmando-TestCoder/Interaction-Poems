@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 import { addDefaultObjects } from '../utils'
-import { setFilteredControls } from '../controls'
+import { setFilteredControls } from '../actions'
 import { getCanvasState } from '../consulters'
 import {
     CanvasState,
