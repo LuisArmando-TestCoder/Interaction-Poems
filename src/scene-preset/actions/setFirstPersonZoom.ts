@@ -18,7 +18,11 @@ export default function setFirstPersonZoom(canvasState: CanvasState) {
     // Added non-passive event listener to a scroll-blocking 'wheel' event
     // Consider marking event handler as 'passive' to make the page more responsive
     // See https://www.chromestatus.com/feature/5745543795965952
+    const { controlsBlacklist } = canvasState.presetConfiguration
+
     canvasState.canvas.addEventListener('wheel', event => {
-        setControlOnWheel(event, canvasState)
+        if (!controlsBlacklist.includes('setFirstPersonZoom')) {
+            setControlOnWheel(event, canvasState)
+        }
     }, { passive: true })
 }

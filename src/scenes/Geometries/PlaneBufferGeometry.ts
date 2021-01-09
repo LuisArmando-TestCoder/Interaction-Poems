@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import presetScene, { actions } from 'scene-preset'
+import presetScene, { actions } from '../../scene-preset'
 
 // https://threejs.org/docs/api/en/geometries/PlaneBufferGeometry.html
 

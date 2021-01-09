@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import presetScene from 'scene-preset'
+import presetScene from '../../scene-preset'
 
 // https://threejs.org/docs/api/en/materials/PointsMaterial.html
  

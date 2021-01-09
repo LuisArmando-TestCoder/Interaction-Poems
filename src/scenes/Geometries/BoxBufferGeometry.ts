@@ -28,7 +28,7 @@ export default function BoxBufferGeometry() {
   const mainSceneWrapper = document.getElementById('mainSceneWrapper')
 
   presetScene({
-    setup({ scene, canvas, presetConfiguration }) {
+    setup({ scene, canvas, canvasSelector }) {
       events.onKey('j').end(() => {
         actions.screenshotCanvas(canvas)
       })
@@ -49,7 +49,8 @@ export default function BoxBufferGeometry() {
         recorder[switchKey]()
       })
 
-      // actions.blacklistObjects({ scene, blacklist: ['SimpleLightSet', 'SimpleFloor', 'SimpleCube'] })
+      // actions.blacklistObjects({ scene, blacklist: ['SimpleFloor', 'SimpleCube'] })
+      // actions.blacklistControls(['setFirstPersonPosition'], canvasSelector)
 
       const box = getBox()
 
