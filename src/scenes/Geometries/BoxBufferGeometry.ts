@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import presetScene, { actions, events, consulters } from '../../scenePreset'
+import presetScene, { actions, events, consulters } from '../../scene-preset'
 
 // https://threejs.org/docs/api/en/geometries/BoxBufferGeometry.html
 
@@ -49,7 +49,7 @@ export default function BoxBufferGeometry() {
         recorder[switchKey]()
       })
 
-      actions.blacklistObjects({ scene, blacklist: ['SimpleLightSet', 'SimpleFloor', 'SimpleCube'] })
+      // actions.blacklistObjects({ scene, blacklist: ['SimpleLightSet', 'SimpleFloor', 'SimpleCube'] })
 
       const box = getBox()
 

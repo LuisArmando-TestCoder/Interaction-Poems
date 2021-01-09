@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
-import presetScene, { consulters } from '../../scenePreset'
-import { AudioProperties } from '../../scenePreset/state/audios'
+import presetScene, { consulters } from 'scene-preset'
+import { AudioProperties } from 'scene-preset/state/audios'
 
 // https://threejs.org/docs/api/en/geometries/WireframeGeometry.html
 

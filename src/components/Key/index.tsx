@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { events } from '../../scenePreset'
+import { events } from '../../scene-preset'
 import './style.scss'
 
 const index = ({ keyName, style }) => {

@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import presetScene from '../../scenePreset'
+import presetScene from 'scene-preset'
 
 // https://threejs.org/docs/api/en/materials/ShaderMaterial.html
  

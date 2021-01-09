@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { actions, types } from '../scenePreset'
+import { actions, types } from '../scene-preset'
 
 import { getScenes } from '../scenes/getScene'
 
@@ -27,7 +27,6 @@ function setScenes() {
 function changeState() {
   actions.addSceneSetupIntrude((canvasState: types.state.CanvasState) => {
     // canvasState.presetConfiguration.ambient.color = 0x101010
-    
   })
 }
 

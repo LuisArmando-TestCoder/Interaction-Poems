@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { events } from '../../scenePreset'
+import { events } from '../../scene-preset'
 
 function toggleAudio() {
     events.onKey('i').end(() => {

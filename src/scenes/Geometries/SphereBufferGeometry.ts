@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { TimelineMax } from 'gsap'
 
-import presetScene, { events } from '../../scenePreset'
+import presetScene, { events } from 'scene-preset'
 
 // https://threejs.org/docs/api/en/geometries/SphereBufferGeometry.html
 
