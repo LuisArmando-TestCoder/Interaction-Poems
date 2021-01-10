@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 import presetScene, { consulters } from '../../scene-preset'
-import { AudioProperties } from 'scene-preset/state/audios'
+import { AudioProperties } from '../../scene-preset/types/state'
 
 // https://threejs.org/docs/api/en/geometries/WireframeGeometry.html
 
@@ -82,7 +82,6 @@ export default function WireframeGeometry() {
 
   presetScene({
     setup({ scene }) {
-
       scene.add(dancingTribe)
     },
     animate() {
