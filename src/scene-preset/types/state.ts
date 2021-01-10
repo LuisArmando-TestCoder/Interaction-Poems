@@ -2,7 +2,6 @@ import {
     AnimationsState,
 } from '../state/animations'
 import {
-    AudioProperties,
     AudiosState,
 } from '../state/audios'
 import {
@@ -30,9 +29,8 @@ import {
     SceneSetupIntrudes
 } from '../state/sceneSetupIntrudes'
 
-export {
+export type {
     AnimationsState,
-    AudioProperties,
     AudiosState,
     CanvasStateCallback,
     PresetConfiguration,
