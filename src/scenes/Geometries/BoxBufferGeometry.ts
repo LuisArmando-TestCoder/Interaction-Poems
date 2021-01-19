@@ -38,6 +38,7 @@ export default function BoxBufferGeometry() {
       events.onKey('p').end(() => {
         actions.toggleVR('canvas')
       })
+      // events.onCombo('xcv', console.log)
 
       const recorder = consulters.getCanvasRecorder(canvas)
 
