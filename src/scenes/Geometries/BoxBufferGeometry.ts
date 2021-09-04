@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import presetScene, { actions, events, consulters } from '../../scene-preset'
+import presetScene, { actions, events, consulters, state } from '../../scene-preset'
 
 // https://threejs.org/docs/api/en/geometries/BoxBufferGeometry.html
 
@@ -29,6 +29,14 @@ export default function BoxBufferGeometry() {
 
   presetScene({
     setup({ scene, canvas, canvasSelector }) {
+      const canvasState = consulters.getCanvasState(canvasSelector)
+      
+      canvasState.presetConfiguration.camera
+        .cameraVectorsState.position.min.y = -Infinity
+
+      canvasState.presetConfiguration.camera
+        .cameraVectorsState.position.y = 2
+
       events.onKey('j').end(() => {
         actions.screenshotCanvas(canvas)
       })
@@ -38,7 +46,6 @@ export default function BoxBufferGeometry() {
       events.onKey('p').end(() => {
         actions.toggleVR('canvas')
       })
-      // events.onCombo('xcv', console.log)
 
       const recorder = consulters.getCanvasRecorder(canvas)
 
@@ -59,5 +66,5 @@ export default function BoxBufferGeometry() {
 
       scene.add(box)
     },
-  })
+  }, 'canvas')
 }
