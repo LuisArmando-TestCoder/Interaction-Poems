@@ -391,3 +391,47 @@ type Rotation = number
 
 type ChosenAxis = 'x' | 'y' | 'z'
 ```
+
+## Set procedural group
+
+### consulters.getProceduralGroup
+
+```jsx
+import * as THREE from 'three'
+import presetScene, { consulters } from 'scene-preset'
+
+const cubesNet = consulters.getProceduralGroup([
+	{
+		geometry: new THREE.BoxBufferGeometry(.5, .5, .5),
+		getIntersectionMesh(indices, mesh) {
+			mesh.position.set(
+				indices[0],
+				indices[1],
+				indices[2]
+			)
+
+			return mesh
+		},
+		dimensions: [3, 3, 3]
+	}
+])
+
+presetScene({
+    setup({ scene }) {
+        scene.add(cubesNet)
+    },
+})
+```
+
+The following is the representation of the type for each group
+
+In getIntersectionMesh if the mesh is not returned then it won't be rendered
+
+```ts
+type Group = {
+    geometry?: THREE.BufferGeometry
+    material?: THREE.Material
+    dimensions?: number[]
+    getIntersectionMesh: (indices: number[], mesh: THREE.Mesh) => THREE.Mesh | void
+}
+```
