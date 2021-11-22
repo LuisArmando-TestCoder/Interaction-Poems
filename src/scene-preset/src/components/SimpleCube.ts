@@ -1,0 +1,19 @@
+import * as THREE from "three"
+
+import { componentNames } from "../state/index"
+
+export default class SimpleCube {
+  height = 1
+  material = new THREE.MeshStandardMaterial({ color: 0x44ffff })
+  geometry = new THREE.BoxBufferGeometry(this.height, this.height, this.height)
+  object: THREE.Mesh
+
+  constructor() {
+    this.object = new THREE.Mesh(this.geometry, this.material)
+
+    this.object.position.y = this.height / 2
+    this.object.castShadow = true
+    this.object.receiveShadow = false
+    this.object.name = componentNames.SimpleCube
+  }
+}

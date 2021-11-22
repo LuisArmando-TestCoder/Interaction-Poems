@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import presetScene, { actions, events, consulters, state } from '../../scene-preset'
+import presetScene, { actions, events, consulters } from '../../scene-preset'
 
 // https://threejs.org/docs/api/en/geometries/BoxBufferGeometry.html
 
