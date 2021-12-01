@@ -446,3 +446,5 @@ type Group = {
     getIntersectionMesh: (indices: number[], mesh: THREE.Mesh) => THREE.Mesh | void
 }
 ```
+
+## 
