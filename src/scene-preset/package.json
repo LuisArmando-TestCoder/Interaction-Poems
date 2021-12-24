@@ -1,6 +1,6 @@
 {
   "name": "scene-preset",
-  "version": "2.2.1",
+  "version": "2.4.3",
   "description": "Abstracts boilerplate when making 3D scenes with Three.js",
   "scripts": {
     "tsc": "tsc"
@@ -20,12 +20,16 @@
     "@types/dom-mediacapture-record": "^1.0.7",
     "@types/webgl2": "0.0.6",
     "body-scroll-lock": "^3.1.5",
-    "three": "^0.134.0",
-    "typescript": "^4.5.2"
+    "three": "^0.134.0"
   },
   "types": "lib/index.d.ts",
   "main": "lib/index.js",
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "devDependencies": {
+    "@types/body-scroll-lock": "^3.1.0",
+    "@types/three": "^0.135.0",
+    "typescript": "^4.5.4"
+  }
 }

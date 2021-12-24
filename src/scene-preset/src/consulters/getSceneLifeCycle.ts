@@ -1,8 +1,10 @@
 import * as THREE from "three"
+
 import { CanvasState } from "../types/state"
 
 export type SceneExport = {
   object3D: THREE.Object3D
+  exported?: any
   [index: string]: any
 }
 export type SceneExportForScene = {
@@ -26,8 +28,8 @@ export type Scene = {
     | Promise<SceneExport>
     | SceneExport
     | SceneExportForScene
-  onAnimation?: (exportedScene: ExportedScene, canvasState: CanvasState) => {}
-  onSetup?: (exportedScene: ExportedScene, canvasState: CanvasState) => {}
+  onAnimation?: (sceneExport: SceneExport, canvasState: CanvasState) => {}
+  onSetup?: (sceneExport: SceneExport, canvasState: CanvasState) => {}
 }
 export type Scenes = {
   [index: string]: Scene
@@ -126,7 +128,11 @@ async function exportScene({
   exportedScene,
   key,
 }: {
-  exportable: THREE.Object3D | THREE.Object3D[] | Promise<THREE.Object3D>[] | SceneExport
+  exportable:
+    | THREE.Object3D
+    | THREE.Object3D[]
+    | Promise<THREE.Object3D>[]
+    | SceneExport
   exportedScene: ExportedScene
   key: string
 }) {
@@ -174,17 +180,28 @@ export default async (scenes: Scenes) => {
   })
 
   Object.values(await Promise.all(objectRequests.filter(x => x))).forEach(
-    sceneExport => {
+    (sceneExport: SceneExport) => {
       sceneExport && sceneGroup.add(sceneExport.object3D)
     }
   )
 
+  let exportedState: { [index: string]: any } = {}
+
   const executeObjectsEvents = (
     canvasState: CanvasState,
     callType: "onSetup" | "onAnimation"
-  ) => {
+  ): { [index: string]: any } | void => {
     Object.keys(scenes).forEach((key: string) => {
-      scenes[key][callType]?.(exportedScene[key], canvasState)
+      const exported = scenes[key][callType]?.(
+        callType === "onAnimation" && exportedState[key]
+          ? { ...exportedScene[key], exported: exportedState[key] }
+          : exportedScene[key],
+        canvasState
+      )
+
+      if (callType === "onSetup" && exported) {
+        exportedState[key] = exported
+      }
     })
   }
 
