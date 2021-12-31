@@ -8,9 +8,10 @@ import Canvas from '../components/Canvas'
 import Keyboard from '../components/KeyBoard'
 import Audio from '../components/Audio'
 
-import './global.scss'
+import './global.module.scss'
 
 function setScenes() {
+  console.log("hay")
   getScenes([
     'WireframeGeometry',
     'CylinderBufferGeometry',
@@ -37,7 +38,9 @@ export default function Home() {
   }, [])
   return (
     <div id="mainSceneWrapper">
-      <Canvas/>
+      <section className="canvas-wrapper" style={{height: window.innerHeight}}>
+        <Canvas/>
+      </section>
       <Keyboard/>
       <Audio src='../audio/samba do moço bonito.mp3'/>
     </div>

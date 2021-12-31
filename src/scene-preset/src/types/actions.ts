@@ -12,6 +12,9 @@ import type {
   Keyboard,
 } from "../actions/setFirstPersonPosition"
 import type { RequestFullScreen } from "../actions/toggleFullscreen"
+import type {
+  TextureChannels,
+} from "../actions/setUniforms"
 
 export type {
   RequestFullScreen,
@@ -24,4 +27,5 @@ export type {
   BlacklistParameters,
   WhitelistParameters,
   CanvasSave,
-}
+  TextureChannels,
+  }

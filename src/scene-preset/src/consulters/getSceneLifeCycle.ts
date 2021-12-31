@@ -149,7 +149,7 @@ async function exportScene({
   })
 }
 
-export default async (scenes: Scenes) => {
+async function getSceneLifeCycle(scenes: Scenes) {
   const exportedScene: ExportedScene = {}
   const sceneGroup = new THREE.Group()
   const objectRequests = Object.keys(scenes).map(async (key: string) => {
@@ -217,3 +217,5 @@ export default async (scenes: Scenes) => {
     },
   }
 }
+
+export default getSceneLifeCycle

@@ -3,7 +3,7 @@ import { events } from '../../scene-preset'
 
 import Key from '../Key'
 
-import './style.scss'
+import './style.module.scss'
 
 const keyboardGrid = `
 Q W E R T Y U I O P

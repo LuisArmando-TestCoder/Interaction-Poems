@@ -164,7 +164,15 @@ class SceneSetup {
   }
 }
 
-export default function presetScene(
+function initializeGlobalAnimations(canvasState: CanvasState) {
+  if (!animationsState.initialized) {
+    setAnimationFrame(canvasState, animations)
+
+    animationsState.initialized = true
+  }
+}
+
+function presetScene(
   presetSceneCallbacks: PresetSceneCallbacks,
   canvasSelector = "canvas"
 ) {
@@ -221,10 +229,4 @@ export default function presetScene(
   sceneSetup.setSceneCallbacks(presetSceneCallbacks)
 }
 
-function initializeGlobalAnimations(canvasState: CanvasState) {
-  if (!animationsState.initialized) {
-    setAnimationFrame(canvasState, animations)
-
-    animationsState.initialized = true
-  }
-}
+export default presetScene

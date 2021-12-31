@@ -1,4 +1,4 @@
-export default `
+const vertex = `
 varying vec3 fragCoord;
 
 void main() {
@@ -8,3 +8,5 @@ void main() {
     gl_Position = projectionMatrix * modelViewPosition; 
 }
 `
+
+export default vertex

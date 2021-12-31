@@ -1,7 +1,9 @@
 import * as THREE from "three"
 
-import { materials, animations, customUniforms } from "../state/index"
-import { CustomUniform } from "../types/state"
+import { materials, animations, customUniforms, audiosState } from "../state"
+import { CustomUniform, AudioChannels } from "../types/state"
+import { audioChannels } from "../state/audios"
+import { consulters } from ".."
 
 // uniform vec3      iResolution;           // viewport resolution (in pixels)
 // uniform float     iTime;                 // shader playback time (in seconds)
@@ -10,13 +12,47 @@ import { CustomUniform } from "../types/state"
 // uniform float     iChannelTime[4];       // channel playback time (in seconds)
 // uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
 // uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
-// uniform samplerXX iChannel0..3;          // input channel. XX = 2D/Cube
+// uniform samplerXX <<AnyName>>;           // input channel. XX = 2D/Cube
 // uniform vec4      iDate;                 // (year, month, day, time in seconds)
 // uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
+
+export type TextureChannels = { [index: string]: () => THREE.DataTexture2DArray };
 
 const iMouse = new THREE.Vector4()
 
 let iTime = 0
+
+function getEmptyAudioTexture(): THREE.DataTexture2DArray {
+  const width = 512
+  const height = 2
+  const depth = 1
+  const size = width * height
+  const data = new Uint8Array(size * depth)
+  const texture = new THREE.DataTexture2DArray(data, width, height, depth)
+
+  texture.format = THREE.RGBFormat
+  texture.needsUpdate = true
+
+  return texture
+}
+
+function getTextureChannels(channels: AudioChannels): TextureChannels {
+  const textureChannels: TextureChannels = {}
+
+  for (const [channelName, audio] of Object.entries(channels)) {
+    const audioProperties = consulters.getAudioProperties(audio);
+    const audioTexture = getEmptyAudioTexture();
+    textureChannels[channelName] = () => {
+      if (audioProperties.frequencies) {
+        audioTexture.image.data = audioProperties.frequencies;
+      }
+
+      return audioTexture
+    }
+  }
+
+  return textureChannels
+}
 
 function getBaseUniforms(material: THREE.ShaderMaterial): CustomUniform {
   return {
@@ -27,10 +63,8 @@ function getBaseUniforms(material: THREE.ShaderMaterial): CustomUniform {
     // iFrame: () => null,
     // iChannelTime: () => null,
     // iChannelResolution: () => null,
-    // iChannel0: () => null,
-    // iChannel1: () => null,
-    // iChannel2: () => null,
-    // iChannel3: () => null,
+    // <<AnyName>> for samplerXX 
+    ...getTextureChannels(audioChannels),
     // iDate: () => null,
     // iSampleRate: () => null,
   }

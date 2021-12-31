@@ -43,7 +43,7 @@ function callForDimensions(
   }
 }
 
-export default (groups: Group[]) => {
+function getProceduralGroup(groups: Group[]) {
   const proceduralGroup = new THREE.Group()
 
   groups.forEach(({ geometry, material, dimensions, getIntersectionMesh }) => {
@@ -80,3 +80,5 @@ export default (groups: Group[]) => {
 
   return proceduralGroup
 }
+
+export default getProceduralGroup

@@ -64,7 +64,7 @@ function setMeshTransform(
   })
 }
 
-export default ({
+function getAssembledMeshesGroup({
   amount = 1,
   transformVectors = [],
   setupChildPosition,
@@ -75,7 +75,7 @@ export default ({
   vertexShader = defaultVertexShader,
   fragmentShader = defaultFragmentShader,
   size = { x: 1, y: 1, z: 1 },
-}: AssemblyMeshesGroupOptions) => {
+}: AssemblyMeshesGroupOptions) {
   const group = new THREE.Group()
 
   group.name = name
@@ -134,3 +134,5 @@ export default ({
     },
   }
 }
+
+export default getAssembledMeshesGroup

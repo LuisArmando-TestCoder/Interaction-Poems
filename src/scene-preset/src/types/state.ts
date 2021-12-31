@@ -1,5 +1,8 @@
 import type { AnimationsState } from "../state/animations"
-import type { AudiosState } from "../state/audios"
+import type {
+  AudiosState,
+  AudioChannels,
+} from "../state/audios"
 import type {
   KeyController,
   CameraVectorsState,
@@ -27,6 +30,7 @@ export type {
   CameraVectorsState,
   AnimationsState,
   AudiosState,
+  AudioChannels,
   CanvasStateCallback,
   ControlsBlacklist,
   PresetConfiguration,

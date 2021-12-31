@@ -36,12 +36,6 @@ build/Release
 node_modules/
 jspm_packages/
 
-scene-preset/.gitignore
-scene-preset/LICENSE
-scene-preset/package-lock.json
-scene-preset/package.json
-scene-preset/README.md
-
 # Typescript v1 declaration files
 typings/
 
@@ -73,5 +67,3 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
-
-lib

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { events } from '../../scene-preset'
-import './style.scss'
+import './style.module.scss'
 
 const index = ({ keyName, style }) => {
     const [isSelected, setIsSelected] = useState(false)
