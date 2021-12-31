@@ -1,6 +1,7 @@
 export const fragmentShader = /* cs */ `
 uniform float iTime;
 uniform vec2 iResolution;
+uniform sampler2D trance;
 uniform vec2 iGeometryResolution;
 
 // http://www.pouet.net/prod.php?which=57245
@@ -8,9 +9,10 @@ uniform vec2 iGeometryResolution;
 // https://www.shadertoy.com/view/XsXXDn
 
 void main() {
+  vec2 frequency = texture(trance, vec2(10.0)).xy / 64.;
 	vec3 haloColors;
 	float distance;
-    float brightnessDiffuse = 2.;
+    float brightnessDiffuse = 2. * frequency;
     float waveNear = 1.;
     float fov = 15.;
     float wavingSpeed = .5;

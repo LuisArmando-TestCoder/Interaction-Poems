@@ -48,12 +48,16 @@ function getObjectDancingTribe(geometry): THREE.Group {
 
 function makeTribeDance(audioProperties: AudioProperties, dancingTribe: THREE.Group) {
   if (audioProperties) {
-    averageFrequecy = audioProperties.averageFrequecy
+    averageFrequecy = audioProperties.averageFrequency
 
     if (averageFrequecy > maxAverageFrequency) {
       maxAverageFrequency = averageFrequecy
     }
   }
+
+  // console.log("audioProperties", audioProperties)
+  // console.log("averageFrequecy", averageFrequecy)
+  // console.log("maxAverageFrequency", maxAverageFrequency)
 
   const scale = averageFrequecy / maxAverageFrequency
 
@@ -64,6 +68,7 @@ function makeTribeDance(audioProperties: AudioProperties, dancingTribe: THREE.Gr
     child.rotation.y += configuration.speed * 10
     child.rotation.z += configuration.speed * 10
 
+    // console.log(averageFrequecy, maxAverageFrequency)
     if (averageFrequecy) {
       child.scale.set(scale, scale, scale)
     }
@@ -77,6 +82,7 @@ export default function WireframeGeometry() {
     configuration.scale,
     configuration.scale,
   )
+  console.log("audio", audio)
 
   const dancingTribe = getObjectDancingTribe(geometry)
 

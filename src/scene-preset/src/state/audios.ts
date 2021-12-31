@@ -1,15 +1,14 @@
 import { AudioProperties } from "../types/utils"
 
+export type AudioChannels = { [index: string]: HTMLAudioElement };
+
+export const audioChannels: AudioChannels = {}
+
 export class AudiosState {
+  audioChannels = audioChannels
   audios: HTMLMediaElement[] = []
   audioPropertiesGroup: AudioProperties[] = []
 }
-
-export type AudioChannels = { [index: string]: HTMLAudioElement };
-
-// this could to go on state
-export const audioChannels: AudioChannels = {}
-
 const audiosState: AudiosState = new AudiosState()
 
 export default audiosState

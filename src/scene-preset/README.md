@@ -215,15 +215,15 @@ presetScene({
     - iTime → shader playback time (in seconds)
     - iTimeDelta → render time (in seconds)
     - iMouse → mouse pixel coords. xy: current (if MLB down), zw: click
+    - anyName // channel playback time (in seconds)*
 4. Is intended to add these over time:
     - *iFrame // shader playback frame*
-    - *iChannelTime[4] // channel playback time (in seconds)*
     - *iChannelResolution[4] // channel resolution (in pixels)*
-    - *iChannel0..3 // input channel. XX = 2D/Cube*
+    - *anyName // input channel. XX = 2D/Cube*
     - *iDate*
     - *iSampleRate*
 
-```jsx
+```c
 uniform vec3      iResolution;
 uniform float     iTime;
 uniform float     iTimeDelta;
@@ -231,7 +231,7 @@ uniform float     iTimeDelta;
 // uniform float     iChannelTime[4];
 // uniform vec3      iChannelResolution[4];
 uniform vec4      iMouse;
-// uniform samplerXX iChannel0..3;
+uniform sampler2D <<anyName>>;
 // uniform vec4      iDate;
 // uniform float     iSampleRate;
 

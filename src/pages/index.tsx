@@ -11,7 +11,6 @@ import Audio from '../components/Audio'
 import './global.module.scss'
 
 function setScenes() {
-  console.log("hay")
   getScenes([
     'WireframeGeometry',
     'CylinderBufferGeometry',
@@ -42,7 +41,7 @@ export default function Home() {
         <Canvas/>
       </section>
       <Keyboard/>
-      <Audio src='../audio/samba do moço bonito.mp3'/>
+      <Audio src='../audio/Downloading System.mp3'/>
     </div>
   )
 }
